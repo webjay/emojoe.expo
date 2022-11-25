@@ -1,0 +1,58 @@
+{
+  "expo": {
+    "name": "Do",
+    "slug": "do",
+    "scheme": "do",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "entryPoint": "./src/root.ts",
+    "icon": "assets/blank.png",
+    "splash": {
+      "image": "assets/blank.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#fff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": ""
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "dk.doitwithsamagain.doapp",
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "dk.doitwithsamagain.doapp",
+      "versionCode": 1,
+      "permissions": [],
+      "adaptiveIcon": {
+        "foregroundImage": "assets/blank.png",
+        "backgroundColor": "#FCEC84"
+      }
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "",
+            "project": "",
+            "authToken": ""
+          }
+        }
+      ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "50ab79ea-1980-4522-98e4-3681ca764e38"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "owner": "doitwithsamagain"
+  }
+}
