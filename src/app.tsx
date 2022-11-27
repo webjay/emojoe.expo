@@ -1,6 +1,6 @@
 import './lib/amplify';
 import React from 'react';
-import { Authenticator } from '@aws-amplify/ui-react-native';
+import { Authenticator, ThemeProvider } from '@aws-amplify/ui-react-native';
 import { StyleSheet, View } from 'react-native';
 import Do from './components/do';
 
@@ -15,11 +15,13 @@ const styles = StyleSheet.create({
 function App() {
   return (
     <Authenticator.Provider>
-      <Authenticator>
-        <View style={styles.container}>
-          <Do />
-        </View>
-      </Authenticator>
+      <ThemeProvider>
+        <Authenticator>
+          <View style={styles.container}>
+            <Do />
+          </View>
+        </Authenticator>
+      </ThemeProvider>
     </Authenticator.Provider>
   );
 }
