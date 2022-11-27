@@ -18,3 +18,4 @@
 - `push` will build all your local backend resources and provision it in the cloud.
 - `console` to open the Ampify Console and view your project status.
 - `publish` will build all your local backend and frontend resources (if you have hosting category added) and provision it in the cloud.
+- `pull --appId d11lva892bavia --envName dev` to get the latest client configuration files.

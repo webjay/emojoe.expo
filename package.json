@@ -6,6 +6,7 @@
     "expo": "expo-cli",
     "eas": "eas",
     "amplify": "amplify",
+    "amplify:pull": "amplify pull --appId d11lva892bavia --envName dev",
     "repack": "rm package-lock.json && rm -rf node_modules && npm install",
     "lint": "eslint ./src/ --ext .jsx,.js,.tsx,.ts",
     "start": "expo start",
@@ -14,6 +15,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@aws-amplify/datastore": "4.0.4",
     "@aws-amplify/ui-react-native": "1.1.1",
     "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-community/netinfo": "9.3.5",

@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "doitwithsamagain",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authdoitwithsamagain334a02eb",
+      "Outputs.UserPoolId"
+    ]
+  }
+}
