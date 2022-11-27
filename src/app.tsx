@@ -1,4 +1,6 @@
+import './lib/amplify';
 import React from 'react';
+import { Authenticator } from '@aws-amplify/ui-react-native';
 import { StyleSheet, Text, View } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -10,10 +12,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function App() {
+function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <Authenticator.Provider>
+      <Authenticator>
+        <View style={styles.container}>
+          <Text>Open up App.tsx to start working on your app!</Text>
+        </View>
+      </Authenticator>
+    </Authenticator.Provider>
   );
 }
+
+export default App;
