@@ -4,10 +4,12 @@ import { schema } from './schema';
 
 
 
-const { Emoji, Group, Activity } = initSchema(schema);
+const { Profile, Group, Emoji, Activity, GroupProfile } = initSchema(schema);
 
 export {
-  Emoji,
+  Profile,
   Group,
-  Activity
+  Emoji,
+  Activity,
+  GroupProfile
 };
