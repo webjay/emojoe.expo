@@ -7,6 +7,8 @@
 ## Expo
 
 - `npm run expo upgrade` to upgrade Expo and any relevant packages.
+- `npx expo config --type introspect` to check config.
+- `npm run eas update` to ship an update.
 
 ## Amplify
 
@@ -19,3 +21,7 @@
 - `console` to open the Ampify Console and view your project status.
 - `publish` will build all your local backend and frontend resources (if you have hosting category added) and provision it in the cloud.
 - `pull --appId d11lva892bavia --envName dev` to get the latest client configuration files.
+
+### Hacks
+
+- sync failure: https://github.com/aws-amplify/amplify-adminui/issues/495#issuecomment-1061205308

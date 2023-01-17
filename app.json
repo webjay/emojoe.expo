@@ -3,18 +3,19 @@
     "name": "Do",
     "slug": "do",
     "scheme": "do",
-    "version": "1.0.0",
+    "version": "0.8.0.8",
     "orientation": "portrait",
     "entryPoint": "./src/root.ts",
-    "icon": "assets/blank.png",
+    "icon": "./assets/do.png",
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "assets/blank.png",
+      "image": "./assets/do.png",
       "resizeMode": "contain",
       "backgroundColor": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": ""
+      "url": "https://u.expo.dev/50ab79ea-1980-4522-98e4-3681ca764e38"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -29,8 +30,8 @@
       "versionCode": 1,
       "permissions": [],
       "adaptiveIcon": {
-        "foregroundImage": "assets/blank.png",
-        "backgroundColor": "#FCEC84"
+        "foregroundImage": "./assets/do.png",
+        "backgroundColor": "#fff"
       }
     },
     "hooks": {

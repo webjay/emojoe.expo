@@ -17,11 +17,18 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "groups": {
-                    "name": "groups",
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Groups": {
+                    "name": "Groups",
                     "isArray": true,
                     "type": {
-                        "model": "GroupProfile"
+                        "model": "ProfileGroup"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -32,13 +39,6 @@ export const schema = {
                             "profile"
                         ]
                     }
-                },
-                "username": {
-                    "name": "username",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -108,11 +108,11 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "Profiles": {
-                    "name": "Profiles",
+                "profiles": {
+                    "name": "profiles",
                     "isArray": true,
                     "type": {
-                        "model": "GroupProfile"
+                        "model": "ProfileGroup"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -196,7 +196,7 @@ export const schema = {
                 "emoji": {
                     "name": "emoji",
                     "isArray": false,
-                    "type": "String",
+                    "type": "AWSJSON",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -206,7 +206,7 @@ export const schema = {
                     "type": {
                         "model": "Profile"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "HAS_ONE",
@@ -245,7 +245,7 @@ export const schema = {
                     "name": "emojiProfileId",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 }
             },
@@ -311,7 +311,7 @@ export const schema = {
                     "type": {
                         "model": "Profile"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "HAS_ONE",
@@ -350,7 +350,7 @@ export const schema = {
                     "name": "activityProfileId",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 }
             },
@@ -388,8 +388,8 @@ export const schema = {
                 }
             ]
         },
-        "GroupProfile": {
-            "name": "GroupProfile",
+        "ProfileGroup": {
+            "name": "ProfileGroup",
             "fields": {
                 "id": {
                     "name": "id",
@@ -460,7 +460,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "GroupProfiles",
+            "pluralName": "ProfileGroups",
             "attributes": [
                 {
                     "type": "model",
@@ -490,5 +490,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "dd13fa7721c1b304b882516470a78357"
+    "version": "379f742e46d64373226b9f43cf2cf8db"
 };

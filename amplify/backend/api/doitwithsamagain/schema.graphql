@@ -1,26 +1,26 @@
 type Profile @model @auth(rules: [{allow: private, operations: [read]}, {allow: owner}]) {
   id: ID!
   subId: String!
-  groups: [Group] @manyToMany(relationName: "GroupProfile")
-  username: String!
+  name: String
+  Groups: [Group] @manyToMany(relationName: "ProfileGroup")
 }
 
 type Emoji @model @auth(rules: [{allow: owner}]) {
   id: ID!
   Group: Group @hasOne
-  emoji: String!
-  Profile: Profile @hasOne
+  emoji: AWSJSON!
+  Profile: Profile! @hasOne
 }
 
 type Group @model @auth(rules: [{allow: private, operations: [create, read, update]}]) {
   id: ID!
   name: String!
-  Profiles: [Profile] @manyToMany(relationName: "GroupProfile")
+  profiles: [Profile] @manyToMany(relationName: "ProfileGroup")
 }
 
 type Activity @model @auth(rules: [{allow: owner}, {allow: private, operations: [read]}]) {
   id: ID!
   Group: Group! @hasOne
-  Profile: Profile @hasOne
+  Profile: Profile! @hasOne
 }
  
