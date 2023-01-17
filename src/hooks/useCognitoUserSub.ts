@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Auth } from '@aws-amplify/auth';
 
-function useCognitoUserSub() {
-  const [subId, setSubId] = useState<string>(null);
-  useEffect(() => {
-    async function getUser() {
-      const { attributes: { sub } } = await Auth.currentUserInfo();
-      setSubId(sub);
-    }
-    getUser();
-  }, []);
-  return subId;
+async function getCognitoUserSub() {
+  const { attributes: { sub } } = await Auth.currentUserInfo();
+  return sub;
 }
 
-export default useCognitoUserSub;
+export default function useCognitoUserSub() {
+  const [subId, setSubId] = useState<string | null>(null);
+  useEffect(() => {
+    getCognitoUserSub().then(setSubId);
+  }, []);
+  return { subId, getCognitoUserSub };
+}

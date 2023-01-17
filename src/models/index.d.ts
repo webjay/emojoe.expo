@@ -13,8 +13,8 @@ type EagerProfile = {
   };
   readonly id: string;
   readonly subId: string;
-  readonly groups?: (GroupProfile | null)[] | null;
-  readonly username: string;
+  readonly name?: string | null;
+  readonly Groups?: (ProfileGroup | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -26,8 +26,8 @@ type LazyProfile = {
   };
   readonly id: string;
   readonly subId: string;
-  readonly groups: AsyncCollection<GroupProfile>;
-  readonly username: string;
+  readonly name?: string | null;
+  readonly Groups: AsyncCollection<ProfileGroup>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -45,7 +45,7 @@ type EagerGroup = {
   };
   readonly id: string;
   readonly name: string;
-  readonly Profiles?: (GroupProfile | null)[] | null;
+  readonly profiles?: (ProfileGroup | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -57,7 +57,7 @@ type LazyGroup = {
   };
   readonly id: string;
   readonly name: string;
-  readonly Profiles: AsyncCollection<GroupProfile>;
+  readonly profiles: AsyncCollection<ProfileGroup>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -76,11 +76,11 @@ type EagerEmoji = {
   readonly id: string;
   readonly Group?: Group | null;
   readonly emoji: string;
-  readonly Profile?: Profile | null;
+  readonly Profile: Profile;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly emojiGroupId?: string | null;
-  readonly emojiProfileId?: string | null;
+  readonly emojiProfileId: string;
 }
 
 type LazyEmoji = {
@@ -91,11 +91,11 @@ type LazyEmoji = {
   readonly id: string;
   readonly Group: AsyncItem<Group | undefined>;
   readonly emoji: string;
-  readonly Profile: AsyncItem<Profile | undefined>;
+  readonly Profile: AsyncItem<Profile>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly emojiGroupId?: string | null;
-  readonly emojiProfileId?: string | null;
+  readonly emojiProfileId: string;
 }
 
 export declare type Emoji = LazyLoading extends LazyLoadingDisabled ? EagerEmoji : LazyEmoji
@@ -111,11 +111,11 @@ type EagerActivity = {
   };
   readonly id: string;
   readonly Group: Group;
-  readonly Profile?: Profile | null;
+  readonly Profile: Profile;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly activityGroupId: string;
-  readonly activityProfileId?: string | null;
+  readonly activityProfileId: string;
 }
 
 type LazyActivity = {
@@ -125,11 +125,11 @@ type LazyActivity = {
   };
   readonly id: string;
   readonly Group: AsyncItem<Group>;
-  readonly Profile: AsyncItem<Profile | undefined>;
+  readonly Profile: AsyncItem<Profile>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly activityGroupId: string;
-  readonly activityProfileId?: string | null;
+  readonly activityProfileId: string;
 }
 
 export declare type Activity = LazyLoading extends LazyLoadingDisabled ? EagerActivity : LazyActivity
@@ -138,9 +138,9 @@ export declare const Activity: (new (init: ModelInit<Activity>) => Activity) & {
   copyOf(source: Activity, mutator: (draft: MutableModel<Activity>) => MutableModel<Activity> | void): Activity;
 }
 
-type EagerGroupProfile = {
+type EagerProfileGroup = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<GroupProfile, 'id'>;
+    identifier: ManagedIdentifier<ProfileGroup, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -152,9 +152,9 @@ type EagerGroupProfile = {
   readonly updatedAt?: string | null;
 }
 
-type LazyGroupProfile = {
+type LazyProfileGroup = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<GroupProfile, 'id'>;
+    identifier: ManagedIdentifier<ProfileGroup, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -166,8 +166,8 @@ type LazyGroupProfile = {
   readonly updatedAt?: string | null;
 }
 
-export declare type GroupProfile = LazyLoading extends LazyLoadingDisabled ? EagerGroupProfile : LazyGroupProfile
+export declare type ProfileGroup = LazyLoading extends LazyLoadingDisabled ? EagerProfileGroup : LazyProfileGroup
 
-export declare const GroupProfile: (new (init: ModelInit<GroupProfile>) => GroupProfile) & {
-  copyOf(source: GroupProfile, mutator: (draft: MutableModel<GroupProfile>) => MutableModel<GroupProfile> | void): GroupProfile;
+export declare const ProfileGroup: (new (init: ModelInit<ProfileGroup>) => ProfileGroup) & {
+  copyOf(source: ProfileGroup, mutator: (draft: MutableModel<ProfileGroup>) => MutableModel<ProfileGroup> | void): ProfileGroup;
 }
