@@ -22,5 +22,4 @@ type Activity @model @auth(rules: [{allow: owner}, {allow: private, operations: 
   id: ID!
   Group: Group! @hasOne
   Profile: Profile! @hasOne
-}
- 
+} 
