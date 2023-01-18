@@ -1,25 +1,37 @@
-type Profile @model @auth(rules: [{allow: private, operations: [read]}, {allow: owner}]) {
+type Profile
+  @model
+  @auth(rules: [{ allow: private, operations: [read] }, { allow: owner }]) {
   id: ID!
   subId: String!
   name: String
-  Groups: [Group] @manyToMany(relationName: "ProfileGroup")
 }
 
-type Emoji @model @auth(rules: [{allow: owner}]) {
+type Emoji @model @auth(rules: [{ allow: owner }]) {
   id: ID!
-  Group: Group @hasOne
   emoji: AWSJSON!
+  Group: Group @hasOne
   Profile: Profile! @hasOne
 }
 
-type Group @model @auth(rules: [{allow: private, operations: [create, read, update]}]) {
+type Group
+  @model
+  @auth(rules: [{ allow: private, operations: [create, read, update] }]) {
   id: ID!
   name: String!
-  profiles: [Profile] @manyToMany(relationName: "ProfileGroup")
 }
 
-type Activity @model @auth(rules: [{allow: owner}, {allow: private, operations: [read]}]) {
+type GroupMember
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   id: ID!
   Group: Group! @hasOne
   Profile: Profile! @hasOne
-} 
+}
+
+type Activity
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
+  id: ID!
+  Group: Group! @hasOne
+  Profile: Profile! @hasOne
+}
