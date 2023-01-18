@@ -6,6 +6,7 @@ import HomeScreen from './screens/home';
 import GroupsScreen from './screens/groups';
 import ProfileScreen from './screens/profile';
 import ExitScreen from './screens/exit';
+import headerGroupRight from '../components/HeaderButtonGroupCreate';
 
 const Drawer = createDrawerNavigator<DrawerNavigatorParamList>();
 
@@ -14,7 +15,7 @@ export default function DrawerNavigator() {
   return (
     <Drawer.Navigator id="DrawerNavigator" screenOptions={{ headerTintColor: colors.onPrimaryContainer }}>
       <Drawer.Screen name="Home" component={HomeScreen} options={{ headerTitle: 'Do' }} />
-      <Drawer.Screen name="Groups" component={GroupsScreen} />
+      <Drawer.Screen name="Groups" component={GroupsScreen} options={{ headerRight: headerGroupRight }} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
       <Drawer.Screen name="LogOut" component={ExitScreen} options={{ title: 'Log Out' }} />
     </Drawer.Navigator>

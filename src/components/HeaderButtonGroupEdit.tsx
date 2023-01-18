@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { DataStore } from '@aws-amplify/datastore';
-import { Group, ProfileGroup } from '../models';
+import { Group, GroupMember } from '../models';
 import useProfile from '../hooks/useProfile';
 
 interface Props {
@@ -25,8 +25,13 @@ export default function HeaderHeaderButtonGroupEdit({ name, groupId }: Props) {
       }));
       navigate('Groups');
     } else {
-      const group = await DataStore.save(new Group({ name, profiles: [] }));
-      await DataStore.save(new ProfileGroup({ group, profile }));
+      const group = await DataStore.save(new Group({ name }));
+      await DataStore.save(new GroupMember({
+        Group: group,
+        Profile: profile,
+        groupMemberGroupId: group.id,
+        groupMemberProfileId: profile.id,
+      }));
       navigate('GroupEmoji', { groupId: group.id });
     }
   }, [name, profileGet, groupId, navigate]);
