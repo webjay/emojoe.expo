@@ -1,6 +1,6 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncItem } from "@aws-amplify/datastore";
 
 
 
@@ -14,7 +14,6 @@ type EagerProfile = {
   readonly id: string;
   readonly subId: string;
   readonly name?: string | null;
-  readonly Groups?: (ProfileGroup | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -27,7 +26,6 @@ type LazyProfile = {
   readonly id: string;
   readonly subId: string;
   readonly name?: string | null;
-  readonly Groups: AsyncCollection<ProfileGroup>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -38,44 +36,14 @@ export declare const Profile: (new (init: ModelInit<Profile>) => Profile) & {
   copyOf(source: Profile, mutator: (draft: MutableModel<Profile>) => MutableModel<Profile> | void): Profile;
 }
 
-type EagerGroup = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Group, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly name: string;
-  readonly profiles?: (ProfileGroup | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyGroup = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Group, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly name: string;
-  readonly profiles: AsyncCollection<ProfileGroup>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Group = LazyLoading extends LazyLoadingDisabled ? EagerGroup : LazyGroup
-
-export declare const Group: (new (init: ModelInit<Group>) => Group) & {
-  copyOf(source: Group, mutator: (draft: MutableModel<Group>) => MutableModel<Group> | void): Group;
-}
-
 type EagerEmoji = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Emoji, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly Group?: Group | null;
   readonly emoji: string;
+  readonly Group?: Group | null;
   readonly Profile: Profile;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -89,8 +57,8 @@ type LazyEmoji = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly Group: AsyncItem<Group | undefined>;
   readonly emoji: string;
+  readonly Group: AsyncItem<Group | undefined>;
   readonly Profile: AsyncItem<Profile>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -102,6 +70,68 @@ export declare type Emoji = LazyLoading extends LazyLoadingDisabled ? EagerEmoji
 
 export declare const Emoji: (new (init: ModelInit<Emoji>) => Emoji) & {
   copyOf(source: Emoji, mutator: (draft: MutableModel<Emoji>) => MutableModel<Emoji> | void): Emoji;
+}
+
+type EagerGroup = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Group, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyGroup = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Group, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Group = LazyLoading extends LazyLoadingDisabled ? EagerGroup : LazyGroup
+
+export declare const Group: (new (init: ModelInit<Group>) => Group) & {
+  copyOf(source: Group, mutator: (draft: MutableModel<Group>) => MutableModel<Group> | void): Group;
+}
+
+type EagerGroupMember = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<GroupMember, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly Group: Group;
+  readonly Profile: Profile;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly groupMemberGroupId: string;
+  readonly groupMemberProfileId: string;
+}
+
+type LazyGroupMember = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<GroupMember, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly Group: AsyncItem<Group>;
+  readonly Profile: AsyncItem<Profile>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly groupMemberGroupId: string;
+  readonly groupMemberProfileId: string;
+}
+
+export declare type GroupMember = LazyLoading extends LazyLoadingDisabled ? EagerGroupMember : LazyGroupMember
+
+export declare const GroupMember: (new (init: ModelInit<GroupMember>) => GroupMember) & {
+  copyOf(source: GroupMember, mutator: (draft: MutableModel<GroupMember>) => MutableModel<GroupMember> | void): GroupMember;
 }
 
 type EagerActivity = {
@@ -136,38 +166,4 @@ export declare type Activity = LazyLoading extends LazyLoadingDisabled ? EagerAc
 
 export declare const Activity: (new (init: ModelInit<Activity>) => Activity) & {
   copyOf(source: Activity, mutator: (draft: MutableModel<Activity>) => MutableModel<Activity> | void): Activity;
-}
-
-type EagerProfileGroup = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<ProfileGroup, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly profileId?: string | null;
-  readonly groupId?: string | null;
-  readonly profile: Profile;
-  readonly group: Group;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyProfileGroup = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<ProfileGroup, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly profileId?: string | null;
-  readonly groupId?: string | null;
-  readonly profile: AsyncItem<Profile>;
-  readonly group: AsyncItem<Group>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type ProfileGroup = LazyLoading extends LazyLoadingDisabled ? EagerProfileGroup : LazyProfileGroup
-
-export declare const ProfileGroup: (new (init: ModelInit<ProfileGroup>) => ProfileGroup) & {
-  copyOf(source: ProfileGroup, mutator: (draft: MutableModel<ProfileGroup>) => MutableModel<ProfileGroup> | void): ProfileGroup;
 }

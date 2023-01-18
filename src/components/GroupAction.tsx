@@ -7,7 +7,7 @@ import useEmoji from '../hooks/useEmoji';
 import Swipe from './Swipe';
 
 type Props = {
-  group: Group
+  groupId: Group['id']
   isSwiping: (swiping: boolean) => void
 };
 
@@ -21,19 +21,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function GroupAction({ group, isSwiping }: Props) {
+export default function GroupAction({ groupId, isSwiping }: Props) {
   const { navigate } = useNavigation();
   const { getEmoji } = useEmoji();
   const [emoji, setEmoji] = useState<string>('🃏');
   const handleDone = useCallback(() => {
-    navigate('Done', { groupId: group.id });
-  }, [group.id, navigate]);
+    navigate('Done', { groupId });
+  }, [groupId, navigate]);
   useEffect(() => {
-    getEmoji(group.id).then((result) => {
+    getEmoji(groupId).then((result) => {
       if (!result) return;
       setEmoji(result.emoji.emoji);
     });
-  }, [getEmoji, group.id]);
+  }, [groupId, getEmoji]);
   return (
     <Card style={styles.container}>
       <Card.Content style={styles.content}>

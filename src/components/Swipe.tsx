@@ -45,7 +45,7 @@ export default function Swipe({ emoji, isSwiping, handleDone }: Props) {
   const {
     colors: {
       surfaceVariant: backgroundColor,
-      primary: backgroundColorAvatar,
+      // primary: backgroundColorAvatar,
     },
   } = useTheme();
   const [swiped, setSwiped] = useState(false);
@@ -114,7 +114,7 @@ export default function Swipe({ emoji, isSwiping, handleDone }: Props) {
         <Avatar.Text
           size={60}
           label={emoji}
-          style={{ backgroundColor: backgroundColorAvatar }}
+          // style={{ backgroundColor: backgroundColorAvatar }}
           labelStyle={styles.emoji}
         />
       </Animated.View>
