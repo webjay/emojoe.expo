@@ -1,7 +1,6 @@
 # Do
 
 - GitHub: https://github.com/doitwithsamagain/app
-- Amplify Studio: https://eu-central-1.admin.amplifyapp.com/admin/d11lva892bavia/dev/home
 - Expo: https://expo.dev/accounts/doitwithsamagain/projects/do
 
 ## Expo
