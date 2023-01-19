@@ -84,8 +84,10 @@ export function groupUpdate(id: UpdateGroupInput['id'], update: Partial<UpdateGr
 }
 
 export async function groupCreateMembership(groupId: CreateGroupMembershipInput['groupId']) {
+  const [{ id }] = await groupMembershipByGroupId(groupId);
+  if (groupId === id) return;
   const { id: profileId } = await profileGet();
-  return API.graphql(graphqlOperation(createGroupMembership, { input: { profileId, groupId } }));
+  await API.graphql(graphqlOperation(createGroupMembership, { input: { profileId, groupId } }));
 }
 
 export async function groupCreate(input: CreateGroupInput): Promise<Group> {
