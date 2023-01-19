@@ -11,7 +11,7 @@
 
 ### Links
 
-- npx uri-scheme open --ios exp://127.0.0.1:19000/--/group/join/b3944fe2-43dd-4150-bbb5-9c91c0098c9a
+- `npx uri-scheme open --ios exp://127.0.0.1:19000/--/group/join/927934dd-5bd6-493c-9d1e-cb15f61da6db`
 
 ## Amplify
 
