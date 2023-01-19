@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import useProfile from '../../hooks/useProfile';
+import { profileGet, profileUpdate } from '../lib/api';
 
 const styles = StyleSheet.create({
   input: {
@@ -10,14 +10,13 @@ const styles = StyleSheet.create({
 });
 
 function ProfileScreen() {
-  const { profileGet, profileSave } = useProfile();
   const [name, setName] = useState<string>('');
   useEffect(() => {
     profileGet().then((profile) => setName(profile.name || ''));
-  }, [profileGet]);
+  }, []);
   const onDone = useCallback(() => {
-    profileSave({ name });
-  }, [name, profileSave]);
+    profileUpdate({ name });
+  }, [name]);
   return (
     <SafeAreaView>
       <TextInput

@@ -3,11 +3,12 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { DrawerScreenProps } from '@react-navigation/drawer';
 
 export type StackNavigatorParamList = {
-  Drawer: undefined;
+  Drawer: undefined | { screen: keyof DrawerNavigatorParamList };
   Done: { groupId: string };
   GroupEdit: { groupId: string } | undefined;
   GroupLeave: { groupId: string };
   GroupInvite: { groupId: string };
+  GroupJoin: { groupId: string };
   GroupEmoji: { groupId: string };
 };
 

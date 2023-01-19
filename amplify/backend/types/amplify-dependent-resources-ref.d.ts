@@ -1,12 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
-    "api": {
-        "doitwithsamagain": {
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
-        }
-    },
     "auth": {
-        "doitwithsamagain334a02eb": {
+        "doapp6a33d8ad": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "UserPoolId": "string",
@@ -14,6 +8,12 @@ export type AmplifyDependentResourcesAttributes = {
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
             "AppClientID": "string"
+        }
+    },
+    "api": {
+        "doapp": {
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
         }
     }
 }

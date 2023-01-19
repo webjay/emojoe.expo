@@ -17,12 +17,35 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "owner": {
+                    "name": "owner",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "name": {
                     "name": "name",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
+                },
+                "groups": {
+                    "name": "groups",
+                    "isArray": true,
+                    "type": {
+                        "model": "GroupMembership"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "profileGroupsId"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -47,6 +70,14 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "subId"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -75,8 +106,8 @@ export const schema = {
                 }
             ]
         },
-        "Emoji": {
-            "name": "Emoji",
+        "GroupMembership": {
+            "name": "GroupMembership",
             "fields": {
                 "id": {
                     "name": "id",
@@ -85,33 +116,44 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "emoji": {
-                    "name": "emoji",
+                "owner": {
+                    "name": "owner",
                     "isArray": false,
-                    "type": "AWSJSON",
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "profileId": {
+                    "name": "profileId",
+                    "isArray": false,
+                    "type": "ID",
                     "isRequired": true,
                     "attributes": []
                 },
-                "Group": {
-                    "name": "Group",
+                "groupId": {
+                    "name": "groupId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "group": {
+                    "name": "group",
                     "isArray": false,
                     "type": {
                         "model": "Group"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": [],
                     "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
+                        "connectionType": "BELONGS_TO",
                         "targetNames": [
-                            "emojiGroupId"
+                            "groupId"
                         ]
                     }
                 },
-                "Profile": {
-                    "name": "Profile",
+                "profile": {
+                    "name": "profile",
                     "isArray": false,
                     "type": {
                         "model": "Profile"
@@ -119,12 +161,32 @@ export const schema = {
                     "isRequired": true,
                     "attributes": [],
                     "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
+                        "connectionType": "BELONGS_TO",
                         "targetNames": [
-                            "emojiProfileId"
+                            "profileId"
+                        ]
+                    }
+                },
+                "emoji": {
+                    "name": "emoji",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "activities": {
+                    "name": "activities",
+                    "isArray": true,
+                    "type": {
+                        "model": "Activity"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "groupMembershipActivitiesId"
                         ]
                     }
                 },
@@ -144,27 +206,44 @@ export const schema = {
                     "attributes": [],
                     "isReadOnly": true
                 },
-                "emojiGroupId": {
-                    "name": "emojiGroupId",
+                "profileGroupsId": {
+                    "name": "profileGroupsId",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": false,
                     "attributes": []
                 },
-                "emojiProfileId": {
-                    "name": "emojiProfileId",
+                "groupProfilesId": {
+                    "name": "groupProfilesId",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "Emojis",
+            "pluralName": "GroupMemberships",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "profileId"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "groupId",
+                            "profileId"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -203,6 +282,22 @@ export const schema = {
                     "type": "String",
                     "isRequired": true,
                     "attributes": []
+                },
+                "profiles": {
+                    "name": "profiles",
+                    "isArray": true,
+                    "type": {
+                        "model": "GroupMembership"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "groupProfilesId"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -245,117 +340,6 @@ export const schema = {
                 }
             ]
         },
-        "GroupMember": {
-            "name": "GroupMember",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "Group": {
-                    "name": "Group",
-                    "isArray": false,
-                    "type": {
-                        "model": "Group"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
-                        "targetNames": [
-                            "groupMemberGroupId"
-                        ]
-                    }
-                },
-                "Profile": {
-                    "name": "Profile",
-                    "isArray": false,
-                    "type": {
-                        "model": "Profile"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
-                        "targetNames": [
-                            "groupMemberProfileId"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "groupMemberGroupId": {
-                    "name": "groupMemberGroupId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "groupMemberProfileId": {
-                    "name": "groupMemberProfileId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                }
-            },
-            "syncable": true,
-            "pluralName": "GroupMembers",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "identityClaim": "cognito:username",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            },
-                            {
-                                "allow": "private",
-                                "operations": [
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
         "Activity": {
             "name": "Activity",
             "fields": {
@@ -366,39 +350,25 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "Group": {
-                    "name": "Group",
+                "owner": {
+                    "name": "owner",
                     "isArray": false,
-                    "type": {
-                        "model": "Group"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
-                        "targetNames": [
-                            "activityGroupId"
-                        ]
-                    }
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
-                "Profile": {
-                    "name": "Profile",
+                "groupMembership": {
+                    "name": "groupMembership",
                     "isArray": false,
                     "type": {
-                        "model": "Profile"
+                        "model": "GroupMembership"
                     },
                     "isRequired": true,
                     "attributes": [],
                     "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
+                        "connectionType": "BELONGS_TO",
                         "targetNames": [
-                            "activityProfileId"
+                            "groupMembershipActivitiesId"
                         ]
                     }
                 },
@@ -418,18 +388,11 @@ export const schema = {
                     "attributes": [],
                     "isReadOnly": true
                 },
-                "activityGroupId": {
-                    "name": "activityGroupId",
+                "groupMembershipActivitiesId": {
+                    "name": "groupMembershipActivitiesId",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "activityProfileId": {
-                    "name": "activityProfileId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 }
             },
@@ -471,5 +434,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.2",
-    "version": "ed1e6511d4868bfebe7be0ced0703c9c"
+    "version": "a5c363436856e3e00ec212b72552dd8d"
 };

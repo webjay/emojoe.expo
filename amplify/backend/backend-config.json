@@ -1,60 +1,57 @@
 {
-  "api": {
-    "doitwithsamagain": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "UserPoolId"
-          ],
-          "category": "auth",
-          "resourceName": "doitwithsamagain334a02eb"
-        }
-      ],
-      "output": {
-        "authConfig": {
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AWS_IAM"
-            }
-          ],
-          "defaultAuthentication": {
-            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-            "userPoolConfig": {
-              "userPoolId": "authdoitwithsamagain334a02eb"
-            }
-          }
-        }
-      },
-      "providerPlugin": "awscloudformation",
-      "service": "AppSync"
-    }
-  },
   "auth": {
-    "doitwithsamagain334a02eb": {
-      "customAuth": false,
+    "doapp6a33d8ad": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
       "dependsOn": [],
+      "customAuth": false,
       "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL",
+          "PHONE_NUMBER"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
         "mfaConfiguration": "OFF",
         "mfaTypes": [
           "SMS"
         ],
-        "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 8
-        },
-        "signupAttributes": [
-          "EMAIL"
-        ],
-        "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
         "verificationMechanisms": [
           "EMAIL"
         ]
-      },
+      }
+    }
+  },
+  "api": {
+    "doapp": {
+      "service": "AppSync",
       "providerPlugin": "awscloudformation",
-      "service": "Cognito"
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "doapp6a33d8ad",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authdoapp6a33d8ad"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        }
+      }
     }
   }
 }

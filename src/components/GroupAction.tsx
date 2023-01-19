@@ -1,13 +1,12 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Card } from 'react-native-paper';
-import type { Group } from '../models';
-import useEmoji from '../hooks/useEmoji';
+import type { GroupMembership } from '../types/api';
 import Swipe from './Swipe';
 
 type Props = {
-  groupId: Group['id']
+  group: GroupMembership
   isSwiping: (swiping: boolean) => void
 };
 
@@ -21,23 +20,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function GroupAction({ groupId, isSwiping }: Props) {
+export default function GroupAction({ group: { groupId, emoji }, isSwiping }: Props) {
   const { navigate } = useNavigation();
-  const { getEmoji } = useEmoji();
-  const [emoji, setEmoji] = useState<string>('🃏');
   const handleDone = useCallback(() => {
     navigate('Done', { groupId });
   }, [groupId, navigate]);
-  useEffect(() => {
-    getEmoji(groupId).then((result) => {
-      if (!result) return;
-      setEmoji(result.emoji.emoji);
-    });
-  }, [groupId, getEmoji]);
   return (
     <Card style={styles.container}>
       <Card.Content style={styles.content}>
-        <Swipe emoji={emoji} isSwiping={isSwiping} handleDone={handleDone} />
+        <Swipe emoji={emoji || '🃟'} isSwiping={isSwiping} handleDone={handleDone} />
       </Card.Content>
     </Card>
   );
