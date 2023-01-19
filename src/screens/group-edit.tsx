@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import type { ScreenPropsStack } from '../types';
-import HeaderButtonGroupEdit from '../../components/HeaderButtonGroupEdit';
-import useGroup from '../../hooks/useGroup';
+import type { ScreenPropsStack } from '../types/navigation';
+import HeaderButtonGroupEdit from '../components/HeaderButtonGroupEdit';
+import useGroup from '../hooks/useGroup';
 
 type Props = ScreenPropsStack<'GroupEdit'>;
 
@@ -33,7 +33,7 @@ export default function GroupEditScreen({ navigation: { setOptions }, route: { p
       <TextInput
         label="Group Name"
         value={name}
-        onChangeText={(value) => setName(value)}
+        onChangeText={setName}
       />
     </SafeAreaView>
   );

@@ -1,12 +1,13 @@
 import React from 'react';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import Drawer from './drawer';
-import DoneScreen from './screens/done';
-import GroupEditScreen from './screens/group-edit';
-import GroupInviteScreen from './screens/group-invite';
-import GroupEmojiScreen from './screens/group-emoji';
-import GroupLeaveScreen from './screens/group-leave';
-import type { StackNavigatorParamList } from './types';
+import DoneScreen from '../screens/done';
+import GroupEditScreen from '../screens/group-edit';
+import GroupInviteScreen from '../screens/group-invite';
+import GroupJoinScreen from '../screens/group-join';
+import GroupEmojiScreen from '../screens/group-emoji';
+import GroupLeaveScreen from '../screens/group-leave';
+import type { StackNavigatorParamList } from '../types/navigation';
 
 const Stack = createNativeStackNavigator<StackNavigatorParamList>();
 
@@ -43,6 +44,11 @@ export default function StackNavigator() {
         name="GroupInvite"
         component={GroupInviteScreen}
         options={options({ title: 'Group Invite' })}
+      />
+      <Stack.Screen
+        name="GroupJoin"
+        component={GroupJoinScreen}
+        options={options({ title: 'Join Group' })}
       />
       <Stack.Screen
         name="GroupLeave"

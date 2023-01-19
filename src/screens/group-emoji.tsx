@@ -1,9 +1,9 @@
 import React, { useCallback, ComponentProps } from 'react';
 import { StyleSheet, useColorScheme, SafeAreaView } from 'react-native';
 import EmojiPicker from 'rn-emoji-picker';
-import type { ScreenPropsStack } from '../types';
-import useEmoji from '../../hooks/useEmoji';
-import useEmojis from '../../hooks/useEmojis';
+import type { ScreenPropsStack } from '../types/navigation';
+import { groupUpdateMembership } from '../lib/api';
+import useEmojis from '../hooks/useEmojis';
 
 type Props = ScreenPropsStack<'GroupEmoji'>;
 type EmojiPickerProps = ComponentProps<typeof EmojiPicker>;
@@ -33,11 +33,10 @@ export default function GroupEmojiScreen({
 }: Props) {
   const { emojis, loading } = useEmojis();
   const colorScheme = useColorScheme();
-  const { saveGroupEmoji } = useEmoji();
-  const onSelect: EmojiPickerProps['onSelect'] = useCallback(async (emoji) => {
-    await saveGroupEmoji(groupId, emoji);
-    navigate('Groups');
-  }, [groupId, navigate, saveGroupEmoji]);
+  const onSelect: EmojiPickerProps['onSelect'] = useCallback(async ({ emoji }) => {
+    await groupUpdateMembership(groupId, { emoji });
+    navigate('Drawer', { screen: 'Groups' });
+  }, [groupId, navigate]);
   return (
     <SafeAreaView style={styles.container}>
       <EmojiPicker

@@ -6,15 +6,14 @@ import { StatusBar } from 'expo-status-bar';
 import { Authenticator, ThemeProvider } from '@aws-amplify/ui-react-native';
 import StackNavigator from './navigation/stack';
 import useNavigationTheme from './hooks/useNavigationTheme';
-import useTheme from './hooks/useTheme';
+import linking from './navigation/linking';
 
 function App() {
-  const theme = useTheme();
   const navigationTheme = useNavigationTheme();
   return (
     <Authenticator.Provider>
-      <PaperProvider theme={theme}>
-        <NavigationContainer theme={navigationTheme}>
+      <PaperProvider>
+        <NavigationContainer linking={linking} theme={navigationTheme}>
           <StatusBar />
           <ThemeProvider colorMode="system">
             <Authenticator>

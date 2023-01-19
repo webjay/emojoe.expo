@@ -1,11 +1,11 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useTheme } from 'react-native-paper';
-import { DrawerNavigatorParamList } from './types';
-import HomeScreen from './screens/home';
-import GroupsScreen from './screens/groups';
-import ProfileScreen from './screens/profile';
-import ExitScreen from './screens/exit';
+import { DrawerNavigatorParamList } from '../types/navigation';
+import HomeScreen from '../screens/home';
+import GroupsScreen from '../screens/groups';
+import ProfileScreen from '../screens/profile';
+import ExitScreen from '../screens/exit';
 import headerGroupRight from '../components/HeaderButtonGroupCreate';
 
 const Drawer = createDrawerNavigator<DrawerNavigatorParamList>();

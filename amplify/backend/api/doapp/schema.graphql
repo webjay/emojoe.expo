@@ -1,0 +1,42 @@
+type Profile
+  @model
+  @auth(rules: [{ allow: private, operations: [read] }, { allow: owner }])
+{
+  id: ID!
+  subId: String! @index
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  name: String
+  groups: [GroupMembership] @hasMany
+}
+
+type Group
+  @model
+  @auth(rules: [{ allow: private, operations: [create, read, update] }])
+{
+  id: ID!
+  name: String!
+  profiles: [GroupMembership] @hasMany
+}
+
+type GroupMembership
+  @model
+  @auth(rules: [{ allow: owner }])
+{
+  id: ID!
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  profileId: ID! @index
+  groupId: ID! @index(sortKeyFields:["profileId"])
+  group: Group! @belongsTo(fields: ["groupId"])
+  profile: Profile! @belongsTo(fields: ["profileId"])
+  emoji: String
+  activities: [Activity] @hasMany
+}
+
+type Activity
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }])
+{
+  id: ID!
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  groupMembership: GroupMembership! @belongsTo
+}
