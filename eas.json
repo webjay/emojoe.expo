@@ -1,16 +1,21 @@
 {
   "cli": {
-    "version": ">= 2.7.1"
+    "version": ">= 3.3.0"
   },
   "build": {
+    "production": {
+      "ios": {
+        "resourceClass": "m1-medium"
+      }
+    },
     "development": {
+      "extends": "production",
       "developmentClient": true,
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal"
-    },
-    "production": {}
+      "extends": "production"
+    }
   },
   "submit": {
     "production": {}
