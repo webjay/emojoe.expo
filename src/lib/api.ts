@@ -16,6 +16,7 @@ import {
   getGroup,
   groupMembershipsByProfileId,
   groupMembershipsByGroupIdAndProfileId,
+  listActivities,
 } from '../graphql/queries';
 import {
   Profile,
@@ -104,6 +105,18 @@ export async function groupUpdateMembership(groupId: Group['id'], update: Partia
 export async function groupDeleteMembership(groupId: Group['id']) {
   const [{ id }] = await groupMembershipByGroupId(groupId);
   return API.graphql(graphqlOperation(deleteGroupMembership, { input: { id } }));
+}
+
+export async function groupGetActivities(groupId: Group['id']) {
+  const [{ id: groupMembershipActivitiesId }] = await groupMembershipByGroupId(groupId);
+  const variables = {
+    filter: {
+      groupMembershipActivitiesId: {
+        eq: groupMembershipActivitiesId,
+      },
+    },
+  };
+  return dataExtract(API.graphql(graphqlOperation(listActivities, variables)));
 }
 
 export async function activityCreate(groupId: Group['id']) {

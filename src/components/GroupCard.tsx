@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -22,29 +22,35 @@ const styles = StyleSheet.create({
 
 export default function GroupCard({ group: { groupId, emoji, group: { name } } }: Props) {
   const { navigate } = useNavigation();
+  const cardTitleLeft = useCallback<({ size }: { size: number }) => JSX.Element>(({ size }) => (
+    <TouchableOpacity onPress={() => navigate('GroupEmoji', { groupId })}>
+      <Avatar.Text size={size} label={emoji || '🃟'} labelStyle={styles.emoji} />
+    </TouchableOpacity>
+  ), [emoji, groupId, navigate]);
   return (
     <Card style={styles.card}>
       <Card.Title
         title={<Text onPress={() => navigate('GroupEdit', { groupId })}>{name}</Text>}
-        // eslint-disable-next-line react/no-unstable-nested-components
-        left={({ size }) => (
-          <TouchableOpacity onPress={() => navigate('GroupEmoji', { groupId })}>
-            <Avatar.Text size={size} label={emoji || '🃟'} labelStyle={styles.emoji} />
-          </TouchableOpacity>
-        )}
+        left={cardTitleLeft}
       />
       <Card.Actions>
         <Button
-          mode="contained-tonal"
-          onPress={() => navigate('GroupLeave', { groupId })}
+          mode="outlined"
+          onPress={() => navigate('GroupActivity', { groupId })}
         >
-          Leave
+          Activity
         </Button>
         <Button
-          mode="contained-tonal"
+          mode="outlined"
           onPress={() => navigate('GroupInvite', { groupId })}
         >
           Invite
+        </Button>
+        <Button
+          mode="outlined"
+          onPress={() => navigate('GroupLeave', { groupId })}
+        >
+          Leave
         </Button>
       </Card.Actions>
     </Card>
