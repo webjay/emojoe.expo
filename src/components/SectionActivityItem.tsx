@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import type { SectionListRenderItem, StyleProp, ViewStyle } from 'react-native';
+import type { StyleProp, ViewStyle } from 'react-native';
 import type { ActivityItem } from '../types/common';
 import { dayProgress } from '../lib/date';
 import Emoji from './Emoji';
 
 type Props = {
-  activity: ActivityItem
+  item: ActivityItem
 };
 
 const styles = StyleSheet.create({
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function SectionActivityItem({ activity: { createdAt, emoji } }: Props) {
+export default function SectionActivityItem({ item: { createdAt, emoji } }: Props) {
   const styleView = useMemo<StyleProp<ViewStyle>>(() => ({
     paddingLeft: `${dayProgress(createdAt)}%`,
   }), [createdAt]);
@@ -25,8 +25,3 @@ function SectionActivityItem({ activity: { createdAt, emoji } }: Props) {
     </View>
   );
 }
-
-// eslint-disable-next-line import/prefer-default-export
-export const renderItem: SectionListRenderItem<ActivityItem> = ({ item }) => (
-  <SectionActivityItem activity={item} />
-);
