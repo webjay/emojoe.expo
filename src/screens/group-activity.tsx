@@ -1,13 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, SafeAreaView, SectionList } from 'react-native';
+import type { SectionListRenderItem } from 'react-native';
 import type { ScreenPropsStack } from '../types/navigation';
 import useGroup from '../hooks/useGroup';
 import type { Activity } from '../types/api';
 import { groupGetActivities } from '../lib/api';
 import SectionActivityHeader from '../components/SectionActivityHeader';
-import { renderItem } from '../components/SectionActivityItem';
-import type { ActivitySection, ActivitySectionMap } from '../types/common';
+import SectionActivityItem from '../components/SectionActivityItem';
+import type { ActivitySection, ActivitySectionMap, ActivityItem } from '../types/common';
 import { toDateString, dayTitle } from '../lib/date';
 
 type Props = ScreenPropsStack<'GroupActivity'>;
@@ -46,6 +47,10 @@ function makeSections(activities: Activity[]) {
 
 const renderSectionHeader = ({ section }: { section: ActivitySection }) => (
   <SectionActivityHeader section={section} />
+);
+
+const renderItem: SectionListRenderItem<ActivityItem> = ({ item }) => (
+  <SectionActivityItem item={item} />
 );
 
 export default function GroupActivityScreen({ route: { params: { groupId } } }: Props) {
