@@ -7,7 +7,7 @@ const dayMonth = new Intl.DateTimeFormat('en-US', {
 export function dayProgressFlex(createdAt: string) {
   const date = new Date(createdAt);
   const dayStart = new Date(date);
-  dayStart.setUTCHours(0, 0, 0, 0);
+  dayStart.setHours(0, 0, 0, 0);
   const progressMS = date.getTime() - dayStart.getTime();
   return progressMS / dayMS;
 }
