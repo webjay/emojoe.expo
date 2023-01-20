@@ -207,6 +207,7 @@ export type CreateActivityInput = {
   owner?: string | null,
   groupId: string,
   emoji: string,
+  createdAt?: string | null,
   groupMembershipActivitiesId?: string | null,
 };
 
@@ -214,6 +215,7 @@ export type ModelActivityConditionInput = {
   owner?: ModelStringInput | null,
   groupId?: ModelIDInput | null,
   emoji?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelActivityConditionInput | null > | null,
   or?: Array< ModelActivityConditionInput | null > | null,
   not?: ModelActivityConditionInput | null,
@@ -225,6 +227,7 @@ export type UpdateActivityInput = {
   owner?: string | null,
   groupId?: string | null,
   emoji?: string | null,
+  createdAt?: string | null,
   groupMembershipActivitiesId?: string | null,
 };
 
@@ -280,6 +283,7 @@ export type ModelActivityFilterInput = {
   owner?: ModelStringInput | null,
   groupId?: ModelIDInput | null,
   emoji?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelActivityFilterInput | null > | null,
   or?: Array< ModelActivityFilterInput | null > | null,
   not?: ModelActivityFilterInput | null,
@@ -293,6 +297,16 @@ export enum ModelSortDirection {
 
 
 export type ModelIDKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export type ModelStringKeyConditionInput = {
   eq?: string | null,
   le?: string | null,
   lt?: string | null,
@@ -360,6 +374,7 @@ export type ModelSubscriptionActivityFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   groupId?: ModelSubscriptionIDInput | null,
   emoji?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionActivityFilterInput | null > | null,
   or?: Array< ModelSubscriptionActivityFilterInput | null > | null,
 };
@@ -1301,16 +1316,17 @@ export type GroupMembershipsByGroupIdAndProfileIdQuery = {
   } | null,
 };
 
-export type ActivitiesByGroupIdQueryVariables = {
+export type ActivitiesByGroupIdAndCreatedAtQueryVariables = {
   groupId: string,
+  createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelActivityFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ActivitiesByGroupIdQuery = {
-  activitiesByGroupId?:  {
+export type ActivitiesByGroupIdAndCreatedAtQuery = {
+  activitiesByGroupIdAndCreatedAt?:  {
     __typename: "ModelActivityConnection",
     items:  Array< {
       __typename: "Activity",

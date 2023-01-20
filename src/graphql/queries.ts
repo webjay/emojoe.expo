@@ -382,16 +382,18 @@ export const groupMembershipsByGroupIdAndProfileId = /* GraphQL */ `
     }
   }
 `;
-export const activitiesByGroupId = /* GraphQL */ `
-  query ActivitiesByGroupId(
+export const activitiesByGroupIdAndCreatedAt = /* GraphQL */ `
+  query ActivitiesByGroupIdAndCreatedAt(
     $groupId: ID!
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelActivityFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    activitiesByGroupId(
+    activitiesByGroupIdAndCreatedAt(
       groupId: $groupId
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit

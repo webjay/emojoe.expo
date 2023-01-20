@@ -38,7 +38,8 @@ type Activity
 {
   id: ID!
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: private, operations: [read] }])
-  groupId: ID! @index
+  groupId: ID! @index(sortKeyFields:["createdAt"])
   emoji: String!
   groupMembership: GroupMembership! @belongsTo
+  createdAt: AWSDateTime!
 }
