@@ -12,6 +12,7 @@ import {
   createActivity,
 } from '../graphql/mutations';
 import {
+  getProfile,
   profilesBySubId,
   getGroup,
   groupMembershipsByProfileId,
@@ -46,19 +47,23 @@ export async function profileCreate(input?: Partial<CreateProfileInput>) {
   return API.graphql(graphqlOperation(createProfile, { input: { ...input, subId } }));
 }
 
-export async function profileGet(): Promise<Profile> {
+export function profileGetById(id: Profile['id']): Promise<Profile> {
+  return dataExtract(API.graphql(graphqlOperation(getProfile, { id })));
+}
+
+export async function profileGetBySubId(): Promise<Profile> {
   const subId = await getCognitoUserSub();
   const [profile] = await dataExtract(API.graphql(graphqlOperation(profilesBySubId, { subId })));
   if (!profile) {
     // TODO: dont
     await profileCreate();
-    return profileGet();
+    return profileGetBySubId();
   }
   return profile;
 }
 
 export async function profileUpdate(update: Partial<UpdateProfileInput>) {
-  const { id } = await profileGet();
+  const { id } = await profileGetBySubId();
   return API.graphql(graphqlOperation(updateProfile, { input: { ...update, id } }));
 }
 
@@ -67,12 +72,12 @@ export function groupGet(id: Group['id']): Promise<Group> {
 }
 
 export async function groupsByProfile(): Promise<GroupMembership[]> {
-  const { id: profileId } = await profileGet();
+  const { id: profileId } = await profileGetBySubId();
   return dataExtract(API.graphql(graphqlOperation(groupMembershipsByProfileId, { profileId })));
 }
 
 async function groupMembershipByGroupId(groupId: Group['id']): Promise<GroupMembership[]> {
-  const { id: profileId } = await profileGet();
+  const { id: profileId } = await profileGetBySubId();
   const variables = {
     groupId,
     profileId: { eq: profileId },
@@ -87,7 +92,7 @@ export function groupUpdate(id: UpdateGroupInput['id'], update: Partial<UpdateGr
 export async function groupCreateMembership(groupId: CreateGroupMembershipInput['groupId']) {
   const existing = await groupMembershipByGroupId(groupId);
   if (existing.length !== 0) return;
-  const { id: profileId } = await profileGet();
+  const { id: profileId } = await profileGetBySubId();
   await API.graphql(graphqlOperation(createGroupMembership, { input: { profileId, groupId } }));
 }
 

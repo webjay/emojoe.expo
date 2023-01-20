@@ -27,7 +27,9 @@ function sectionsMapToArray(map: SectionsMap) {
 
 function makeSections(activities: Activity[]) {
   const sections: SectionsMap = new Map();
-  activities.forEach(({ id, createdAt, emoji }) => {
+  activities.forEach(({
+    id, createdAt, emoji, groupMembership: { profileId },
+  }) => {
     const createdAtDateString = toDateString(createdAt);
     if (!sections.has(createdAtDateString)) {
       sections.set(createdAtDateString, {
@@ -40,6 +42,7 @@ function makeSections(activities: Activity[]) {
       id,
       createdAt,
       emoji,
+      profileId,
     });
   });
   return sections;

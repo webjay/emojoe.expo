@@ -4,9 +4,9 @@ type Profile
 {
   id: ID!
   subId: String! @index
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: private, operations: [read] }])
   name: String
-  groups: [GroupMembership] @hasMany
+  groupMemberships: [GroupMembership] @hasMany
 }
 
 type Group
