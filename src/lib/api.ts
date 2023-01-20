@@ -17,7 +17,7 @@ import {
   getGroup,
   groupMembershipsByProfileId,
   groupMembershipsByGroupIdAndProfileId,
-  listActivities,
+  activitiesByGroupIdAndCreatedAt,
 } from '../graphql/queries';
 import {
   Profile,
@@ -113,14 +113,8 @@ export async function groupDeleteMembership(groupId: Group['id']) {
 }
 
 export function groupGetActivities(groupId: Group['id']) {
-  const variables = {
-    filter: {
-      groupId: {
-        eq: groupId,
-      },
-    },
-  };
-  return dataExtract(API.graphql(graphqlOperation(listActivities, variables)));
+  const sortDirection = 'DESC';
+  return dataExtract(API.graphql(graphqlOperation(activitiesByGroupIdAndCreatedAt, { groupId, sortDirection })));
 }
 
 export async function activityCreate(groupId: Group['id'], emoji: GroupMembership['emoji']) {
