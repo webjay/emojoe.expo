@@ -4,6 +4,7 @@ export type ActivityItem = {
   id: Activity['id'],
   createdAt: Activity['createdAt'],
   emoji: Activity['emoji'],
+  profileId: Activity['groupMembership']['profileId'],
 };
 
 export type ActivitySection = {

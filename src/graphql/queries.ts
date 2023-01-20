@@ -9,7 +9,7 @@ export const getProfile = /* GraphQL */ `
       subId
       owner
       name
-      groups {
+      groupMemberships {
         items {
           id
           owner
@@ -18,7 +18,7 @@ export const getProfile = /* GraphQL */ `
           emoji
           createdAt
           updatedAt
-          profileGroupsId
+          profileGroupMembershipsId
           groupMembershipsId
         }
         nextToken
@@ -40,7 +40,7 @@ export const listProfiles = /* GraphQL */ `
         subId
         owner
         name
-        groups {
+        groupMemberships {
           nextToken
         }
         createdAt
@@ -64,7 +64,7 @@ export const getGroup = /* GraphQL */ `
           emoji
           createdAt
           updatedAt
-          profileGroupsId
+          profileGroupMembershipsId
           groupMembershipsId
         }
         nextToken
@@ -115,7 +115,7 @@ export const getGroupMembership = /* GraphQL */ `
         subId
         owner
         name
-        groups {
+        groupMemberships {
           nextToken
         }
         createdAt
@@ -136,7 +136,7 @@ export const getGroupMembership = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      profileGroupsId
+      profileGroupMembershipsId
       groupMembershipsId
     }
   }
@@ -177,7 +177,7 @@ export const listGroupMemberships = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        profileGroupsId
+        profileGroupMembershipsId
         groupMembershipsId
       }
       nextToken
@@ -216,7 +216,7 @@ export const getActivity = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        profileGroupsId
+        profileGroupMembershipsId
         groupMembershipsId
       }
       createdAt
@@ -245,7 +245,7 @@ export const listActivities = /* GraphQL */ `
           emoji
           createdAt
           updatedAt
-          profileGroupsId
+          profileGroupMembershipsId
           groupMembershipsId
         }
         createdAt
@@ -276,7 +276,7 @@ export const profilesBySubId = /* GraphQL */ `
         subId
         owner
         name
-        groups {
+        groupMemberships {
           nextToken
         }
         createdAt
@@ -326,7 +326,7 @@ export const groupMembershipsByProfileId = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        profileGroupsId
+        profileGroupMembershipsId
         groupMembershipsId
       }
       nextToken
@@ -375,7 +375,7 @@ export const groupMembershipsByGroupIdAndProfileId = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        profileGroupsId
+        profileGroupMembershipsId
         groupMembershipsId
       }
       nextToken
@@ -410,7 +410,7 @@ export const activitiesByGroupId = /* GraphQL */ `
           emoji
           createdAt
           updatedAt
-          profileGroupsId
+          profileGroupMembershipsId
           groupMembershipsId
         }
         createdAt

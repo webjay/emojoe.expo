@@ -64,7 +64,7 @@ export type Profile = {
   subId: string,
   owner?: string | null,
   name?: string | null,
-  groups?: ModelGroupMembershipConnection | null,
+  groupMemberships?: ModelGroupMembershipConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -87,7 +87,7 @@ export type GroupMembership = {
   activities?: ModelActivityConnection | null,
   createdAt: string,
   updatedAt: string,
-  profileGroupsId?: string | null,
+  profileGroupMembershipsId?: string | null,
   groupMembershipsId?: string | null,
 };
 
@@ -156,7 +156,7 @@ export type CreateGroupMembershipInput = {
   profileId: string,
   groupId: string,
   emoji?: string | null,
-  profileGroupsId?: string | null,
+  profileGroupMembershipsId?: string | null,
   groupMembershipsId?: string | null,
 };
 
@@ -168,7 +168,7 @@ export type ModelGroupMembershipConditionInput = {
   and?: Array< ModelGroupMembershipConditionInput | null > | null,
   or?: Array< ModelGroupMembershipConditionInput | null > | null,
   not?: ModelGroupMembershipConditionInput | null,
-  profileGroupsId?: ModelIDInput | null,
+  profileGroupMembershipsId?: ModelIDInput | null,
   groupMembershipsId?: ModelIDInput | null,
 };
 
@@ -194,7 +194,7 @@ export type UpdateGroupMembershipInput = {
   profileId?: string | null,
   groupId?: string | null,
   emoji?: string | null,
-  profileGroupsId?: string | null,
+  profileGroupMembershipsId?: string | null,
   groupMembershipsId?: string | null,
 };
 
@@ -271,7 +271,7 @@ export type ModelGroupMembershipFilterInput = {
   and?: Array< ModelGroupMembershipFilterInput | null > | null,
   or?: Array< ModelGroupMembershipFilterInput | null > | null,
   not?: ModelGroupMembershipFilterInput | null,
-  profileGroupsId?: ModelIDInput | null,
+  profileGroupMembershipsId?: ModelIDInput | null,
   groupMembershipsId?: ModelIDInput | null,
 };
 
@@ -376,7 +376,7 @@ export type CreateProfileMutation = {
     subId: string,
     owner?: string | null,
     name?: string | null,
-    groups?:  {
+    groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
         __typename: "GroupMembership",
@@ -387,7 +387,7 @@ export type CreateProfileMutation = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -409,7 +409,7 @@ export type UpdateProfileMutation = {
     subId: string,
     owner?: string | null,
     name?: string | null,
-    groups?:  {
+    groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
         __typename: "GroupMembership",
@@ -420,7 +420,7 @@ export type UpdateProfileMutation = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -442,7 +442,7 @@ export type DeleteProfileMutation = {
     subId: string,
     owner?: string | null,
     name?: string | null,
-    groups?:  {
+    groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
         __typename: "GroupMembership",
@@ -453,7 +453,7 @@ export type DeleteProfileMutation = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -484,7 +484,7 @@ export type CreateGroupMutation = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -515,7 +515,7 @@ export type UpdateGroupMutation = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -546,7 +546,7 @@ export type DeleteGroupMutation = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -585,7 +585,7 @@ export type CreateGroupMembershipMutation = {
       subId: string,
       owner?: string | null,
       name?: string | null,
-      groups?:  {
+      groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
       } | null,
@@ -609,7 +609,7 @@ export type CreateGroupMembershipMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    profileGroupsId?: string | null,
+    profileGroupMembershipsId?: string | null,
     groupMembershipsId?: string | null,
   } | null,
 };
@@ -643,7 +643,7 @@ export type UpdateGroupMembershipMutation = {
       subId: string,
       owner?: string | null,
       name?: string | null,
-      groups?:  {
+      groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
       } | null,
@@ -667,7 +667,7 @@ export type UpdateGroupMembershipMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    profileGroupsId?: string | null,
+    profileGroupMembershipsId?: string | null,
     groupMembershipsId?: string | null,
   } | null,
 };
@@ -701,7 +701,7 @@ export type DeleteGroupMembershipMutation = {
       subId: string,
       owner?: string | null,
       name?: string | null,
-      groups?:  {
+      groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
       } | null,
@@ -725,7 +725,7 @@ export type DeleteGroupMembershipMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    profileGroupsId?: string | null,
+    profileGroupMembershipsId?: string | null,
     groupMembershipsId?: string | null,
   } | null,
 };
@@ -771,7 +771,7 @@ export type CreateActivityMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      profileGroupsId?: string | null,
+      profileGroupMembershipsId?: string | null,
       groupMembershipsId?: string | null,
     },
     createdAt: string,
@@ -821,7 +821,7 @@ export type UpdateActivityMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      profileGroupsId?: string | null,
+      profileGroupMembershipsId?: string | null,
       groupMembershipsId?: string | null,
     },
     createdAt: string,
@@ -871,7 +871,7 @@ export type DeleteActivityMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      profileGroupsId?: string | null,
+      profileGroupMembershipsId?: string | null,
       groupMembershipsId?: string | null,
     },
     createdAt: string,
@@ -891,7 +891,7 @@ export type GetProfileQuery = {
     subId: string,
     owner?: string | null,
     name?: string | null,
-    groups?:  {
+    groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
         __typename: "GroupMembership",
@@ -902,7 +902,7 @@ export type GetProfileQuery = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -927,7 +927,7 @@ export type ListProfilesQuery = {
       subId: string,
       owner?: string | null,
       name?: string | null,
-      groups?:  {
+      groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
       } | null,
@@ -958,7 +958,7 @@ export type GetGroupQuery = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1020,7 +1020,7 @@ export type GetGroupMembershipQuery = {
       subId: string,
       owner?: string | null,
       name?: string | null,
-      groups?:  {
+      groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
       } | null,
@@ -1044,7 +1044,7 @@ export type GetGroupMembershipQuery = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    profileGroupsId?: string | null,
+    profileGroupMembershipsId?: string | null,
     groupMembershipsId?: string | null,
   } | null,
 };
@@ -1087,7 +1087,7 @@ export type ListGroupMembershipsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      profileGroupsId?: string | null,
+      profileGroupMembershipsId?: string | null,
       groupMembershipsId?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -1134,7 +1134,7 @@ export type GetActivityQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      profileGroupsId?: string | null,
+      profileGroupMembershipsId?: string | null,
       groupMembershipsId?: string | null,
     },
     createdAt: string,
@@ -1167,7 +1167,7 @@ export type ListActivitiesQuery = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       },
       createdAt: string,
@@ -1195,7 +1195,7 @@ export type ProfilesBySubIdQuery = {
       subId: string,
       owner?: string | null,
       name?: string | null,
-      groups?:  {
+      groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
       } | null,
@@ -1246,7 +1246,7 @@ export type GroupMembershipsByProfileIdQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      profileGroupsId?: string | null,
+      profileGroupMembershipsId?: string | null,
       groupMembershipsId?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -1294,7 +1294,7 @@ export type GroupMembershipsByGroupIdAndProfileIdQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      profileGroupsId?: string | null,
+      profileGroupMembershipsId?: string | null,
       groupMembershipsId?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -1327,7 +1327,7 @@ export type ActivitiesByGroupIdQuery = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       },
       createdAt: string,
@@ -1350,7 +1350,7 @@ export type OnCreateProfileSubscription = {
     subId: string,
     owner?: string | null,
     name?: string | null,
-    groups?:  {
+    groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
         __typename: "GroupMembership",
@@ -1361,7 +1361,7 @@ export type OnCreateProfileSubscription = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1383,7 +1383,7 @@ export type OnUpdateProfileSubscription = {
     subId: string,
     owner?: string | null,
     name?: string | null,
-    groups?:  {
+    groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
         __typename: "GroupMembership",
@@ -1394,7 +1394,7 @@ export type OnUpdateProfileSubscription = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1416,7 +1416,7 @@ export type OnDeleteProfileSubscription = {
     subId: string,
     owner?: string | null,
     name?: string | null,
-    groups?:  {
+    groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
         __typename: "GroupMembership",
@@ -1427,7 +1427,7 @@ export type OnDeleteProfileSubscription = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1457,7 +1457,7 @@ export type OnCreateGroupSubscription = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1487,7 +1487,7 @@ export type OnUpdateGroupSubscription = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1517,7 +1517,7 @@ export type OnDeleteGroupSubscription = {
         emoji?: string | null,
         createdAt: string,
         updatedAt: string,
-        profileGroupsId?: string | null,
+        profileGroupMembershipsId?: string | null,
         groupMembershipsId?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -1556,7 +1556,7 @@ export type OnCreateGroupMembershipSubscription = {
       subId: string,
       owner?: string | null,
       name?: string | null,
-      groups?:  {
+      groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
       } | null,
@@ -1580,7 +1580,7 @@ export type OnCreateGroupMembershipSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    profileGroupsId?: string | null,
+    profileGroupMembershipsId?: string | null,
     groupMembershipsId?: string | null,
   } | null,
 };
@@ -1614,7 +1614,7 @@ export type OnUpdateGroupMembershipSubscription = {
       subId: string,
       owner?: string | null,
       name?: string | null,
-      groups?:  {
+      groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
       } | null,
@@ -1638,7 +1638,7 @@ export type OnUpdateGroupMembershipSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    profileGroupsId?: string | null,
+    profileGroupMembershipsId?: string | null,
     groupMembershipsId?: string | null,
   } | null,
 };
@@ -1672,7 +1672,7 @@ export type OnDeleteGroupMembershipSubscription = {
       subId: string,
       owner?: string | null,
       name?: string | null,
-      groups?:  {
+      groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
       } | null,
@@ -1696,7 +1696,7 @@ export type OnDeleteGroupMembershipSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    profileGroupsId?: string | null,
+    profileGroupMembershipsId?: string | null,
     groupMembershipsId?: string | null,
   } | null,
 };
@@ -1742,7 +1742,7 @@ export type OnCreateActivitySubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      profileGroupsId?: string | null,
+      profileGroupMembershipsId?: string | null,
       groupMembershipsId?: string | null,
     },
     createdAt: string,
@@ -1792,7 +1792,7 @@ export type OnUpdateActivitySubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      profileGroupsId?: string | null,
+      profileGroupMembershipsId?: string | null,
       groupMembershipsId?: string | null,
     },
     createdAt: string,
@@ -1842,7 +1842,7 @@ export type OnDeleteActivitySubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      profileGroupsId?: string | null,
+      profileGroupMembershipsId?: string | null,
       groupMembershipsId?: string | null,
     },
     createdAt: string,
