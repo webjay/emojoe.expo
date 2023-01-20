@@ -22,7 +22,7 @@ export const onCreateProfile = /* GraphQL */ `
           createdAt
           updatedAt
           profileGroupsId
-          groupProfilesId
+          groupMembershipsId
         }
         nextToken
       }
@@ -51,7 +51,7 @@ export const onUpdateProfile = /* GraphQL */ `
           createdAt
           updatedAt
           profileGroupsId
-          groupProfilesId
+          groupMembershipsId
         }
         nextToken
       }
@@ -80,7 +80,7 @@ export const onDeleteProfile = /* GraphQL */ `
           createdAt
           updatedAt
           profileGroupsId
-          groupProfilesId
+          groupMembershipsId
         }
         nextToken
       }
@@ -94,7 +94,7 @@ export const onCreateGroup = /* GraphQL */ `
     onCreateGroup(filter: $filter) {
       id
       name
-      profiles {
+      memberships {
         items {
           id
           owner
@@ -104,7 +104,7 @@ export const onCreateGroup = /* GraphQL */ `
           createdAt
           updatedAt
           profileGroupsId
-          groupProfilesId
+          groupMembershipsId
         }
         nextToken
       }
@@ -118,7 +118,7 @@ export const onUpdateGroup = /* GraphQL */ `
     onUpdateGroup(filter: $filter) {
       id
       name
-      profiles {
+      memberships {
         items {
           id
           owner
@@ -128,7 +128,7 @@ export const onUpdateGroup = /* GraphQL */ `
           createdAt
           updatedAt
           profileGroupsId
-          groupProfilesId
+          groupMembershipsId
         }
         nextToken
       }
@@ -142,7 +142,7 @@ export const onDeleteGroup = /* GraphQL */ `
     onDeleteGroup(filter: $filter) {
       id
       name
-      profiles {
+      memberships {
         items {
           id
           owner
@@ -152,7 +152,7 @@ export const onDeleteGroup = /* GraphQL */ `
           createdAt
           updatedAt
           profileGroupsId
-          groupProfilesId
+          groupMembershipsId
         }
         nextToken
       }
@@ -174,7 +174,7 @@ export const onCreateGroupMembership = /* GraphQL */ `
       group {
         id
         name
-        profiles {
+        memberships {
           nextToken
         }
         createdAt
@@ -196,6 +196,8 @@ export const onCreateGroupMembership = /* GraphQL */ `
         items {
           id
           owner
+          groupId
+          emoji
           createdAt
           updatedAt
           groupMembershipActivitiesId
@@ -205,7 +207,7 @@ export const onCreateGroupMembership = /* GraphQL */ `
       createdAt
       updatedAt
       profileGroupsId
-      groupProfilesId
+      groupMembershipsId
     }
   }
 `;
@@ -222,7 +224,7 @@ export const onUpdateGroupMembership = /* GraphQL */ `
       group {
         id
         name
-        profiles {
+        memberships {
           nextToken
         }
         createdAt
@@ -244,6 +246,8 @@ export const onUpdateGroupMembership = /* GraphQL */ `
         items {
           id
           owner
+          groupId
+          emoji
           createdAt
           updatedAt
           groupMembershipActivitiesId
@@ -253,7 +257,7 @@ export const onUpdateGroupMembership = /* GraphQL */ `
       createdAt
       updatedAt
       profileGroupsId
-      groupProfilesId
+      groupMembershipsId
     }
   }
 `;
@@ -270,7 +274,7 @@ export const onDeleteGroupMembership = /* GraphQL */ `
       group {
         id
         name
-        profiles {
+        memberships {
           nextToken
         }
         createdAt
@@ -292,6 +296,8 @@ export const onDeleteGroupMembership = /* GraphQL */ `
         items {
           id
           owner
+          groupId
+          emoji
           createdAt
           updatedAt
           groupMembershipActivitiesId
@@ -301,7 +307,7 @@ export const onDeleteGroupMembership = /* GraphQL */ `
       createdAt
       updatedAt
       profileGroupsId
-      groupProfilesId
+      groupMembershipsId
     }
   }
 `;
@@ -313,6 +319,8 @@ export const onCreateActivity = /* GraphQL */ `
     onCreateActivity(filter: $filter, owner: $owner) {
       id
       owner
+      groupId
+      emoji
       groupMembership {
         id
         owner
@@ -339,7 +347,7 @@ export const onCreateActivity = /* GraphQL */ `
         createdAt
         updatedAt
         profileGroupsId
-        groupProfilesId
+        groupMembershipsId
       }
       createdAt
       updatedAt
@@ -355,6 +363,8 @@ export const onUpdateActivity = /* GraphQL */ `
     onUpdateActivity(filter: $filter, owner: $owner) {
       id
       owner
+      groupId
+      emoji
       groupMembership {
         id
         owner
@@ -381,7 +391,7 @@ export const onUpdateActivity = /* GraphQL */ `
         createdAt
         updatedAt
         profileGroupsId
-        groupProfilesId
+        groupMembershipsId
       }
       createdAt
       updatedAt
@@ -397,6 +407,8 @@ export const onDeleteActivity = /* GraphQL */ `
     onDeleteActivity(filter: $filter, owner: $owner) {
       id
       owner
+      groupId
+      emoji
       groupMembership {
         id
         owner
@@ -423,7 +435,7 @@ export const onDeleteActivity = /* GraphQL */ `
         createdAt
         updatedAt
         profileGroupsId
-        groupProfilesId
+        groupMembershipsId
       }
       createdAt
       updatedAt

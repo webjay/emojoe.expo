@@ -4,7 +4,7 @@ import type { DrawerScreenProps } from '@react-navigation/drawer';
 
 export type StackNavigatorParamList = {
   Drawer: undefined | { screen: keyof DrawerNavigatorParamList };
-  Done: { groupId: string };
+  Done: { groupId: string, emoji: string };
   GroupActivity: { groupId: string };
   GroupEdit: { groupId: string } | undefined;
   GroupLeave: { groupId: string };
