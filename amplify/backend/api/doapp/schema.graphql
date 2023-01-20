@@ -20,10 +20,10 @@ type Group
 
 type GroupMembership
   @model
-  @auth(rules: [{ allow: owner }])
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }])
 {
   id: ID!
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: private, operations: [read] }])
   profileId: ID! @index
   groupId: ID! @index(sortKeyFields:["profileId"])
   group: Group! @belongsTo(fields: ["groupId"])
@@ -37,7 +37,7 @@ type Activity
   @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }])
 {
   id: ID!
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: private, operations: [read] }])
   groupId: ID! @index
   emoji: String!
   groupMembership: GroupMembership! @belongsTo
