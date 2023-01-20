@@ -13,8 +13,7 @@ type Props = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20,
-    marginLeft: 10,
+    margin: 10,
     flexDirection: 'row',
     alignItems: 'center',
   },
