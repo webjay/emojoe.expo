@@ -107,19 +107,18 @@ export async function groupDeleteMembership(groupId: Group['id']) {
   return API.graphql(graphqlOperation(deleteGroupMembership, { input: { id } }));
 }
 
-export async function groupGetActivities(groupId: Group['id']) {
-  const [{ id: groupMembershipActivitiesId }] = await groupMembershipByGroupId(groupId);
+export function groupGetActivities(groupId: Group['id']) {
   const variables = {
     filter: {
-      groupMembershipActivitiesId: {
-        eq: groupMembershipActivitiesId,
+      groupId: {
+        eq: groupId,
       },
     },
   };
   return dataExtract(API.graphql(graphqlOperation(listActivities, variables)));
 }
 
-export async function activityCreate(groupId: Group['id']) {
+export async function activityCreate(groupId: Group['id'], emoji: GroupMembership['emoji']) {
   const [{ id: groupMembershipActivitiesId }] = await groupMembershipByGroupId(groupId);
-  return API.graphql(graphqlOperation(createActivity, { input: { groupMembershipActivitiesId } }));
+  return API.graphql(graphqlOperation(createActivity, { input: { groupId, groupMembershipActivitiesId, emoji } }));
 }

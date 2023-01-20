@@ -23,8 +23,11 @@ const styles = StyleSheet.create({
 export default function GroupAction({ group: { groupId, emoji }, isSwiping }: Props) {
   const { navigate } = useNavigation();
   const handleDone = useCallback(() => {
-    navigate('Done', { groupId });
-  }, [groupId, navigate]);
+    navigate('Done', {
+      groupId,
+      emoji: emoji ?? '🃟',
+    });
+  }, [groupId, emoji, navigate]);
   return (
     <Card style={styles.container}>
       <Card.Content style={styles.content}>

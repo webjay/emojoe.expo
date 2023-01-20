@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import type { SectionListRenderItem, StyleProp, ViewStyle } from 'react-native';
 import type { Activity } from '../types/api';
+import { dayProgress } from '../lib/date';
 import Emoji from './Emoji';
 
 type Props = {
@@ -10,18 +11,14 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: 20,
   },
 });
 
-function SectionActivity({ activity: { createdAt, groupMembership: { emoji } } }: Props) {
-  const styleView = useMemo<StyleProp<ViewStyle>>(() => {
-    const date = new Date(createdAt);
-    const dayProgressPercent = Math.round((date.getHours() / 24) * 100);
-    return {
-      paddingLeft: `${dayProgressPercent}%`,
-    };
-  }, [createdAt]);
+function SectionActivity({ activity: { createdAt, emoji } }: Props) {
+  const styleView = useMemo<StyleProp<ViewStyle>>(() => ({
+    paddingLeft: `${dayProgress(createdAt)}%`,
+  }), [createdAt]);
   return (
     <View style={[styles.container, styleView]}>
       <Emoji emoji={emoji} />

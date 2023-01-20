@@ -15,17 +15,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function DoneScreen({ navigation: { navigate }, route: { params: { groupId } } }: Props) {
+export default function DoneScreen({ navigation: { navigate }, route: { params: { groupId, emoji } } }: Props) {
   const [loading, setLoading] = useState(true);
   const isFocused = useIsFocused();
   useEffect(() => {
     async function handleActivityDone() {
       // setLoading(true);
-      await activityCreate(groupId);
+      await activityCreate(groupId, emoji);
       setLoading(false);
     }
     if (isFocused) handleActivityDone();
-  }, [groupId, isFocused]);
+  }, [groupId, emoji, isFocused]);
   return (
     <SafeAreaView style={styles.container}>
       <Text variant="displayLarge">Bravo</Text>

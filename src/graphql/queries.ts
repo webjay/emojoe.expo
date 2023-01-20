@@ -19,7 +19,7 @@ export const getProfile = /* GraphQL */ `
           createdAt
           updatedAt
           profileGroupsId
-          groupProfilesId
+          groupMembershipsId
         }
         nextToken
       }
@@ -55,7 +55,7 @@ export const getGroup = /* GraphQL */ `
     getGroup(id: $id) {
       id
       name
-      profiles {
+      memberships {
         items {
           id
           owner
@@ -65,7 +65,7 @@ export const getGroup = /* GraphQL */ `
           createdAt
           updatedAt
           profileGroupsId
-          groupProfilesId
+          groupMembershipsId
         }
         nextToken
       }
@@ -84,7 +84,7 @@ export const listGroups = /* GraphQL */ `
       items {
         id
         name
-        profiles {
+        memberships {
           nextToken
         }
         createdAt
@@ -104,7 +104,7 @@ export const getGroupMembership = /* GraphQL */ `
       group {
         id
         name
-        profiles {
+        memberships {
           nextToken
         }
         createdAt
@@ -126,6 +126,8 @@ export const getGroupMembership = /* GraphQL */ `
         items {
           id
           owner
+          groupId
+          emoji
           createdAt
           updatedAt
           groupMembershipActivitiesId
@@ -135,7 +137,7 @@ export const getGroupMembership = /* GraphQL */ `
       createdAt
       updatedAt
       profileGroupsId
-      groupProfilesId
+      groupMembershipsId
     }
   }
 `;
@@ -176,7 +178,7 @@ export const listGroupMemberships = /* GraphQL */ `
         createdAt
         updatedAt
         profileGroupsId
-        groupProfilesId
+        groupMembershipsId
       }
       nextToken
     }
@@ -187,6 +189,8 @@ export const getActivity = /* GraphQL */ `
     getActivity(id: $id) {
       id
       owner
+      groupId
+      emoji
       groupMembership {
         id
         owner
@@ -213,7 +217,7 @@ export const getActivity = /* GraphQL */ `
         createdAt
         updatedAt
         profileGroupsId
-        groupProfilesId
+        groupMembershipsId
       }
       createdAt
       updatedAt
@@ -231,6 +235,8 @@ export const listActivities = /* GraphQL */ `
       items {
         id
         owner
+        groupId
+        emoji
         groupMembership {
           id
           owner
@@ -240,7 +246,7 @@ export const listActivities = /* GraphQL */ `
           createdAt
           updatedAt
           profileGroupsId
-          groupProfilesId
+          groupMembershipsId
         }
         createdAt
         updatedAt
@@ -321,7 +327,7 @@ export const groupMembershipsByProfileId = /* GraphQL */ `
         createdAt
         updatedAt
         profileGroupsId
-        groupProfilesId
+        groupMembershipsId
       }
       nextToken
     }
@@ -370,7 +376,46 @@ export const groupMembershipsByGroupIdAndProfileId = /* GraphQL */ `
         createdAt
         updatedAt
         profileGroupsId
-        groupProfilesId
+        groupMembershipsId
+      }
+      nextToken
+    }
+  }
+`;
+export const activitiesByGroupId = /* GraphQL */ `
+  query ActivitiesByGroupId(
+    $groupId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelActivityFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    activitiesByGroupId(
+      groupId: $groupId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        owner
+        groupId
+        emoji
+        groupMembership {
+          id
+          owner
+          profileId
+          groupId
+          emoji
+          createdAt
+          updatedAt
+          profileGroupsId
+          groupMembershipsId
+        }
+        createdAt
+        updatedAt
+        groupMembershipActivitiesId
       }
       nextToken
     }

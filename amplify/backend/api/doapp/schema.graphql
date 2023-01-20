@@ -15,7 +15,7 @@ type Group
 {
   id: ID!
   name: String!
-  profiles: [GroupMembership] @hasMany
+  memberships: [GroupMembership] @hasMany
 }
 
 type GroupMembership
@@ -38,5 +38,7 @@ type Activity
 {
   id: ID!
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  groupId: ID! @index
+  emoji: String!
   groupMembership: GroupMembership! @belongsTo
 }
