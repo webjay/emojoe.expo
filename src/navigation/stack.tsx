@@ -2,6 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import Drawer from './drawer';
 import DoneScreen from '../screens/done';
+import GroupActivityScreen from '../screens/group-activity';
 import GroupEditScreen from '../screens/group-edit';
 import GroupInviteScreen from '../screens/group-invite';
 import GroupJoinScreen from '../screens/group-join';
@@ -29,6 +30,11 @@ export default function StackNavigator() {
           headerShown: false,
           gestureEnabled: false,
         })}
+      />
+      <Stack.Screen
+        name="GroupActivity"
+        component={GroupActivityScreen}
+        options={options({ title: 'Activities' })}
       />
       <Stack.Screen
         name="GroupEdit"
