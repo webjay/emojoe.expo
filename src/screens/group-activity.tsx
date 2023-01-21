@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, SafeAreaView, SectionList } from 'react-native';
+import {
+  StyleSheet, SafeAreaView, SectionList, View,
+} from 'react-native';
 import type { SectionListRenderItem } from 'react-native';
 import type { ScreenPropsStack } from '../types/navigation';
 import useGroup from '../hooks/useGroup';
@@ -18,6 +20,9 @@ type SectionsMap = Map<string, ActivitySectionMap>;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  sectionFooter: {
+    height: 20,
   },
 });
 
@@ -52,6 +57,10 @@ const renderSectionHeader = ({ section }: { section: ActivitySection }) => (
   <SectionActivityHeader section={section} />
 );
 
+const renderSectionFooter = () => (
+  <View style={styles.sectionFooter} />
+);
+
 const renderItem: SectionListRenderItem<ActivityItem> = ({ item }) => (
   <SectionActivityItem item={item} />
 );
@@ -78,6 +87,7 @@ export default function GroupActivityScreen({ route: { params: { groupId } } }: 
       <SectionList
         sections={sections}
         renderSectionHeader={renderSectionHeader}
+        renderSectionFooter={renderSectionFooter}
         renderItem={renderItem}
         onRefresh={loadData}
         refreshing={refreshing}
