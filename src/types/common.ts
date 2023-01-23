@@ -9,10 +9,10 @@ export type ActivityItem = {
 
 export type ActivitySection = {
   title?: Readonly<string>,
-  data: Readonly<ActivityItem[]>,
+  data: Readonly<ActivityItem[][]>,
 };
 
 export interface ActivitySectionMap {
   title?: string,
-  data: ActivityItem[],
+  data: Map<string, ActivityItem[]>,
 }

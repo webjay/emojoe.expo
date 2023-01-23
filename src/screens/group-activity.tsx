@@ -27,7 +27,10 @@ const styles = StyleSheet.create({
 });
 
 function sectionsMapToArray(map: SectionsMap) {
-  return Array.from(map, ([, item]) => item);
+  return Array.from(map, ([, item]) => ({
+    title: item.title,
+    data: Array.from(item.data, ([, v]) => v),
+  }));
 }
 
 function makeSections(activities: Activity[]) {
@@ -39,11 +42,15 @@ function makeSections(activities: Activity[]) {
     if (!sections.has(createdAtDateString)) {
       sections.set(createdAtDateString, {
         title: dayTitle(new Date(createdAt)),
-        data: [],
+        data: new Map(),
       });
     }
     const section = sections.get(createdAtDateString);
-    section?.data.push({
+    if (!section?.data.has(profileId)) {
+      section?.data.set(profileId, []);
+    }
+    const sectionForProfile = section?.data.get(profileId);
+    sectionForProfile?.push({
       id,
       createdAt,
       emoji,
@@ -61,7 +68,7 @@ const renderSectionFooter = () => (
   <View style={styles.sectionFooter} />
 );
 
-const renderItem: SectionListRenderItem<ActivityItem> = ({ item }) => (
+const renderItem: SectionListRenderItem<ActivityItem[]> = ({ item }) => (
   <SectionActivityItem item={item} />
 );
 
