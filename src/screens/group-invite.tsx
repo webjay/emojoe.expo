@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function GroupInviteScreen({ route: { params: { groupId } } }: Props) {
+export default function GroupInviteScreen({ route: { params: { groupId } }, navigation: { navigate } }: Props) {
   const { group } = useGroup(groupId);
   const onInvitePress = useCallback(() => {
     const url = createURL(`/group/join/${groupId}`);
@@ -25,12 +25,18 @@ export default function GroupInviteScreen({ route: { params: { groupId } } }: Pr
     const message = `Please join ${dialogTitle}.\nGet Expo Go in the App Store, then hit this:\n${url}`;
     Share.share({ message }, { dialogTitle, subject });
   }, [group, groupId]);
+  const onCancelPress = useCallback(() => {
+    navigate('Home');
+  }, [navigate]);
   return (
     <SafeAreaView style={styles.container}>
       <Text variant="displayLarge">Invite</Text>
       <Text variant="headlineLarge">{group?.name}</Text>
       <Button mode="contained" onPress={onInvitePress}>
         Invite
+      </Button>
+      <Button mode="outlined" onPress={onCancelPress}>
+        Nevermind
       </Button>
     </SafeAreaView>
   );
