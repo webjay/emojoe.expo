@@ -35,7 +35,7 @@ export default function GroupEmojiScreen({
   const colorScheme = useColorScheme();
   const onSelect: EmojiPickerProps['onSelect'] = useCallback(async ({ emoji }) => {
     await groupUpdateMembership(groupId, { emoji });
-    navigate('Drawer', { screen: 'Groups' });
+    navigate('GroupInvite', { groupId });
   }, [groupId, navigate]);
   return (
     <SafeAreaView style={styles.container}>
