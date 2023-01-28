@@ -12,8 +12,8 @@ type Props = {
 
 const styles = StyleSheet.create({
   card: {
-    marginHorizontal: 15,
-    marginTop: 20,
+    margin: 15,
+    marginBottom: 0,
   },
   emoji: {
     transform: [{ rotateY: '180deg' }],
