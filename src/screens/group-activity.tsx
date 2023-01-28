@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
-  StyleSheet, SectionList, View, SafeAreaView,
+  StyleSheet, SectionList, View,
 } from 'react-native';
 import type { SectionListRenderItem } from 'react-native';
 import type { ScreenPropsStack } from '../types/navigation';
@@ -11,6 +11,7 @@ import { groupGetActivities } from '../lib/api';
 import SectionActivityHeader from '../components/SectionActivityHeader';
 import SectionActivityItem from '../components/SectionActivityItem';
 import Empty from '../components/Empty';
+import SafeAreaBottom from '../components/SafeAreaBottom';
 import type { ActivitySection, ActivitySectionMap, ActivityItem } from '../types/common';
 import { toDateString, dayTitle } from '../lib/date';
 
@@ -101,7 +102,7 @@ export default function GroupActivityScreen({ route: { params: { groupId } } }: 
         refreshing={refreshing}
         stickySectionHeadersEnabled
         ListEmptyComponent={refreshing ? null : Empty}
-        ListFooterComponent={SafeAreaView}
+        ListFooterComponent={SafeAreaBottom}
       />
     </View>
   );

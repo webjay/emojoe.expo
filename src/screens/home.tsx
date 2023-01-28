@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import useGroupMemberships from '../hooks/useGroupMemberships';
 import ScrollViewRefresh from '../components/ScrollViewRefresh';
 import GroupAction from '../components/GroupAction';
+import SafeAreaBottom from '../components/SafeAreaBottom';
 import Empty from '../components/Empty';
 
 const styles = StyleSheet.create({
@@ -31,7 +32,7 @@ export default function HomeScreen() {
         {groups.map((group) => (
           <GroupAction key={group.groupId} group={group} isSwiping={isSwiping} />
         ))}
-        <SafeAreaView />
+        <SafeAreaBottom />
       </ScrollViewRefresh>
     </View>
   );
