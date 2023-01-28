@@ -10,6 +10,7 @@ import type { Activity } from '../types/api';
 import { groupGetActivities } from '../lib/api';
 import SectionActivityHeader from '../components/SectionActivityHeader';
 import SectionActivityItem from '../components/SectionActivityItem';
+import Empty from '../components/Empty';
 import type { ActivitySection, ActivitySectionMap, ActivityItem } from '../types/common';
 import { toDateString, dayTitle } from '../lib/date';
 
@@ -99,6 +100,7 @@ export default function GroupActivityScreen({ route: { params: { groupId } } }: 
         onRefresh={loadData}
         refreshing={refreshing}
         stickySectionHeadersEnabled
+        ListEmptyComponent={refreshing ? null : Empty}
       />
     </SafeAreaView>
   );

@@ -4,6 +4,7 @@ import { StyleSheet, SafeAreaView } from 'react-native';
 import useGroupMemberships from '../hooks/useGroupMemberships';
 import ScrollViewRefresh from '../components/ScrollViewRefresh';
 import GroupAction from '../components/GroupAction';
+import Empty from '../components/Empty';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,6 +24,9 @@ export default function HomeScreen() {
   }, [isFocused, loadData]);
   return (
     <SafeAreaView style={styles.container}>
+      {groups.length === 0 && !loading && (
+        <Empty />
+      )}
       <ScrollViewRefresh loading={loading} refetch={loadData} scrollEnabled={scrollEnabled}>
         {groups.map((group) => (
           <GroupAction key={group.groupId} group={group} isSwiping={isSwiping} />
