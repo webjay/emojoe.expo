@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
-  StyleSheet, SafeAreaView, SectionList, View,
+  StyleSheet, SectionList, View, SafeAreaView,
 } from 'react-native';
 import type { SectionListRenderItem } from 'react-native';
 import type { ScreenPropsStack } from '../types/navigation';
@@ -91,7 +91,7 @@ export default function GroupActivityScreen({ route: { params: { groupId } } }: 
     setOptions({ title: group.name });
   }, [group, setOptions]);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <SectionList
         sections={sections}
         renderSectionHeader={renderSectionHeader}
@@ -101,7 +101,8 @@ export default function GroupActivityScreen({ route: { params: { groupId } } }: 
         refreshing={refreshing}
         stickySectionHeadersEnabled
         ListEmptyComponent={refreshing ? null : Empty}
+        ListFooterComponent={SafeAreaView}
       />
-    </SafeAreaView>
+    </View>
   );
 }
