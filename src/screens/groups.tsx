@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import useGroupMemberships from '../hooks/useGroupMemberships';
 import GroupCard from '../components/GroupCard';
 import ScrollViewRefresh from '../components/ScrollViewRefresh';
+import SafeAreaBottom from '../components/SafeAreaBottom';
 
 const styles = StyleSheet.create({
   container: {
@@ -23,7 +24,7 @@ export default function GroupsScreen() {
         {groups.map((group) => (
           <GroupCard key={group.groupId} group={group} />
         ))}
-        <SafeAreaView />
+        <SafeAreaBottom />
       </ScrollViewRefresh>
     </View>
   );
