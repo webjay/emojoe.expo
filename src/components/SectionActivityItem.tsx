@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import type { StyleProp, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import type { ActivityItem } from '../types/common';
 import { dayProgressFlex } from '../lib/date';
 import NameChip from './NameChip';
+import AnimatedFlexView from './AnimatedFlexView';
 import Emoji from './Emoji';
 
 type Props = {
@@ -39,12 +39,6 @@ const styles = StyleSheet.create({
   },
 });
 
-function progressSpaceStyle(createdAt: ActivityItem['createdAt']): StyleProp<ViewStyle> {
-  return {
-    flex: dayProgressFlex(createdAt),
-  };
-}
-
 export default function SectionActivityItem({ item }: Props) {
   const {
     colors: {
@@ -61,7 +55,7 @@ export default function SectionActivityItem({ item }: Props) {
       </View>
       {item.sort(({ createdAt: a }, { createdAt: b }) => a.localeCompare(b)).map(({ createdAt, emoji }) => (
         <View key={createdAt} style={styles.emojiView}>
-          <View style={progressSpaceStyle(createdAt)} />
+          <AnimatedFlexView flex={dayProgressFlex(createdAt)} />
           <Emoji emoji={emoji} style={[styles.emoji, { borderColor }]} />
         </View>
       ))}
