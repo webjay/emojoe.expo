@@ -13,13 +13,13 @@ const styles = StyleSheet.create({
 
 export default function GroupsScreen() {
   const isFocused = useIsFocused();
-  const { loading, groups, refetch } = useGroupMemberships();
+  const { loading, groups, loadData } = useGroupMemberships();
   useEffect(() => {
-    if (isFocused) refetch();
-  }, [isFocused, refetch]);
+    if (isFocused) loadData(false);
+  }, [isFocused, loadData]);
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollViewRefresh loading={loading} refetch={refetch}>
+      <ScrollViewRefresh loading={loading} refetch={loadData}>
         {groups.map((group) => (
           <GroupCard key={group.groupId} group={group} />
         ))}

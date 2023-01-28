@@ -13,17 +13,17 @@ const styles = StyleSheet.create({
 
 export default function HomeScreen() {
   const isFocused = useIsFocused();
-  const { loading, groups, refetch } = useGroupMemberships();
+  const { loading, groups, loadData } = useGroupMemberships();
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const isSwiping = useCallback((swiping: boolean) => {
     setScrollEnabled(swiping === false);
   }, []);
   useEffect(() => {
-    if (isFocused) refetch();
-  }, [isFocused, refetch]);
+    if (isFocused) loadData(false);
+  }, [isFocused, loadData]);
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollViewRefresh loading={loading} refetch={refetch} scrollEnabled={scrollEnabled}>
+      <ScrollViewRefresh loading={loading} refetch={loadData} scrollEnabled={scrollEnabled}>
         {groups.map((group) => (
           <GroupAction key={group.groupId} group={group} isSwiping={isSwiping} />
         ))}
