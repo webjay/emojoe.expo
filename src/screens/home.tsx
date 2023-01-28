@@ -28,7 +28,7 @@ export default function HomeScreen() {
       {groups.length === 0 && !loading && (
         <Empty />
       )}
-      <ScrollViewRefresh loading={loading} refetch={loadData} scrollEnabled={scrollEnabled}>
+      <ScrollViewRefresh loading={loading} refetch={loadData} scrollEnabled={scrollEnabled} style={styles.container}>
         {groups.map((group) => (
           <GroupAction key={group.groupId} group={group} isSwiping={isSwiping} />
         ))}
