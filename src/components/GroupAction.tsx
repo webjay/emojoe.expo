@@ -12,8 +12,8 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 15,
-    marginTop: 20,
+    margin: 15,
+    marginBottom: 0,
   },
   content: {
     overflow: 'hidden',
