@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import useGroupMemberships from '../hooks/useGroupMemberships';
 import GroupCard from '../components/GroupCard';
@@ -18,12 +18,13 @@ export default function GroupsScreen() {
     if (isFocused) loadData(false);
   }, [isFocused, loadData]);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollViewRefresh loading={loading} refetch={loadData}>
         {groups.map((group) => (
           <GroupCard key={group.groupId} group={group} />
         ))}
+        <SafeAreaView />
       </ScrollViewRefresh>
-    </SafeAreaView>
+    </View>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useIsFocused } from '@react-navigation/native';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
 import useGroupMemberships from '../hooks/useGroupMemberships';
 import ScrollViewRefresh from '../components/ScrollViewRefresh';
 import GroupAction from '../components/GroupAction';
@@ -23,7 +23,7 @@ export default function HomeScreen() {
     if (isFocused) loadData(false);
   }, [isFocused, loadData]);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {groups.length === 0 && !loading && (
         <Empty />
       )}
@@ -31,7 +31,8 @@ export default function HomeScreen() {
         {groups.map((group) => (
           <GroupAction key={group.groupId} group={group} isSwiping={isSwiping} />
         ))}
+        <SafeAreaView />
       </ScrollViewRefresh>
-    </SafeAreaView>
+    </View>
   );
 }
