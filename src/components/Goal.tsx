@@ -23,13 +23,8 @@ export default function Goal({ groupId, onLayout }: Props) {
     navigate('GroupActivity', { groupId });
   }, [groupId, navigate]);
   return (
-    <Pressable onPress={onPress}>
-      <Avatar.Text
-        size={40}
-        label=""
-        style={[styles.container, { backgroundColor }]}
-        onLayout={onLayout}
-      />
+    <Pressable onPress={onPress} style={styles.container} onLayout={onLayout}>
+      <Avatar.Text size={40} label="" style={{ backgroundColor }} />
     </Pressable>
   );
 }
