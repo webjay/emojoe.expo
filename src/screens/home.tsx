@@ -25,10 +25,10 @@ export default function HomeScreen() {
   }, [isFocused, loadData]);
   return (
     <View style={styles.container}>
-      {groups.length === 0 && !loading && (
-        <Empty />
-      )}
       <ScrollViewRefresh loading={loading} refetch={loadData} scrollEnabled={scrollEnabled} style={styles.container}>
+        {groups.length === 0 && !loading && (
+          <Empty />
+        )}
         {groups.map((group) => (
           <GroupAction key={group.groupId} group={group} isSwiping={isSwiping} />
         ))}
