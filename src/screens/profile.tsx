@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
+import type { ScreenPropsDrawer } from '../types/navigation';
 import { profileGetBySubId, profileUpdate } from '../lib/api';
+
+type Props = ScreenPropsDrawer<'Profile'>;
 
 const styles = StyleSheet.create({
   input: {
@@ -9,14 +12,26 @@ const styles = StyleSheet.create({
   },
 });
 
-function ProfileScreen() {
-  const [name, setName] = useState<string>('');
+function ProfileScreen({ navigation: { setOptions, navigate } }: Props) {
+  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState('');
   useEffect(() => {
     profileGetBySubId().then((profile) => setName(profile.name || ''));
   }, []);
-  const onDone = useCallback(() => {
-    profileUpdate({ name });
-  }, [name]);
+  const onDone = useCallback(async () => {
+    setLoading(true);
+    await profileUpdate({ name });
+    setLoading(false);
+    navigate('Home');
+  }, [name, navigate]);
+  const headerRight = useCallback(() => (
+    <Button compact onPress={onDone} loading={loading} disabled={!name || loading}>
+      Save
+    </Button>
+  ), [loading, name, onDone]);
+  useEffect(() => {
+    setOptions({ headerRight });
+  }, [headerRight, setOptions]);
   return (
     <SafeAreaView>
       <TextInput
@@ -27,7 +42,6 @@ function ProfileScreen() {
         autoCapitalize="words"
         autoCorrect={false}
         placeholder="Average Joe"
-        onEndEditing={onDone}
         textContentType="name"
       />
     </SafeAreaView>
