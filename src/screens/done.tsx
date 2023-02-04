@@ -15,21 +15,37 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function DoneScreen({ navigation: { replace }, route: { params: { groupId, emoji } } }: Props) {
+export default function DoneScreen({
+  navigation: { replace },
+  route: {
+    params: { groupId, emoji },
+  },
+}: Props) {
   const [loading, setLoading] = useState(true);
-  useFocusEffect(useCallback(() => {
-    async function handleActivityDone() {
-      setLoading(true);
-      await activityCreate(groupId, emoji);
-      setLoading(false);
-    }
-    handleActivityDone();
-  }, [emoji, groupId]));
-  const handlePress = useCallback(() => replace('GroupActivity', { groupId }), [groupId, replace]);
+  useFocusEffect(
+    useCallback(() => {
+      async function handleActivityDone() {
+        setLoading(true);
+        await activityCreate(groupId, emoji);
+        setLoading(false);
+      }
+      handleActivityDone();
+    }, [emoji, groupId]),
+  );
+  const handlePress = useCallback(
+    () => replace('GroupActivity', { groupId }),
+    [groupId, replace],
+  );
   return (
     <SafeAreaView style={styles.container}>
       <Text variant="displayLarge">Bravo</Text>
-      <Button icon="rocket" mode="contained" loading={loading} disabled={loading} onPress={handlePress}>
+      <Button
+        icon="rocket"
+        mode="contained"
+        loading={loading}
+        disabled={loading}
+        onPress={handlePress}
+      >
         Press me
       </Button>
     </SafeAreaView>

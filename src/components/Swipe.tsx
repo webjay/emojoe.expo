@@ -2,15 +2,20 @@ import React, {
   useRef, useState, useEffect, useCallback,
 } from 'react';
 import {
-  StyleSheet, View, Animated, PanResponder, LayoutChangeEvent,
+  StyleSheet,
+  View,
+  Animated,
+  PanResponder,
+  LayoutChangeEvent,
 } from 'react-native';
 import { useTheme, Avatar } from 'react-native-paper';
 import Goal from './Goal';
 
 type Props = {
-  emoji: string
-  isSwiping: (swiping: boolean) => void
-  handleDone: () => void
+  emoji: string;
+  groupId: string;
+  isSwiping: (swiping: boolean) => void;
+  handleDone: () => void;
 };
 
 const animConfig: Animated.EventConfig<unknown> = {
@@ -41,12 +46,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Swipe({ emoji, isSwiping, handleDone }: Props) {
+export default function Swipe({
+  emoji,
+  groupId,
+  isSwiping,
+  handleDone,
+}: Props) {
   const {
-    colors: {
-      surfaceVariant: backgroundColor,
-      // primary: backgroundColorAvatar,
-    },
+    colors: { surfaceVariant: backgroundColor },
   } = useTheme();
   const [swiped, setSwiped] = useState(false);
   const [swipePast, setSwipePast] = useState(200);
@@ -111,14 +118,9 @@ export default function Swipe({ emoji, isSwiping, handleDone }: Props) {
         onResponderRelease={onResponderRelease}
         style={[styles.animation, { transform: [{ translateX: pan.x }] }]}
       >
-        <Avatar.Text
-          size={60}
-          label={emoji}
-          // style={{ backgroundColor: backgroundColorAvatar }}
-          labelStyle={styles.emoji}
-        />
+        <Avatar.Text size={60} label={emoji} labelStyle={styles.emoji} />
       </Animated.View>
-      <Goal onLayout={onLayout} />
+      <Goal groupId={groupId} onLayout={onLayout} />
     </View>
   );
 }

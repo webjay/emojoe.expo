@@ -1,9 +1,11 @@
-import React from 'react';
-import { LayoutChangeEvent, StyleSheet } from 'react-native';
+import React, { useCallback } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { Pressable, LayoutChangeEvent, StyleSheet } from 'react-native';
 import { useTheme, Avatar } from 'react-native-paper';
 
 type Props = {
-  onLayout: (event: LayoutChangeEvent) => void
+  groupId: string;
+  onLayout: (event: LayoutChangeEvent) => void;
 };
 
 const styles = StyleSheet.create({
@@ -12,13 +14,22 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Goal({ onLayout }: Props) {
+export default function Goal({ groupId, onLayout }: Props) {
+  const { navigate } = useNavigation();
   const {
-    colors: {
-      surfaceVariant: backgroundColor,
-    },
+    colors: { surfaceVariant: backgroundColor },
   } = useTheme();
+  const onPress = useCallback(() => {
+    navigate('GroupActivity', { groupId });
+  }, [groupId, navigate]);
   return (
-    <Avatar.Text size={40} label="" style={[styles.container, { backgroundColor }]} onLayout={onLayout} />
+    <Pressable onPress={onPress}>
+      <Avatar.Text
+        size={40}
+        label=""
+        style={[styles.container, { backgroundColor }]}
+        onLayout={onLayout}
+      />
+    </Pressable>
   );
 }

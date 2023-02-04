@@ -6,8 +6,8 @@ import type { GroupMembership } from '../types/api';
 import Swipe from './Swipe';
 
 type Props = {
-  group: GroupMembership
-  isSwiping: (swiping: boolean) => void
+  group: GroupMembership;
+  isSwiping: (swiping: boolean) => void;
 };
 
 const styles = StyleSheet.create({
@@ -20,7 +20,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function GroupAction({ group: { groupId, emoji }, isSwiping }: Props) {
+export default function GroupAction({
+  group: { groupId, emoji },
+  isSwiping,
+}: Props) {
   const { navigate } = useNavigation();
   const handleDone = useCallback(() => {
     navigate('Done', {
@@ -31,7 +34,12 @@ export default function GroupAction({ group: { groupId, emoji }, isSwiping }: Pr
   return (
     <Card style={styles.container}>
       <Card.Content style={styles.content}>
-        <Swipe emoji={emoji || '🃟'} isSwiping={isSwiping} handleDone={handleDone} />
+        <Swipe
+          emoji={emoji || '🃟'}
+          groupId={groupId}
+          isSwiping={isSwiping}
+          handleDone={handleDone}
+        />
       </Card.Content>
     </Card>
   );
