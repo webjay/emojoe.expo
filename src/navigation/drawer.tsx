@@ -14,7 +14,7 @@ export default function DrawerNavigator() {
   const { colors } = useTheme();
   return (
     <Drawer.Navigator id="DrawerNavigator" screenOptions={{ headerTintColor: colors.onPrimaryContainer }}>
-      <Drawer.Screen name="Home" component={HomeScreen} options={{ headerTitle: 'Do' }} />
+      <Drawer.Screen name="Home" component={HomeScreen} options={{ headerTitle: 'Emojoe' }} />
       <Drawer.Screen name="Groups" component={GroupsScreen} options={{ headerRight: headerGroupRight }} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
       <Drawer.Screen name="LogOut" component={ExitScreen} options={{ title: 'Log Out' }} />
