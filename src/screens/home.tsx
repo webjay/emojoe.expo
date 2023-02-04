@@ -1,6 +1,6 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { useIsFocused } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
 import useGroupMemberships from '../hooks/useGroupMemberships';
 import ScrollViewRefresh from '../components/ScrollViewRefresh';
 import GroupAction from '../components/GroupAction';
@@ -14,26 +14,23 @@ const styles = StyleSheet.create({
 });
 
 export default function HomeScreen() {
-  const isFocused = useIsFocused();
   const { loading, groups, loadData } = useGroupMemberships();
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const isSwiping = useCallback((swiping: boolean) => {
     setScrollEnabled(swiping === false);
   }, []);
-  useEffect(() => {
-    if (isFocused) loadData(false);
-  }, [isFocused, loadData]);
+  useFocusEffect(useCallback(() => {
+    loadData(groups.length === 0);
+  }, [groups.length, loadData]));
   return (
-    <View style={styles.container}>
-      <ScrollViewRefresh loading={loading} refetch={loadData} scrollEnabled={scrollEnabled} style={styles.container}>
-        {groups.length === 0 && !loading && (
-          <Empty />
-        )}
-        {groups.map((group) => (
-          <GroupAction key={group.groupId} group={group} isSwiping={isSwiping} />
-        ))}
-        <SafeAreaBottom />
-      </ScrollViewRefresh>
-    </View>
+    <ScrollViewRefresh loading={loading} refetch={loadData} scrollEnabled={scrollEnabled} style={styles.container}>
+      {groups.length === 0 && !loading && (
+        <Empty />
+      )}
+      {groups.map((group) => (
+        <GroupAction key={group.groupId} group={group} isSwiping={isSwiping} />
+      ))}
+      <SafeAreaBottom />
+    </ScrollViewRefresh>
   );
 }
