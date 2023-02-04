@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useIsFocused } from '@react-navigation/native';
+import React, { useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { Text, Button } from 'react-native-paper';
 import type { ScreenPropsStack } from '../types/navigation';
@@ -15,21 +15,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function DoneScreen({ navigation: { navigate }, route: { params: { groupId, emoji } } }: Props) {
+export default function DoneScreen({ navigation: { replace }, route: { params: { groupId, emoji } } }: Props) {
   const [loading, setLoading] = useState(true);
-  const isFocused = useIsFocused();
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     async function handleActivityDone() {
-      // setLoading(true);
+      setLoading(true);
       await activityCreate(groupId, emoji);
       setLoading(false);
     }
-    if (isFocused) handleActivityDone();
-  }, [groupId, emoji, isFocused]);
+    handleActivityDone();
+  }, [emoji, groupId]));
+  const handlePress = useCallback(() => replace('GroupActivity', { groupId }), [groupId, replace]);
   return (
     <SafeAreaView style={styles.container}>
       <Text variant="displayLarge">Bravo</Text>
-      <Button icon="rocket" mode="contained" loading={loading} disabled={loading} onPress={() => navigate('Home')}>
+      <Button icon="rocket" mode="contained" loading={loading} disabled={loading} onPress={handlePress}>
         Press me
       </Button>
     </SafeAreaView>
