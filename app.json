@@ -7,10 +7,10 @@
     "version": "0.8.0.8",
     "orientation": "portrait",
     "entryPoint": "./src/root.ts",
-    "icon": "./assets/do.png",
+    "icon": "./assets/logo_transparent.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/do.png",
+      "image": "./assets/logo_transparent.png",
       "resizeMode": "contain",
       "backgroundColor": "#fff"
     },
@@ -29,7 +29,7 @@
       "versionCode": 1,
       "permissions": [],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/do.png",
+        "foregroundImage": "./assets/logo_transparent.png",
         "backgroundColor": "#fff"
       }
     },
