@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "emojoe",
     "name": "Emojoe",
     "slug": "emojoe",
     "scheme": "emojoe",
@@ -15,11 +16,9 @@
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/50ab79ea-1980-4522-98e4-3681ca764e38"
+      "url": "https://u.expo.dev/4b6d8773-7a99-4388-9b58-f658be614e3b"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "dk.webcom.emojoe",
@@ -46,14 +45,13 @@
         }
       ]
     },
-    "extra": {
-      "eas": {
-        "projectId": "50ab79ea-1980-4522-98e4-3681ca764e38"
-      }
-    },
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
-    "owner": "webjay"
+    "extra": {
+      "eas": {
+        "projectId": "4b6d8773-7a99-4388-9b58-f658be614e3b"
+      }
+    }
   }
 }
