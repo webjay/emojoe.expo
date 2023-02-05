@@ -1,7 +1,7 @@
-# Do
+# Emojoe
 
-- GitHub: https://github.com/doitwithsamagain/app
-- Expo: https://expo.dev/accounts/doitwithsamagain/projects/do
+- GitHub: https://github.com/webjay/emojoe.expo
+- Expo: https://expo.dev/accounts/emojoe/projects/do
 
 ## Expo
 

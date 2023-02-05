@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Do",
-    "slug": "do",
-    "scheme": "do",
+    "name": "Emojoe",
+    "slug": "emojoe",
+    "scheme": "emojoe",
     "version": "0.8.0.8",
     "orientation": "portrait",
     "entryPoint": "./src/root.ts",
@@ -22,11 +22,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "dk.doitwithsamagain.doapp",
+      "bundleIdentifier": "dk.webcom.emojoe",
       "buildNumber": "1"
     },
     "android": {
-      "package": "dk.doitwithsamagain.doapp",
+      "package": "dk.webcom.emojoe",
       "versionCode": 1,
       "permissions": [],
       "adaptiveIcon": {
@@ -54,6 +54,6 @@
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
-    "owner": "doitwithsamagain"
+    "owner": "webjay"
   }
 }
