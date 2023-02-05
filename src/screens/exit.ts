@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Auth } from '@aws-amplify/auth';
 
 async function signOut() {
-  Auth.signOut();
+  await Auth.signOut();
 }
 
 export default function ExitScreen() {
