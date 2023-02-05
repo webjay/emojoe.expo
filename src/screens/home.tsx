@@ -20,8 +20,8 @@ export default function HomeScreen() {
     setScrollEnabled(swiping === false);
   }, []);
   useFocusEffect(useCallback(() => {
-    loadData(groups.length === 0);
-  }, [groups.length, loadData]));
+    loadData(false);
+  }, [loadData]));
   return (
     <ScrollViewRefresh loading={loading} refetch={loadData} scrollEnabled={scrollEnabled} style={styles.container}>
       {groups.length === 0 && !loading && (
