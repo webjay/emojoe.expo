@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { createURL } from 'expo-linking';
+import type { ShareAction } from 'react-native';
 import { StyleSheet, Share, SafeAreaView } from 'react-native';
 import { Text, Button } from 'react-native-paper';
 import type { ScreenPropsStack } from '../types/navigation';
@@ -16,14 +17,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function GroupInviteScreen({ route: { params: { groupId } }, navigation: { navigate } }: Props) {
+export default function GroupInviteScreen({
+  route: {
+    params: { groupId },
+  },
+  navigation: { navigate },
+}: Props) {
+  const [shareAction, setShareAction] = useState<ShareAction>();
   const { group } = useGroup(groupId);
-  const onInvitePress = useCallback(() => {
+  const onInvitePress = useCallback(async () => {
     const url = createURL(`/group/join/${groupId}`);
     const dialogTitle = group?.name;
     const subject = `Please join ${dialogTitle}`;
     const message = `Please join ${dialogTitle}.\nGet Expo Go in the App Store, then hit this:\n${url}`;
-    Share.share({ message }, { dialogTitle, subject });
+    const action = await Share.share({ message }, { dialogTitle, subject });
+    setShareAction(action);
   }, [group, groupId]);
   const onCancelPress = useCallback(() => {
     navigate('Home');
@@ -36,7 +44,8 @@ export default function GroupInviteScreen({ route: { params: { groupId } }, navi
         Invite
       </Button>
       <Button mode="outlined" onPress={onCancelPress}>
-        Nevermind
+        {!shareAction && <>Nevermind</>}
+        {shareAction && <>Done</>}
       </Button>
     </SafeAreaView>
   );
