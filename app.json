@@ -2,9 +2,9 @@
   "expo": {
     "owner": "emojoe",
     "name": "Emojoe",
-    "slug": "emojoe",
-    "scheme": "emojoe",
-    "version": "0.8.0.8",
+    "slug": "emojoe2",
+    "scheme": "emojoe2",
+    "version": "2.0.0",
     "orientation": "portrait",
     "entryPoint": "./src/root.ts",
     "icon": "./assets/logo_transparent.png",
@@ -15,8 +15,7 @@
       "backgroundColor": "#fff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/4b6d8773-7a99-4388-9b58-f658be614e3b"
+      "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -38,9 +37,9 @@
         {
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
-            "organization": "",
-            "project": "",
-            "authToken": ""
+            "organization": "webcomdk",
+            "project": "emojoe2",
+            "authToken": "71a4f0d283e64f0b95473789dbe9ac6be91ff718ef2b4cbf983474ef16431a8c"
           }
         }
       ]
@@ -48,9 +47,12 @@
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
+    "plugins": [
+      "sentry-expo"
+    ],
     "extra": {
       "eas": {
-        "projectId": "4b6d8773-7a99-4388-9b58-f658be614e3b"
+        "projectId": "4d6fa508-0b6d-450a-a519-aba3de6dadda"
       }
     }
   }

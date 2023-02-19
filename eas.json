@@ -1,6 +1,6 @@
 {
   "cli": {
-    "version": ">= 3.3.0"
+    "version": ">= 3.6.0"
   },
   "build": {
     "production": {
@@ -14,7 +14,8 @@
       "distribution": "internal"
     },
     "preview": {
-      "extends": "production"
+      "extends": "production",
+      "distribution": "internal"
     }
   },
   "submit": {

@@ -1,13 +1,13 @@
 {
   "api": {
-    "doapp": {
+    "emojoeexpo": {
       "dependsOn": [
         {
           "attributes": [
             "UserPoolId"
           ],
           "category": "auth",
-          "resourceName": "doapp6a33d8ad"
+          "resourceName": "emojoeexpo5f85b84d"
         }
       ],
       "output": {
@@ -16,7 +16,7 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authdoapp6a33d8ad"
+              "userPoolId": "authemojoeexpo5f85b84d"
             }
           }
         }
@@ -26,7 +26,7 @@
     }
   },
   "auth": {
-    "doapp6a33d8ad": {
+    "emojoeexpo5f85b84d": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -41,11 +41,10 @@
         "signupAttributes": [
           "EMAIL"
         ],
-        "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL",
-          "PHONE_NUMBER"
+        "socialProviders": [
+          "GOOGLE"
         ],
+        "usernameAttributes": [],
         "verificationMechanisms": [
           "EMAIL"
         ]
