@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, InteractionManager } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import useGroupMemberships from '../hooks/useGroupMemberships';
@@ -16,20 +16,29 @@ const styles = StyleSheet.create({
 
 export default function GroupsScreen() {
   const [waiting, setWaiting] = useState(true);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const { loading, groups, loadData } = useGroupMemberships();
-  useFocusEffect(useCallback(() => {
-    loadData(false);
-    // hack to make sure scrollbars are set for full width
-    InteractionManager.runAfterInteractions(() => {
-      setTimeout(() => setWaiting(false), 500);
-    });
-  }, [loadData]));
+  useEffect(() => {
+    loadData();
+    setHasLoaded(true);
+  }, [loadData]);
+  useFocusEffect(
+    useCallback(() => {
+      loadData(false);
+      // hack to make sure scrollbars are set for full width
+      InteractionManager.runAfterInteractions(() => {
+        setTimeout(() => setWaiting(false), 500);
+      });
+    }, [loadData]),
+  );
   if (waiting) return <Loading />;
   return (
-    <ScrollViewRefresh loading={loading} refetch={loadData} style={styles.container}>
-      {groups.length === 0 && !loading && (
-        <Empty />
-      )}
+    <ScrollViewRefresh
+      loading={loading}
+      refetch={loadData}
+      style={styles.container}
+    >
+      {hasLoaded && !loading && groups.length === 0 && <Empty />}
       {groups.map((group) => (
         <GroupCard key={group.groupId} group={group} />
       ))}

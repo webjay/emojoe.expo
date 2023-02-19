@@ -6,11 +6,10 @@ export default function useGroupMemberships() {
   const [loading, setLoading] = useState(false);
   const [groups, setGroups] = useState<GroupMembership[]>([]);
   const loadData = useCallback(async (signal = true) => {
-    if (loading) return;
     if (signal) setLoading(true);
     const data = await groupsByProfile();
     setGroups(data);
-    setLoading(false);
-  }, [loading]);
+    if (signal) setLoading(false);
+  }, []);
   return { loading, groups, loadData };
 }
