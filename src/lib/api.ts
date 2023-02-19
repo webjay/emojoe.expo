@@ -30,12 +30,16 @@ import {
   CreateGroupMembershipInput,
   UpdateGroupMembershipInput,
 } from '../types/api';
+import Sentry from './sentry';
 
 async function dataExtract<T>(result: Promise<GraphQLResult<T>> | unknown) {
   if (result instanceof Promise) {
     const { data, errors } = await result;
-    // eslint-disable-next-line no-console
-    if (errors) console.warn(errors);
+    if (errors) {
+      // eslint-disable-next-line no-console
+      console.warn(errors);
+      Sentry.captureException(errors);
+    }
     const queryResult = data[Object.keys(data)[0]];
     return Object.hasOwn(queryResult, 'items') ? queryResult.items : queryResult;
   }

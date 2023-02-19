@@ -1,13 +1,14 @@
 # Emojoe
 
 - GitHub: https://github.com/webjay/emojoe.expo
-- Expo: https://expo.dev/accounts/emojoe/projects/do
+- Expo: https://expo.dev/accounts/emojoe/projects/emojoe2
 
 ## Expo
 
 - `npm run expo upgrade` to upgrade Expo and any relevant packages.
 - `npx expo config --type introspect` to check config.
 - `npm run eas update` to ship an update.
+- `npm run eas build -- --profile preview --platform ios` for internal distribution.
 
 ### Links
 

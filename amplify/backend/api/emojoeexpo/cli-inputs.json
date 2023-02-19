@@ -1,11 +1,11 @@
 {
   "version": 1,
   "serviceConfiguration": {
-    "apiName": "doapp",
+    "apiName": "emojoeexpo",
     "serviceName": "AppSync",
     "defaultAuthType": {
       "mode": "AMAZON_COGNITO_USER_POOLS",
-      "cognitoUserPoolId": "authdoapp6a33d8ad"
+      "cognitoUserPoolId": "authemojoeexpo5f85b84d"
     }
   }
 }

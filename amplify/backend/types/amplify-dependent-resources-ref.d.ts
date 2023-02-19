@@ -1,16 +1,18 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
-    "doapp": {
+    "emojoeexpo": {
       "GraphQLAPIEndpointOutput": "string",
       "GraphQLAPIIdOutput": "string"
     }
   },
   "auth": {
-    "doapp6a33d8ad": {
+    "emojoeexpo5f85b84d": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
+      "HostedUIDomain": "string",
       "IdentityPoolId": "string",
       "IdentityPoolName": "string",
+      "OAuthMetadata": "string",
       "UserPoolArn": "string",
       "UserPoolId": "string",
       "UserPoolName": "string"
