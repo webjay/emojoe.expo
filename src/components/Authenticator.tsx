@@ -1,6 +1,7 @@
 import '../lib/amplify';
 import React, { useState, useCallback, useEffect } from 'react';
 import { Auth, Hub } from 'aws-amplify';
+import Loading from './Loading';
 import SignIn from './SignIn';
 import Sentry from '../lib/sentry';
 
@@ -14,6 +15,7 @@ function Authenticator({ children }: Props) {
     Auth.currentAuthenticatedUser()
       .then(() => setIsSignedIn(true))
       .catch((error) => {
+        setIsSignedIn(false);
         if (error.message !== 'The user is not authenticated') {
           Sentry.captureException(error);
         }
@@ -24,8 +26,6 @@ function Authenticator({ children }: Props) {
     const unsubscribe = Hub.listen('auth', ({ payload: { event, data } }) => {
       switch (event) {
         case 'signIn':
-          setIsSignedIn(true);
-          break;
         case 'cognitoHostedUI':
           check();
           break;
@@ -45,6 +45,7 @@ function Authenticator({ children }: Props) {
     return unsubscribe;
   }, [check]);
   if (isSignedIn === true) return children;
+  if (isSignedIn === null) return <Loading />;
   return <SignIn />;
 }
 
