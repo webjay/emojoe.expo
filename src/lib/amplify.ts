@@ -13,6 +13,7 @@ const updatedAwsConfig = {
   ...awsConfig,
   oauth: {
     ...awsConfig.oauth,
+    domain: 'auth.emojoe.app',
     redirectSignIn: redirectUrl,
     redirectSignOut: redirectUrl,
     urlOpener,
