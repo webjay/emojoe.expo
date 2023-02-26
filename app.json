@@ -6,7 +6,6 @@
     "scheme": "emojoe2",
     "version": "2.0.0",
     "orientation": "portrait",
-    "entryPoint": "./src/root.ts",
     "icon": "./assets/logo_transparent.png",
     "userInterfaceStyle": "automatic",
     "splash": {
