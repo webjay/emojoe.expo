@@ -32,16 +32,18 @@ import {
 } from '../types/api';
 import Sentry from './sentry';
 
+function filterNullItems(item: Record<string, unknown>) {
+  return item !== null;
+}
+
 async function dataExtract<T>(result: Promise<GraphQLResult<T>> | unknown) {
   if (result instanceof Promise) {
-    const { data, errors } = await result;
+    const { data, errors } = await result.catch((catchedResult) => catchedResult);
     if (errors) {
-      // eslint-disable-next-line no-console
-      console.warn(errors);
       Sentry.captureException(errors);
     }
     const queryResult = data[Object.keys(data)[0]];
-    return Object.hasOwn(queryResult, 'items') ? queryResult.items : queryResult;
+    return Object.hasOwn(queryResult, 'items') ? queryResult.items.filter(filterNullItems) : queryResult;
   }
   return result;
 }
