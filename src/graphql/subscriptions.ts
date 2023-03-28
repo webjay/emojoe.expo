@@ -12,6 +12,7 @@ export const onCreateProfile = /* GraphQL */ `
       subId
       owner
       name
+      pushToken
       groupMemberships {
         items {
           id
@@ -41,6 +42,7 @@ export const onUpdateProfile = /* GraphQL */ `
       subId
       owner
       name
+      pushToken
       groupMemberships {
         items {
           id
@@ -70,6 +72,7 @@ export const onDeleteProfile = /* GraphQL */ `
       subId
       owner
       name
+      pushToken
       groupMemberships {
         items {
           id
@@ -185,6 +188,7 @@ export const onCreateGroupMembership = /* GraphQL */ `
         subId
         owner
         name
+        pushToken
         groupMemberships {
           nextToken
         }
@@ -235,6 +239,7 @@ export const onUpdateGroupMembership = /* GraphQL */ `
         subId
         owner
         name
+        pushToken
         groupMemberships {
           nextToken
         }
@@ -285,6 +290,7 @@ export const onDeleteGroupMembership = /* GraphQL */ `
         subId
         owner
         name
+        pushToken
         groupMemberships {
           nextToken
         }
@@ -337,6 +343,7 @@ export const onCreateActivity = /* GraphQL */ `
           subId
           owner
           name
+          pushToken
           createdAt
           updatedAt
         }
@@ -381,6 +388,7 @@ export const onUpdateActivity = /* GraphQL */ `
           subId
           owner
           name
+          pushToken
           createdAt
           updatedAt
         }
@@ -425,6 +433,7 @@ export const onDeleteActivity = /* GraphQL */ `
           subId
           owner
           name
+          pushToken
           createdAt
           updatedAt
         }
@@ -440,6 +449,51 @@ export const onDeleteActivity = /* GraphQL */ `
       createdAt
       updatedAt
       groupMembershipActivitiesId
+    }
+  }
+`;
+export const onCreateRecognition = /* GraphQL */ `
+  subscription OnCreateRecognition(
+    $filter: ModelSubscriptionRecognitionFilterInput
+    $owner: String
+  ) {
+    onCreateRecognition(filter: $filter, owner: $owner) {
+      id
+      owner
+      activityId
+      emoji
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateRecognition = /* GraphQL */ `
+  subscription OnUpdateRecognition(
+    $filter: ModelSubscriptionRecognitionFilterInput
+    $owner: String
+  ) {
+    onUpdateRecognition(filter: $filter, owner: $owner) {
+      id
+      owner
+      activityId
+      emoji
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteRecognition = /* GraphQL */ `
+  subscription OnDeleteRecognition(
+    $filter: ModelSubscriptionRecognitionFilterInput
+    $owner: String
+  ) {
+    onDeleteRecognition(filter: $filter, owner: $owner) {
+      id
+      owner
+      activityId
+      emoji
+      createdAt
+      updatedAt
     }
   }
 `;

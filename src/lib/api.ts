@@ -1,4 +1,4 @@
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from '@aws-amplify/api';
 import type { GraphQLResult } from '@aws-amplify/api-graphql';
 import getCognitoUserSub from './cognito';
 import {
@@ -10,6 +10,7 @@ import {
   updateGroupMembership,
   deleteGroupMembership,
   createActivity,
+  createRecognition,
 } from '../graphql/mutations';
 import {
   getProfile,
@@ -18,8 +19,10 @@ import {
   groupMembershipsByProfileId,
   groupMembershipsByGroupIdAndProfileId,
   activitiesByGroupIdAndCreatedAt,
+  getActivity,
 } from '../graphql/queries';
-import {
+import type {
+  Activity,
   Profile,
   Group,
   GroupMembership,
@@ -34,6 +37,13 @@ import Sentry from './sentry';
 
 function filterNullItems(item: Record<string, unknown>) {
   return item !== null;
+}
+
+function catchWrap<T>(result: Promise<GraphQLResult<T>> | T) {
+  if (result instanceof Promise) {
+    return result.catch(Sentry.captureException);
+  }
+  return result;
 }
 
 async function dataExtract<T>(result: Promise<GraphQLResult<T>> | unknown) {
@@ -126,4 +136,12 @@ export function groupGetActivities(groupId: Group['id']) {
 export async function activityCreate(groupId: Group['id'], emoji: GroupMembership['emoji']) {
   const [{ id: groupMembershipActivitiesId }] = await groupMembershipByGroupId(groupId);
   return API.graphql(graphqlOperation(createActivity, { input: { groupId, groupMembershipActivitiesId, emoji } }));
+}
+
+export function activityGet(id: Activity['id']) {
+  return dataExtract(API.graphql(graphqlOperation(getActivity, { id })));
+}
+
+export function recognitionCreate(activityId: Activity['id'], emoji: Activity['emoji']) {
+  return catchWrap(API.graphql(graphqlOperation(createRecognition, { input: { activityId, emoji } })));
 }

@@ -26,16 +26,19 @@ export default function GroupInviteScreen({
   const [shareAction, setShareAction] = useState<ShareAction>();
   const { group } = useGroup(groupId);
   const onInvitePress = useCallback(async () => {
+    if (!group) return;
     const url = createURL(`/group/join/${groupId}`);
-    const dialogTitle = group?.name;
+    const dialogTitle = group.name;
     const subject = `Please join ${dialogTitle}`;
-    const message = `Please join ${dialogTitle}.\nGet Expo Go in the App Store, then hit this:\n${url}`;
+    const message = `Please join the group: ${dialogTitle}.\n${url}`;
     const action = await Share.share({ message }, { dialogTitle, subject });
     setShareAction(action);
   }, [group, groupId]);
   const onCancelPress = useCallback(() => {
     navigate('Home');
   }, [navigate]);
+  const cancelButtonTitle =
+    shareAction?.action !== 'dismissedAction' ? 'Done' : 'Nevermind';
   return (
     <SafeAreaView style={styles.container}>
       <Text variant="displayLarge">Invite</Text>
@@ -44,8 +47,7 @@ export default function GroupInviteScreen({
         Invite
       </Button>
       <Button mode="outlined" onPress={onCancelPress}>
-        {!shareAction && <>Nevermind</>}
-        {shareAction && <>Done</>}
+        {cancelButtonTitle}
       </Button>
     </SafeAreaView>
   );

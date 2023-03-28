@@ -1,0 +1,21 @@
+{
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "emojoeexpoemojoeDynamoTrigger",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    }
+  ],
+  "permissions": {
+    "storage": {
+      "Profile:@model(appsync)": [
+        "read"
+      ],
+      "Activity:@model(appsync)": [
+        "read"
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+settings:
+  import/resolver:
+    node:
+      moduleDirectory:
+        [
+          'amplify/backend/function/emojoeexpoemojoeDynamoTrigger/lib/nodejs/node_modules',
+        ]

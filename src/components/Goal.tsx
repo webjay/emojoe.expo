@@ -20,7 +20,7 @@ export default function Goal({ groupId, onLayout }: Props) {
     colors: { surfaceVariant: backgroundColor },
   } = useTheme();
   const onPress = useCallback(() => {
-    navigate('GroupActivity', { groupId });
+    navigate('GroupActivities', { groupId });
   }, [groupId, navigate]);
   return (
     <Pressable onPress={onPress} style={styles.container} onLayout={onLayout}>

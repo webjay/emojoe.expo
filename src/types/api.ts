@@ -7,12 +7,14 @@ export type CreateProfileInput = {
   subId: string,
   owner?: string | null,
   name?: string | null,
+  pushToken?: string | null,
 };
 
 export type ModelProfileConditionInput = {
   subId?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   name?: ModelStringInput | null,
+  pushToken?: ModelStringInput | null,
   and?: Array< ModelProfileConditionInput | null > | null,
   or?: Array< ModelProfileConditionInput | null > | null,
   not?: ModelProfileConditionInput | null,
@@ -64,6 +66,7 @@ export type Profile = {
   subId: string,
   owner?: string | null,
   name?: string | null,
+  pushToken?: string | null,
   groupMemberships?: ModelGroupMembershipConnection | null,
   createdAt: string,
   updatedAt: string,
@@ -123,6 +126,7 @@ export type UpdateProfileInput = {
   subId?: string | null,
   owner?: string | null,
   name?: string | null,
+  pushToken?: string | null,
 };
 
 export type DeleteProfileInput = {
@@ -235,11 +239,52 @@ export type DeleteActivityInput = {
   id: string,
 };
 
+export type CreateRecognitionInput = {
+  id?: string | null,
+  owner?: string | null,
+  activityId: string,
+  emoji: string,
+  createdAt?: string | null,
+};
+
+export type ModelRecognitionConditionInput = {
+  owner?: ModelStringInput | null,
+  activityId?: ModelIDInput | null,
+  emoji?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  and?: Array< ModelRecognitionConditionInput | null > | null,
+  or?: Array< ModelRecognitionConditionInput | null > | null,
+  not?: ModelRecognitionConditionInput | null,
+};
+
+export type Recognition = {
+  __typename: "Recognition",
+  id: string,
+  owner?: string | null,
+  activityId: string,
+  emoji: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateRecognitionInput = {
+  id: string,
+  owner?: string | null,
+  activityId?: string | null,
+  emoji?: string | null,
+  createdAt?: string | null,
+};
+
+export type DeleteRecognitionInput = {
+  id: string,
+};
+
 export type ModelProfileFilterInput = {
   id?: ModelIDInput | null,
   subId?: ModelStringInput | null,
   owner?: ModelStringInput | null,
   name?: ModelStringInput | null,
+  pushToken?: ModelStringInput | null,
   and?: Array< ModelProfileFilterInput | null > | null,
   or?: Array< ModelProfileFilterInput | null > | null,
   not?: ModelProfileFilterInput | null,
@@ -290,6 +335,23 @@ export type ModelActivityFilterInput = {
   groupMembershipActivitiesId?: ModelIDInput | null,
 };
 
+export type ModelRecognitionFilterInput = {
+  id?: ModelIDInput | null,
+  owner?: ModelStringInput | null,
+  activityId?: ModelIDInput | null,
+  emoji?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  and?: Array< ModelRecognitionFilterInput | null > | null,
+  or?: Array< ModelRecognitionFilterInput | null > | null,
+  not?: ModelRecognitionFilterInput | null,
+};
+
+export type ModelRecognitionConnection = {
+  __typename: "ModelRecognitionConnection",
+  items:  Array<Recognition | null >,
+  nextToken?: string | null,
+};
+
 export enum ModelSortDirection {
   ASC = "ASC",
   DESC = "DESC",
@@ -320,6 +382,7 @@ export type ModelSubscriptionProfileFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   subId?: ModelSubscriptionStringInput | null,
   name?: ModelSubscriptionStringInput | null,
+  pushToken?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionProfileFilterInput | null > | null,
   or?: Array< ModelSubscriptionProfileFilterInput | null > | null,
 };
@@ -379,6 +442,15 @@ export type ModelSubscriptionActivityFilterInput = {
   or?: Array< ModelSubscriptionActivityFilterInput | null > | null,
 };
 
+export type ModelSubscriptionRecognitionFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  activityId?: ModelSubscriptionIDInput | null,
+  emoji?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionRecognitionFilterInput | null > | null,
+  or?: Array< ModelSubscriptionRecognitionFilterInput | null > | null,
+};
+
 export type CreateProfileMutationVariables = {
   input: CreateProfileInput,
   condition?: ModelProfileConditionInput | null,
@@ -391,6 +463,7 @@ export type CreateProfileMutation = {
     subId: string,
     owner?: string | null,
     name?: string | null,
+    pushToken?: string | null,
     groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -424,6 +497,7 @@ export type UpdateProfileMutation = {
     subId: string,
     owner?: string | null,
     name?: string | null,
+    pushToken?: string | null,
     groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -457,6 +531,7 @@ export type DeleteProfileMutation = {
     subId: string,
     owner?: string | null,
     name?: string | null,
+    pushToken?: string | null,
     groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -600,6 +675,7 @@ export type CreateGroupMembershipMutation = {
       subId: string,
       owner?: string | null,
       name?: string | null,
+      pushToken?: string | null,
       groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -658,6 +734,7 @@ export type UpdateGroupMembershipMutation = {
       subId: string,
       owner?: string | null,
       name?: string | null,
+      pushToken?: string | null,
       groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -716,6 +793,7 @@ export type DeleteGroupMembershipMutation = {
       subId: string,
       owner?: string | null,
       name?: string | null,
+      pushToken?: string | null,
       groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -776,6 +854,7 @@ export type CreateActivityMutation = {
         subId: string,
         owner?: string | null,
         name?: string | null,
+        pushToken?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -826,6 +905,7 @@ export type UpdateActivityMutation = {
         subId: string,
         owner?: string | null,
         name?: string | null,
+        pushToken?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -876,6 +956,7 @@ export type DeleteActivityMutation = {
         subId: string,
         owner?: string | null,
         name?: string | null,
+        pushToken?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -895,6 +976,57 @@ export type DeleteActivityMutation = {
   } | null,
 };
 
+export type CreateRecognitionMutationVariables = {
+  input: CreateRecognitionInput,
+  condition?: ModelRecognitionConditionInput | null,
+};
+
+export type CreateRecognitionMutation = {
+  createRecognition?:  {
+    __typename: "Recognition",
+    id: string,
+    owner?: string | null,
+    activityId: string,
+    emoji: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateRecognitionMutationVariables = {
+  input: UpdateRecognitionInput,
+  condition?: ModelRecognitionConditionInput | null,
+};
+
+export type UpdateRecognitionMutation = {
+  updateRecognition?:  {
+    __typename: "Recognition",
+    id: string,
+    owner?: string | null,
+    activityId: string,
+    emoji: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteRecognitionMutationVariables = {
+  input: DeleteRecognitionInput,
+  condition?: ModelRecognitionConditionInput | null,
+};
+
+export type DeleteRecognitionMutation = {
+  deleteRecognition?:  {
+    __typename: "Recognition",
+    id: string,
+    owner?: string | null,
+    activityId: string,
+    emoji: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetProfileQueryVariables = {
   id: string,
 };
@@ -906,6 +1038,7 @@ export type GetProfileQuery = {
     subId: string,
     owner?: string | null,
     name?: string | null,
+    pushToken?: string | null,
     groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -942,6 +1075,7 @@ export type ListProfilesQuery = {
       subId: string,
       owner?: string | null,
       name?: string | null,
+      pushToken?: string | null,
       groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -1035,6 +1169,7 @@ export type GetGroupMembershipQuery = {
       subId: string,
       owner?: string | null,
       name?: string | null,
+      pushToken?: string | null,
       groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -1092,6 +1227,7 @@ export type ListGroupMembershipsQuery = {
         subId: string,
         owner?: string | null,
         name?: string | null,
+        pushToken?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1139,6 +1275,7 @@ export type GetActivityQuery = {
         subId: string,
         owner?: string | null,
         name?: string | null,
+        pushToken?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1193,6 +1330,44 @@ export type ListActivitiesQuery = {
   } | null,
 };
 
+export type GetRecognitionQueryVariables = {
+  id: string,
+};
+
+export type GetRecognitionQuery = {
+  getRecognition?:  {
+    __typename: "Recognition",
+    id: string,
+    owner?: string | null,
+    activityId: string,
+    emoji: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListRecognitionsQueryVariables = {
+  filter?: ModelRecognitionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListRecognitionsQuery = {
+  listRecognitions?:  {
+    __typename: "ModelRecognitionConnection",
+    items:  Array< {
+      __typename: "Recognition",
+      id: string,
+      owner?: string | null,
+      activityId: string,
+      emoji: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type ProfilesBySubIdQueryVariables = {
   subId: string,
   sortDirection?: ModelSortDirection | null,
@@ -1210,6 +1385,7 @@ export type ProfilesBySubIdQuery = {
       subId: string,
       owner?: string | null,
       name?: string | null,
+      pushToken?: string | null,
       groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -1251,6 +1427,7 @@ export type GroupMembershipsByProfileIdQuery = {
         subId: string,
         owner?: string | null,
         name?: string | null,
+        pushToken?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1299,6 +1476,7 @@ export type GroupMembershipsByGroupIdAndProfileIdQuery = {
         subId: string,
         owner?: string | null,
         name?: string | null,
+        pushToken?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1366,6 +1544,7 @@ export type OnCreateProfileSubscription = {
     subId: string,
     owner?: string | null,
     name?: string | null,
+    pushToken?: string | null,
     groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -1399,6 +1578,7 @@ export type OnUpdateProfileSubscription = {
     subId: string,
     owner?: string | null,
     name?: string | null,
+    pushToken?: string | null,
     groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -1432,6 +1612,7 @@ export type OnDeleteProfileSubscription = {
     subId: string,
     owner?: string | null,
     name?: string | null,
+    pushToken?: string | null,
     groupMemberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -1572,6 +1753,7 @@ export type OnCreateGroupMembershipSubscription = {
       subId: string,
       owner?: string | null,
       name?: string | null,
+      pushToken?: string | null,
       groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -1630,6 +1812,7 @@ export type OnUpdateGroupMembershipSubscription = {
       subId: string,
       owner?: string | null,
       name?: string | null,
+      pushToken?: string | null,
       groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -1688,6 +1871,7 @@ export type OnDeleteGroupMembershipSubscription = {
       subId: string,
       owner?: string | null,
       name?: string | null,
+      pushToken?: string | null,
       groupMemberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -1748,6 +1932,7 @@ export type OnCreateActivitySubscription = {
         subId: string,
         owner?: string | null,
         name?: string | null,
+        pushToken?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1798,6 +1983,7 @@ export type OnUpdateActivitySubscription = {
         subId: string,
         owner?: string | null,
         name?: string | null,
+        pushToken?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1848,6 +2034,7 @@ export type OnDeleteActivitySubscription = {
         subId: string,
         owner?: string | null,
         name?: string | null,
+        pushToken?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1864,5 +2051,56 @@ export type OnDeleteActivitySubscription = {
     createdAt: string,
     updatedAt: string,
     groupMembershipActivitiesId?: string | null,
+  } | null,
+};
+
+export type OnCreateRecognitionSubscriptionVariables = {
+  filter?: ModelSubscriptionRecognitionFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateRecognitionSubscription = {
+  onCreateRecognition?:  {
+    __typename: "Recognition",
+    id: string,
+    owner?: string | null,
+    activityId: string,
+    emoji: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateRecognitionSubscriptionVariables = {
+  filter?: ModelSubscriptionRecognitionFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateRecognitionSubscription = {
+  onUpdateRecognition?:  {
+    __typename: "Recognition",
+    id: string,
+    owner?: string | null,
+    activityId: string,
+    emoji: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteRecognitionSubscriptionVariables = {
+  filter?: ModelSubscriptionRecognitionFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteRecognitionSubscription = {
+  onDeleteRecognition?:  {
+    __typename: "Recognition",
+    id: string,
+    owner?: string | null,
+    activityId: string,
+    emoji: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };

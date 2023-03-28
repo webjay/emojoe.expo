@@ -9,6 +9,7 @@ export const getProfile = /* GraphQL */ `
       subId
       owner
       name
+      pushToken
       groupMemberships {
         items {
           id
@@ -40,6 +41,7 @@ export const listProfiles = /* GraphQL */ `
         subId
         owner
         name
+        pushToken
         groupMemberships {
           nextToken
         }
@@ -115,6 +117,7 @@ export const getGroupMembership = /* GraphQL */ `
         subId
         owner
         name
+        pushToken
         groupMemberships {
           nextToken
         }
@@ -168,6 +171,7 @@ export const listGroupMemberships = /* GraphQL */ `
           subId
           owner
           name
+          pushToken
           createdAt
           updatedAt
         }
@@ -207,6 +211,7 @@ export const getActivity = /* GraphQL */ `
           subId
           owner
           name
+          pushToken
           createdAt
           updatedAt
         }
@@ -256,6 +261,37 @@ export const listActivities = /* GraphQL */ `
     }
   }
 `;
+export const getRecognition = /* GraphQL */ `
+  query GetRecognition($id: ID!) {
+    getRecognition(id: $id) {
+      id
+      owner
+      activityId
+      emoji
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listRecognitions = /* GraphQL */ `
+  query ListRecognitions(
+    $filter: ModelRecognitionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRecognitions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        owner
+        activityId
+        emoji
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const profilesBySubId = /* GraphQL */ `
   query ProfilesBySubId(
     $subId: String!
@@ -276,6 +312,7 @@ export const profilesBySubId = /* GraphQL */ `
         subId
         owner
         name
+        pushToken
         groupMemberships {
           nextToken
         }
@@ -317,6 +354,7 @@ export const groupMembershipsByProfileId = /* GraphQL */ `
           subId
           owner
           name
+          pushToken
           createdAt
           updatedAt
         }
@@ -366,6 +404,7 @@ export const groupMembershipsByGroupIdAndProfileId = /* GraphQL */ `
           subId
           owner
           name
+          pushToken
           createdAt
           updatedAt
         }

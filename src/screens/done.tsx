@@ -33,7 +33,7 @@ export default function DoneScreen({
     }, [emoji, groupId]),
   );
   const handlePress = useCallback(
-    () => replace('GroupActivity', { groupId }),
+    () => replace('GroupActivities', { groupId }),
     [groupId, replace],
   );
   return (

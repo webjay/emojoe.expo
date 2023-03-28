@@ -17,6 +17,20 @@
       },
       "api": {
         "emojoeexpo": {}
+      },
+      "function": {
+        "emojoeActivityTrigger": {
+          "deploymentBucketName": "amplify-emojoeexpo-dev-123601-deployment",
+          "s3Key": "amplify-builds/emojoeActivityTrigger-374c5a69484233784772-build.zip"
+        },
+        "emojoeRecognitionTrigger": {
+          "deploymentBucketName": "amplify-emojoeexpo-dev-123601-deployment",
+          "s3Key": "amplify-builds/emojoeRecognitionTrigger-52564953647945516f6f-build.zip"
+        },
+        "emojoeexpoemojoeDynamoTrigger": {
+          "deploymentBucketName": "amplify-emojoeexpo-dev-123601-deployment",
+          "s3Key": "amplify-builds/emojoeexpoemojoeDynamoTrigger-LambdaLayerVersion914996c2-build.zip"
+        }
       }
     }
   }

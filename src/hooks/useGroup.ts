@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { groupGet } from '../lib/api';
-import { Group } from '../types/api';
+import type { Group } from '../types/api';
 
 export default function useGroup(id?: Group['id']) {
   const [group, setGroup] = useState<Group>();

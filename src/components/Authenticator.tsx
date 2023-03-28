@@ -1,6 +1,8 @@
 import '../lib/amplify';
 import React, { useState, useCallback, useEffect } from 'react';
-import { Auth, Hub } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
+import { Hub } from '@aws-amplify/core';
+import type { HubCallback } from '@aws-amplify/core';
 import Loading from './Loading';
 import SignIn from './SignIn';
 import Sentry from '../lib/sentry';
@@ -21,9 +23,13 @@ function Authenticator({ children }: Props) {
         }
       });
   }, []);
+  const handleSignIn = useCallback(() => {
+    setIsSignedIn(null);
+    Auth.federatedSignIn();
+  }, []);
   useEffect(check, [check]);
   useEffect(() => {
-    const unsubscribe = Hub.listen('auth', ({ payload: { event, data } }) => {
+    const hubCallback: HubCallback = ({ payload: { event, data } }) => {
       switch (event) {
         case 'signIn':
         case 'cognitoHostedUI':
@@ -41,12 +47,12 @@ function Authenticator({ children }: Props) {
         default:
           break;
       }
-    });
-    return unsubscribe;
+    };
+    return Hub.listen('auth', hubCallback);
   }, [check]);
   if (isSignedIn === true) return children;
   if (isSignedIn === null) return <Loading />;
-  return <SignIn />;
+  return <SignIn handleSignIn={handleSignIn} />;
 }
 
 export default Authenticator;
