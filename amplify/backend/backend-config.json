@@ -52,5 +52,104 @@
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
     }
+  },
+  "function": {
+    "emojoeActivityTrigger": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "emojoeexpo"
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "emojoeexpoemojoeDynamoTrigger"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "emojoeRecognitionTrigger": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "emojoeexpo"
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "emojoeexpoemojoeDynamoTrigger"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "emojoeexpoemojoeDynamoTrigger": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_emojoeActivityTrigger_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emojoeActivityTrigger"
+        }
+      ]
+    },
+    "AMPLIFY_function_emojoeActivityTrigger_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emojoeActivityTrigger"
+        }
+      ]
+    },
+    "AMPLIFY_function_emojoeRecognitionTrigger_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emojoeRecognitionTrigger"
+        }
+      ]
+    },
+    "AMPLIFY_function_emojoeRecognitionTrigger_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emojoeRecognitionTrigger"
+        }
+      ]
+    },
+    "AMPLIFY_function_emojoeexpoemojoeDynamoTrigger_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emojoeexpoemojoeDynamoTrigger"
+        }
+      ]
+    },
+    "AMPLIFY_function_emojoeexpoemojoeDynamoTrigger_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emojoeexpoemojoeDynamoTrigger"
+        }
+      ]
+    }
   }
 }

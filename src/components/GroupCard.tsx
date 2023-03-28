@@ -1,13 +1,11 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import {
-  Card, Avatar, Button, Text,
-} from 'react-native-paper';
+import { Card, Avatar, Button, Text } from 'react-native-paper';
 import type { GroupMembership } from '../types/api';
 
 type Props = {
-  group: GroupMembership
+  group: GroupMembership;
 };
 
 const styles = StyleSheet.create({
@@ -20,23 +18,40 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function GroupCard({ group: { groupId, emoji, group: { name } } }: Props) {
+export default function GroupCard({
+  group: {
+    groupId,
+    emoji,
+    group: { name },
+  },
+}: Props) {
   const { navigate } = useNavigation();
-  const cardTitleLeft = useCallback<({ size }: { size: number }) => JSX.Element>(({ size }) => (
-    <TouchableOpacity onPress={() => navigate('GroupEmoji', { groupId })}>
-      <Avatar.Text size={size} label={emoji || '🃟'} labelStyle={styles.emoji} />
-    </TouchableOpacity>
-  ), [emoji, groupId, navigate]);
+  const cardTitleLeft = useCallback<
+    ({ size }: { size: number }) => JSX.Element
+  >(
+    ({ size }) => (
+      <TouchableOpacity onPress={() => navigate('GroupEmoji', { groupId })}>
+        <Avatar.Text
+          size={size}
+          label={emoji || '🃟'}
+          labelStyle={styles.emoji}
+        />
+      </TouchableOpacity>
+    ),
+    [emoji, groupId, navigate],
+  );
   return (
     <Card style={styles.card}>
       <Card.Title
-        title={<Text onPress={() => navigate('GroupEdit', { groupId })}>{name}</Text>}
+        title={
+          <Text onPress={() => navigate('GroupEdit', { groupId })}>{name}</Text>
+        }
         left={cardTitleLeft}
       />
       <Card.Actions>
         <Button
           mode="outlined"
-          onPress={() => navigate('GroupActivity', { groupId })}
+          onPress={() => navigate('GroupActivities', { groupId })}
         >
           Activity
         </Button>

@@ -12,6 +12,7 @@ export const createProfile = /* GraphQL */ `
       subId
       owner
       name
+      pushToken
       groupMemberships {
         items {
           id
@@ -41,6 +42,7 @@ export const updateProfile = /* GraphQL */ `
       subId
       owner
       name
+      pushToken
       groupMemberships {
         items {
           id
@@ -70,6 +72,7 @@ export const deleteProfile = /* GraphQL */ `
       subId
       owner
       name
+      pushToken
       groupMemberships {
         items {
           id
@@ -194,6 +197,7 @@ export const createGroupMembership = /* GraphQL */ `
         subId
         owner
         name
+        pushToken
         groupMemberships {
           nextToken
         }
@@ -244,6 +248,7 @@ export const updateGroupMembership = /* GraphQL */ `
         subId
         owner
         name
+        pushToken
         groupMemberships {
           nextToken
         }
@@ -294,6 +299,7 @@ export const deleteGroupMembership = /* GraphQL */ `
         subId
         owner
         name
+        pushToken
         groupMemberships {
           nextToken
         }
@@ -346,6 +352,7 @@ export const createActivity = /* GraphQL */ `
           subId
           owner
           name
+          pushToken
           createdAt
           updatedAt
         }
@@ -390,6 +397,7 @@ export const updateActivity = /* GraphQL */ `
           subId
           owner
           name
+          pushToken
           createdAt
           updatedAt
         }
@@ -434,6 +442,7 @@ export const deleteActivity = /* GraphQL */ `
           subId
           owner
           name
+          pushToken
           createdAt
           updatedAt
         }
@@ -449,6 +458,51 @@ export const deleteActivity = /* GraphQL */ `
       createdAt
       updatedAt
       groupMembershipActivitiesId
+    }
+  }
+`;
+export const createRecognition = /* GraphQL */ `
+  mutation CreateRecognition(
+    $input: CreateRecognitionInput!
+    $condition: ModelRecognitionConditionInput
+  ) {
+    createRecognition(input: $input, condition: $condition) {
+      id
+      owner
+      activityId
+      emoji
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateRecognition = /* GraphQL */ `
+  mutation UpdateRecognition(
+    $input: UpdateRecognitionInput!
+    $condition: ModelRecognitionConditionInput
+  ) {
+    updateRecognition(input: $input, condition: $condition) {
+      id
+      owner
+      activityId
+      emoji
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteRecognition = /* GraphQL */ `
+  mutation DeleteRecognition(
+    $input: DeleteRecognitionInput!
+    $condition: ModelRecognitionConditionInput
+  ) {
+    deleteRecognition(input: $input, condition: $condition) {
+      id
+      owner
+      activityId
+      emoji
+      createdAt
+      updatedAt
     }
   }
 `;

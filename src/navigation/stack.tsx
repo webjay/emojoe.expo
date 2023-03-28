@@ -1,13 +1,20 @@
 import React from 'react';
-import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
+} from '@react-navigation/native-stack';
 import Drawer from './drawer';
 import DoneScreen from '../screens/done';
-import GroupActivityScreen from '../screens/group-activity';
+import GroupActivitiesScreen from '../screens/group-activities';
+import GroupActivityScreen from '../screens/group/activity';
 import GroupEditScreen from '../screens/group-edit';
 import GroupInviteScreen from '../screens/group-invite';
 import GroupJoinScreen from '../screens/group-join';
 import GroupEmojiScreen from '../screens/group-emoji';
 import GroupLeaveScreen from '../screens/group-leave';
+import OnboardGroupScreen from '../screens/onboard/group';
+import OnboardNotificationsScreen from '../screens/onboard/notifications';
+import ThxScreen from '../screens/thx';
 import type { StackNavigatorParamList } from '../types/navigation';
 
 const Stack = createNativeStackNavigator<StackNavigatorParamList>();
@@ -22,7 +29,11 @@ function options(stackOptions?: NativeStackNavigationOptions) {
 export default function StackNavigator() {
   return (
     <Stack.Navigator id="StackNavigator">
-      <Stack.Screen name="Drawer" component={Drawer} options={options({ headerShown: false })} />
+      <Stack.Screen
+        name="Drawer"
+        component={Drawer}
+        options={options({ headerShown: false })}
+      />
       <Stack.Screen
         name="Done"
         component={DoneScreen}
@@ -32,9 +43,14 @@ export default function StackNavigator() {
         })}
       />
       <Stack.Screen
+        name="GroupActivities"
+        component={GroupActivitiesScreen}
+        options={options({ title: 'Activities' })}
+      />
+      <Stack.Screen
         name="GroupActivity"
         component={GroupActivityScreen}
-        options={options({ title: 'Activities' })}
+        options={options({ title: 'Activity' })}
       />
       <Stack.Screen
         name="GroupEdit"
@@ -60,6 +76,30 @@ export default function StackNavigator() {
         name="GroupLeave"
         component={GroupLeaveScreen}
         options={options({ title: 'Leave Group' })}
+      />
+      <Stack.Screen
+        name="OnboardGroup"
+        component={OnboardGroupScreen}
+        options={options({
+          headerShown: false,
+          gestureEnabled: false,
+        })}
+      />
+      <Stack.Screen
+        name="OnboardNotifications"
+        component={OnboardNotificationsScreen}
+        options={options({
+          headerShown: false,
+          gestureEnabled: false,
+        })}
+      />
+      <Stack.Screen
+        name="Thx"
+        component={ThxScreen}
+        options={options({
+          headerShown: false,
+          gestureEnabled: false,
+        })}
       />
     </Stack.Navigator>
   );

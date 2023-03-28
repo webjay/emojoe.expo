@@ -1,18 +1,23 @@
 type Profile
   @model
-  @auth(rules: [{ allow: private, operations: [read] }, { allow: owner }])
-{
+  @auth(rules: [{ allow: private, operations: [read] }, { allow: owner }]) {
   id: ID!
   subId: String! @index
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: private, operations: [read] }])
+  owner: String
+    @auth(
+      rules: [
+        { allow: owner, operations: [read, delete] }
+        { allow: private, operations: [read] }
+      ]
+    )
   name: String
+  pushToken: String
   groupMemberships: [GroupMembership] @hasMany
 }
 
 type Group
   @model
-  @auth(rules: [{ allow: private, operations: [create, read, update] }])
-{
+  @auth(rules: [{ allow: private, operations: [create, read, update] }]) {
   id: ID!
   name: String!
   memberships: [GroupMembership] @hasMany
@@ -20,12 +25,17 @@ type Group
 
 type GroupMembership
   @model
-  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }])
-{
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   id: ID!
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: private, operations: [read] }])
+  owner: String
+    @auth(
+      rules: [
+        { allow: owner, operations: [read, delete] }
+        { allow: private, operations: [read] }
+      ]
+    )
   profileId: ID! @index
-  groupId: ID! @index(sortKeyFields:["profileId"])
+  groupId: ID! @index(sortKeyFields: ["profileId"])
   group: Group! @belongsTo(fields: ["groupId"])
   profile: Profile! @belongsTo(fields: ["profileId"])
   emoji: String
@@ -34,12 +44,33 @@ type GroupMembership
 
 type Activity
   @model
-  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }])
-{
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
   id: ID!
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: private, operations: [read] }])
-  groupId: ID! @index(sortKeyFields:["createdAt"])
+  owner: String
+    @auth(
+      rules: [
+        { allow: owner, operations: [read, delete] }
+        { allow: private, operations: [read] }
+      ]
+    )
+  groupId: ID! @index(sortKeyFields: ["createdAt"])
   emoji: String!
   groupMembership: GroupMembership! @belongsTo
+  createdAt: AWSDateTime!
+}
+
+type Recognition
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
+  id: ID!
+  owner: String
+    @auth(
+      rules: [
+        { allow: owner, operations: [read, delete] }
+        { allow: private, operations: [read] }
+      ]
+    )
+  activityId: ID!
+  emoji: String!
   createdAt: AWSDateTime!
 }

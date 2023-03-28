@@ -14,9 +14,12 @@
       "backgroundColor": "#fff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/4d6fa508-0b6d-450a-a519-aba3de6dadda"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "dk.webcom.emojoe",
@@ -46,7 +49,9 @@
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
-    "plugins": ["sentry-expo"],
+    "plugins": [
+      "sentry-expo"
+    ],
     "extra": {
       "eas": {
         "projectId": "4d6fa508-0b6d-450a-a519-aba3de6dadda"

@@ -1,7 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { StyleSheet, View, Pressable } from 'react-native';
 import { useTheme, Text, Button } from 'react-native-paper';
-import { Auth } from 'aws-amplify';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,13 +20,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Signin() {
+type Props = {
+  handleSignIn: () => void;
+};
+
+export default function Signin({ handleSignIn }: Props) {
   const {
     colors: { background: backgroundColor },
   } = useTheme();
-  const signIn = useCallback(() => {
-    Auth.federatedSignIn();
-  }, []);
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <View style={styles.content}>
@@ -35,7 +35,7 @@ export default function Signin() {
           You&apos;re here to build a habit?
         </Text>
         <View style={styles.buttons}>
-          <Pressable onPress={signIn}>
+          <Pressable onPress={handleSignIn}>
             <Button mode="contained">Sign in</Button>
           </Pressable>
         </View>

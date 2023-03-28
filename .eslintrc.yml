@@ -8,6 +8,7 @@ extends:
   - plugin:react-hooks/recommended
   - airbnb
   - airbnb-typescript
+  - prettier
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
@@ -17,7 +18,7 @@ plugins:
   - react
 rules:
   react/no-multi-comp: 2
-  max-len: ["error", { "code": 140 }]
+  max-len: ['error', { 'code': 140 }]
   react/prop-types: off
 settings:
   react:
