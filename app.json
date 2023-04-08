@@ -21,7 +21,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "dk.webcom.emojoe",
-      "buildNumber": "4"
+      "buildNumber": "4",
+      "associatedDomains": ["applinks:emojoe.app"]
     },
     "android": {
       "package": "dk.webcom.emojoe",
