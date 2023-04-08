@@ -1,13 +1,9 @@
 {
   "cli": {
-    "version": ">= 3.6.0"
+    "version": ">= 3.9.0"
   },
   "build": {
-    "production": {
-      "ios": {
-        "resourceClass": "m1-medium"
-      }
-    },
+    "production": {},
     "development": {
       "extends": "production",
       "developmentClient": true,
@@ -19,6 +15,13 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {},
+      "ios": {
+        "appleId": "support@webcom.dk",
+        "ascAppId": "1540478554",
+        "appleTeamId": "745J59SAV3"
+      }
+    }
   }
 }
