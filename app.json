@@ -42,8 +42,7 @@
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "webcomdk",
-            "project": "emojoe2",
-            "authToken": "71a4f0d283e64f0b95473789dbe9ac6be91ff718ef2b4cbf983474ef16431a8c"
+            "project": "emojoe2"
           }
         }
       ]
