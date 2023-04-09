@@ -33,6 +33,9 @@
         "backgroundColor": "#fff"
       }
     },
+    "web": {
+      "bundler": "metro"
+    },
     "hooks": {
       "postPublish": [
         {

@@ -8,7 +8,7 @@ import OnBoard from './components/OnBoard';
 import StackNavigator from './navigation/stack';
 import useNavigationTheme from './hooks/useNavigationTheme';
 import linking from './navigation/linking';
-import Sentry from './lib/sentry';
+import { wrap } from './lib/sentry';
 
 function App() {
   const navigationTheme = useNavigationTheme();
@@ -26,4 +26,4 @@ function App() {
   );
 }
 
-export default Sentry.wrap(App);
+export default wrap(App);
