@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter, Link } from 'expo-router';
 import { Card, Avatar, Button, Text } from 'react-native-paper';
 import type { GroupMembership } from '../types/api';
 
@@ -25,48 +25,41 @@ export default function GroupCard({
     group: { name },
   },
 }: Props) {
-  const { navigate } = useNavigation();
+  const { push: navigate } = useRouter();
   const cardTitleLeft = useCallback<
     ({ size }: { size: number }) => JSX.Element
   >(
     ({ size }) => (
-      <TouchableOpacity onPress={() => navigate('GroupEmoji', { groupId })}>
-        <Avatar.Text
-          size={size}
-          label={emoji || '🃟'}
-          labelStyle={styles.emoji}
-        />
-      </TouchableOpacity>
+      <Link href={`/group/${groupId}/emoji`} asChild>
+        <TouchableOpacity>
+          <Avatar.Text
+            size={size}
+            label={emoji || '🃟'}
+            labelStyle={styles.emoji}
+          />
+        </TouchableOpacity>
+      </Link>
     ),
-    [emoji, groupId, navigate],
+    [emoji, groupId],
   );
   return (
     <Card style={styles.card}>
       <Card.Title
         title={
-          <Text onPress={() => navigate('GroupEdit', { groupId })}>{name}</Text>
+          <Text onPress={() => navigate(`/group/${groupId}/edit`)}>{name}</Text>
         }
         left={cardTitleLeft}
       />
       <Card.Actions>
-        <Button
-          mode="outlined"
-          onPress={() => navigate('GroupActivities', { groupId })}
-        >
-          Activity
-        </Button>
-        <Button
-          mode="outlined"
-          onPress={() => navigate('GroupInvite', { groupId })}
-        >
-          Invite
-        </Button>
-        <Button
-          mode="outlined"
-          onPress={() => navigate('GroupLeave', { groupId })}
-        >
-          Leave
-        </Button>
+        <Link href={`/group/${groupId}`} asChild>
+          <Button mode="outlined">Activity</Button>
+        </Link>
+        <Link href={`/group/${groupId}/invite`} asChild>
+          <Button mode="outlined">Invite</Button>
+        </Link>
+        <Link href={`/group/${groupId}/leave`} asChild>
+          <Button mode="outlined">Leave</Button>
+        </Link>
       </Card.Actions>
     </Card>
   );

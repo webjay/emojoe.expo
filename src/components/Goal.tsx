@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { Pressable, LayoutChangeEvent, StyleSheet } from 'react-native';
 import { useTheme, Avatar } from 'react-native-paper';
 
@@ -15,12 +15,12 @@ const styles = StyleSheet.create({
 });
 
 export default function Goal({ groupId, onLayout }: Props) {
-  const { navigate } = useNavigation();
+  const { push: navigate } = useRouter();
   const {
     colors: { surfaceVariant: backgroundColor },
   } = useTheme();
   const onPress = useCallback(() => {
-    navigate('GroupActivities', { groupId });
+    navigate(`/group/${groupId}/activities`);
   }, [groupId, navigate]);
   return (
     <Pressable onPress={onPress} style={styles.container} onLayout={onLayout}>

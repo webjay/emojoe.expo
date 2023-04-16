@@ -1,6 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, InteractionManager } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
+import { Appbar } from 'react-native-paper';
+import Container from '@src/components/Container';
 import useGroupMemberships from '../hooks/useGroupMemberships';
 import Loading from '../components/Loading';
 import Empty from '../components/Empty';
@@ -11,10 +14,12 @@ import SafeAreaBottom from '../components/SafeAreaBottom';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 10,
   },
 });
 
 export default function GroupsScreen() {
+  const { push: navigate } = useRouter();
   const [waiting, setWaiting] = useState(true);
   const [hasLoaded, setHasLoaded] = useState(false);
   const { loading, groups, loadData } = useGroupMemberships();
@@ -33,16 +38,22 @@ export default function GroupsScreen() {
   );
   if (waiting) return <Loading />;
   return (
-    <ScrollViewRefresh
-      loading={loading}
-      refetch={loadData}
-      style={styles.container}
-    >
-      {hasLoaded && !loading && groups.length === 0 && <Empty />}
-      {groups.map((group) => (
-        <GroupCard key={group.groupId} group={group} />
-      ))}
-      <SafeAreaBottom />
-    </ScrollViewRefresh>
+    <Container>
+      <Appbar.Header mode="small" statusBarHeight={0}>
+        <Appbar.Content title="Groups" />
+        <Appbar.Action icon="plus" onPress={() => navigate('/group/create')} />
+      </Appbar.Header>
+      <ScrollViewRefresh
+        loading={loading}
+        refetch={loadData}
+        style={styles.container}
+      >
+        {hasLoaded && !loading && groups.length === 0 && <Empty />}
+        {groups.map((group) => (
+          <GroupCard key={group.groupId} group={group} />
+        ))}
+        <SafeAreaBottom />
+      </ScrollViewRefresh>
+    </Container>
   );
 }
