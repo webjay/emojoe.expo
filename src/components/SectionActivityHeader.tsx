@@ -4,7 +4,7 @@ import { useTheme, Text, Badge } from 'react-native-paper';
 import type { ActivitySection } from '../types/common';
 
 type Props = {
-  section: ActivitySection
+  section: ActivitySection;
 };
 
 const styles = StyleSheet.create({
@@ -15,8 +15,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function SectionActivityHeader({ section: { title, data } }: Props) {
-  const { colors: { secondaryContainer: backgroundColor } } = useTheme();
+export default function SectionActivityHeader({
+  section: { title, data },
+}: Props) {
+  const {
+    colors: { secondaryContainer: backgroundColor },
+  } = useTheme();
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <Text>{title}</Text>

@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
+import Container from '@src/components/Container';
 import useGroupMemberships from '../hooks/useGroupMemberships';
 import ScrollViewRefresh from '../components/ScrollViewRefresh';
 import GroupAction from '../components/GroupAction';
@@ -10,6 +11,7 @@ import Empty from '../components/Empty';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingBottom: 10,
   },
 });
 
@@ -30,17 +32,23 @@ export default function HomeScreen() {
     }, [loadData]),
   );
   return (
-    <ScrollViewRefresh
-      loading={loading}
-      refetch={loadData}
-      scrollEnabled={scrollEnabled}
-      style={styles.container}
-    >
-      {hasLoaded && !loading && groups.length === 0 && <Empty />}
-      {groups.map((group) => (
-        <GroupAction key={group.groupId} group={group} isSwiping={isSwiping} />
-      ))}
-      <SafeAreaBottom />
-    </ScrollViewRefresh>
+    <Container>
+      <ScrollViewRefresh
+        loading={loading}
+        refetch={loadData}
+        scrollEnabled={scrollEnabled}
+        style={styles.container}
+      >
+        {hasLoaded && !loading && groups.length === 0 && <Empty />}
+        {groups.map((group) => (
+          <GroupAction
+            key={group.groupId}
+            group={group}
+            isSwiping={isSwiping}
+          />
+        ))}
+        <SafeAreaBottom />
+      </ScrollViewRefresh>
+    </Container>
   );
 }

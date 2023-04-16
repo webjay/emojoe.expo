@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { Card } from 'react-native-paper';
 import type { GroupMembership } from '../types/api';
 import Swipe from './Swipe';
@@ -24,13 +24,16 @@ export default function GroupAction({
   group: { groupId, emoji },
   isSwiping,
 }: Props) {
-  const { navigate } = useNavigation();
+  const { push: routerPush } = useRouter();
   const handleDone = useCallback(() => {
-    navigate('Done', {
-      groupId,
-      emoji: emoji ?? '🃟',
+    routerPush({
+      pathname: `/group/${groupId}/done`,
+      params: {
+        // groupId,
+        emoji: emoji ?? '🃟',
+      },
     });
-  }, [groupId, emoji, navigate]);
+  }, [groupId, emoji, routerPush]);
   return (
     <Card style={styles.container}>
       <Card.Content style={styles.content}>

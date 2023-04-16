@@ -19,9 +19,9 @@ const awsmobile = {
       'aws.cognito.signin.user.admin',
     ],
     redirectSignIn:
-      'emojoe2://,exp://127.0.0.1:19000/--/,https://emojoe-expo.vercel.app',
+      'emojoe2://,exp://127.0.0.1:19000/--/,http://localhost:19000,https://emojoe-expo.vercel.app',
     redirectSignOut:
-      'emojoe2://,exp://127.0.0.1:19000/--/,https://emojoe-expo.vercel.app',
+      'emojoe2://,exp://127.0.0.1:19000/--/,http://localhost:19000,https://emojoe-expo.vercel.app',
     responseType: 'code',
   },
   federationTarget: 'COGNITO_USER_POOLS',

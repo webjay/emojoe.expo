@@ -1,11 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { Text, Button } from 'react-native-paper';
-import type { ScreenPropsStack } from '../../types/navigation';
+import { useRouter } from 'expo-router';
 import { hasPermission, getPushToken } from '../../lib/notifications';
 import { profileUpdate } from '../../lib/api';
-
-type Props = ScreenPropsStack<'OnboardNotifications'>;
 
 const styles = StyleSheet.create({
   container: {
@@ -26,11 +24,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const navNext = 'Home';
+const navNext = '/';
 
-export default function OnboardNotificationsScreen({
-  navigation: { navigate },
-}: Props) {
+export default function OnboardNotificationsScreen() {
+  const { push: navigate } = useRouter();
   const [loading, setLoading] = useState(false);
   const handlePressSkip = useCallback(() => navigate(navNext), [navigate]);
   const handlePressYes = useCallback(async () => {

@@ -1,11 +1,14 @@
 import React, { useCallback } from 'react';
-import { StyleSheet, SafeAreaView, ScrollView, Pressable } from 'react-native';
+import { useRouter, useSearchParams } from 'expo-router';
+import { StyleSheet, View, ScrollView, Pressable } from 'react-native';
 import { Avatar } from 'react-native-paper';
-import type { ScreenPropsStack } from '../types/navigation';
+import Container from '@src/components/Container';
 import { groupUpdateMembership } from '../lib/api';
 import useEmojis from '../hooks/useEmojis';
 
-type Props = ScreenPropsStack<'GroupEmoji'>;
+type SearchParams = {
+  groupId: string;
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -15,39 +18,40 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-  scrollViewContent: {
+  contentContainerStyle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 10,
+    justifyContent: 'center',
   },
 });
 
-export default function GroupEmojiScreen({
-  navigation: { navigate },
-  route: {
-    params: { groupId },
-  },
-}: Props) {
+export default function GroupEmojiScreen() {
+  const { push: navigate } = useRouter();
+  const { groupId } = useSearchParams<SearchParams>();
   const { emojiArray } = useEmojis();
   const onEmojiSelect = useCallback(
     async (emoji: string) => {
+      if (!groupId) return;
       await groupUpdateMembership(groupId, { emoji });
-      navigate('GroupInvite', { groupId });
+      navigate(`/group/${groupId}/invite`);
     },
     [groupId, navigate],
   );
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollViewContent}
-      >
-        {emojiArray.map((emoji) => (
-          <Pressable key={emoji} onPress={() => onEmojiSelect(emoji)}>
-            <Avatar.Text label={emoji} />
-          </Pressable>
-        ))}
-      </ScrollView>
-    </SafeAreaView>
+    <Container>
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.contentContainerStyle}
+        >
+          {emojiArray.map((emoji) => (
+            <Pressable key={emoji} onPress={() => onEmojiSelect(emoji)}>
+              <Avatar.Text label={emoji} />
+            </Pressable>
+          ))}
+        </ScrollView>
+      </View>
+    </Container>
   );
 }

@@ -1,6 +1,4 @@
-import React, {
-  useRef, useState, useEffect, useCallback,
-} from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import {
   StyleSheet,
   View,
@@ -43,6 +41,7 @@ const styles = StyleSheet.create({
   },
   emoji: {
     transform: [{ rotateY: '180deg' }],
+    userSelect: 'none',
   },
 });
 

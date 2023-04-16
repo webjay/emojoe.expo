@@ -1,11 +1,14 @@
 import React, { useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
+import { useRouter, useSearchParams } from 'expo-router';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { Text, Button } from 'react-native-paper';
-import type { ScreenPropsStack } from '../types/navigation';
 import { activityCreate } from '../lib/api';
 
-type Props = ScreenPropsStack<'Done'>;
+type SearchParams = {
+  groupId: string;
+  emoji: string;
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -15,16 +18,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function DoneScreen({
-  navigation: { replace },
-  route: {
-    params: { groupId, emoji },
-  },
-}: Props) {
+export default function DoneScreen() {
+  const { push: navigate } = useRouter();
+  const { groupId, emoji } = useSearchParams<SearchParams>();
   const [loading, setLoading] = useState(true);
   useFocusEffect(
     useCallback(() => {
       async function handleActivityDone() {
+        if (!groupId || !emoji) return;
         setLoading(true);
         await activityCreate(groupId, emoji);
         setLoading(false);
@@ -33,8 +34,8 @@ export default function DoneScreen({
     }, [emoji, groupId]),
   );
   const handlePress = useCallback(
-    () => replace('GroupActivities', { groupId }),
-    [groupId, replace],
+    () => navigate(`/group/${groupId}/activities`),
+    [groupId, navigate],
   );
   return (
     <SafeAreaView style={styles.container}>

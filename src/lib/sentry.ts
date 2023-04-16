@@ -14,4 +14,4 @@ export function wrap<P extends Record<string, any>>(children: React.ComponentTyp
   return Sentry.Native.wrap(children);
 }
 
-export default Sentry;
+export default Platform.OS === 'web' ? Sentry.Browser : Sentry.Native;
