@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 });
 
 export default function DoneScreen() {
-  const { push: navigate } = useRouter();
+  const { replace: redirect } = useRouter();
   const { groupId, emoji } = useSearchParams<SearchParams>();
   const [loading, setLoading] = useState(true);
   useFocusEffect(
@@ -34,8 +34,8 @@ export default function DoneScreen() {
     }, [emoji, groupId]),
   );
   const handlePress = useCallback(
-    () => navigate(`/group/${groupId}/activities`),
-    [groupId, navigate],
+    () => redirect(`/group/${groupId}/activities`),
+    [groupId, redirect],
   );
   return (
     <SafeAreaView style={styles.container}>
