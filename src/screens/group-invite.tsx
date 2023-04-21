@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 });
 
 function getURL(groupId: string) {
-  const path = `/group/join/${groupId}`;
+  const path = `/group/${groupId}/join`;
   if (process.env.NODE_ENV === 'development') {
     return createURL(path);
   }
