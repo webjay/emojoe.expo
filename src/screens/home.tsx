@@ -18,10 +18,6 @@ const styles = StyleSheet.create({
 export default function HomeScreen() {
   const { loading, groups, loadData } = useGroupMemberships();
   const [hasLoaded, setHasLoaded] = useState(false);
-  const [scrollEnabled, setScrollEnabled] = useState(true);
-  const isSwiping = useCallback((swiping: boolean) => {
-    setScrollEnabled(swiping === false);
-  }, []);
   useEffect(() => {
     loadData();
     setHasLoaded(true);
@@ -36,16 +32,11 @@ export default function HomeScreen() {
       <ScrollViewRefresh
         loading={loading}
         refetch={loadData}
-        scrollEnabled={scrollEnabled}
         style={styles.container}
       >
         {hasLoaded && !loading && groups.length === 0 && <Empty />}
         {groups.map((group) => (
-          <GroupAction
-            key={group.groupId}
-            group={group}
-            isSwiping={isSwiping}
-          />
+          <GroupAction key={group.groupId} group={group} />
         ))}
         <SafeAreaBottom />
       </ScrollViewRefresh>
