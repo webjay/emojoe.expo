@@ -5,7 +5,6 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withSpring,
-  useAnimatedReaction,
   runOnJS,
 } from 'react-native-reanimated';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
@@ -50,19 +49,6 @@ export default function Swipe({ emoji, groupId }: Props) {
   const onLeft = useSharedValue(true);
   const position = useSharedValue(0);
 
-  useAnimatedReaction(
-    () => position.value,
-    (value) => {
-      if (value === positionEnd) {
-        runOnJS(setDone)(true);
-      }
-      if (value === 0) {
-        runOnJS(setDone)(false);
-      }
-    },
-    [positionEnd],
-  );
-
   const panGesture = useMemo(
     () =>
       Gesture.Pan()
@@ -77,9 +63,11 @@ export default function Swipe({ emoji, groupId }: Props) {
           if (position.value > swipePast) {
             position.value = withSpring(positionEnd);
             onLeft.value = false;
+            runOnJS(setDone)(true);
           } else {
             position.value = withSpring(0);
             onLeft.value = true;
+            runOnJS(setDone)(false);
           }
         }),
     [onLeft, position, swipePast, positionEnd],
