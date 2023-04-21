@@ -105,6 +105,7 @@ export default function GroupActivitiesScreen() {
         onRefresh={loadData}
         refreshing={refreshing}
         stickySectionHeadersEnabled
+        showsVerticalScrollIndicator={false}
         ListEmptyComponent={refreshing ? null : Empty}
         ListFooterComponent={SafeAreaBottom}
       />

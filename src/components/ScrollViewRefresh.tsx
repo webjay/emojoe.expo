@@ -21,6 +21,7 @@ function ScrollViewRefresh({
   return (
     <ScrollView
       scrollEnabled={scrollEnabled}
+      showsVerticalScrollIndicator={false}
       style={style}
       refreshControl={
         <RefreshControl refreshing={loading} onRefresh={refetch} />
