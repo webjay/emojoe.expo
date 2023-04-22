@@ -16,8 +16,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "emojoe2://,exp://127.0.0.1:19000/--/,exp://u.expo.dev/update/24ff540e-9762-4d5d-b34a-ed5f29467c7d//--/,https://auth.expo.io/@emojoe/do/",
-        "redirectSignOut": "emojoe2://,exp://127.0.0.1:19000/--/,exp://u.expo.dev/update/24ff540e-9762-4d5d-b34a-ed5f29467c7d//--/,https://auth.expo.io/@emojoe/do/",
+        "redirectSignIn": "emojoe2://,exp://127.0.0.1:19000/--/,https://emojoe.app/",
+        "redirectSignOut": "emojoe2://,exp://127.0.0.1:19000/--/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
