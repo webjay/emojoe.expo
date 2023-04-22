@@ -1,10 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { Text, Chip, Button } from 'react-native-paper';
-import type { ScreenPropsStack } from '../../types/navigation';
+import { useRouter } from 'expo-router';
 import { groupCreateMembership, groupUpdateMembership } from '../../lib/api';
 
-type Props = ScreenPropsStack<'OnboardGroup'>;
 type Groups = {
   [key: string]: {
     emoji: string;
@@ -69,11 +68,10 @@ const groups: Groups = {
   },
 };
 
-const navNext = 'OnboardNotifications';
+const navNext = '/onboard/notifications';
 
-export default function OnboardGroupScreen({
-  navigation: { navigate },
-}: Props) {
+export default function OnboardGroupScreen() {
+  const { push: navigate } = useRouter();
   const [selected, setSelected] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const handleSelect = useCallback((groupId: string) => {

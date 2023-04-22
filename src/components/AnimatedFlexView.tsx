@@ -1,18 +1,18 @@
-import React, { useRef, useEffect } from 'react';
-import { Animated } from 'react-native';
+import React from 'react';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withDelay,
+  withTiming,
+} from 'react-native-reanimated';
 
 type Props = {
   flex: number;
 };
 
 export default function AnimatedFlexView({ flex }: Props) {
-  const animatedFlex = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    Animated.spring(animatedFlex, {
-      useNativeDriver: false,
-      delay: 100,
-      toValue: flex,
-    }).start();
-  }, [animatedFlex, flex]);
-  return <Animated.View style={{ flex: animatedFlex }} />;
+  const flexShared = useSharedValue(0);
+  flexShared.value = withDelay(100, withTiming(flex));
+  const animatedStyle = useAnimatedStyle(() => ({ flex: flexShared.value }));
+  return <Animated.View style={animatedStyle} />;
 }

@@ -1,10 +1,14 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { useNavigation, useSearchParams } from 'expo-router';
+import { StyleSheet, View } from 'react-native';
 import { Text, Button } from 'react-native-paper';
+import Container from '@src/components/Container';
 import { recognitionCreate } from '../lib/api';
-import type { ScreenPropsStack } from '../types/navigation';
 
-type Props = ScreenPropsStack<'Thx'>;
+type SearchParams = {
+  activityId: string;
+  actionIdentifier: string;
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -15,33 +19,33 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function ThxScreen({
-  navigation: { replace },
-  route: {
-    params: { activityId, actionIdentifier },
-  },
-}: Props) {
+export default function ThxScreen() {
+  const { navigate } = useNavigation();
+  const { activityId, actionIdentifier } = useSearchParams<SearchParams>();
   const [loading, setLoading] = useState<boolean>();
   const onPress = useCallback(() => {
-    replace('Drawer', { screen: 'Home' });
-  }, [replace]);
+    navigate('Drawer', { screen: 'Home' });
+  }, [navigate]);
   useEffect(() => {
+    if (!activityId || !actionIdentifier) return;
     setLoading(true);
     recognitionCreate(activityId, actionIdentifier).then(() =>
       setLoading(false),
     );
   }, [activityId, actionIdentifier]);
   return (
-    <SafeAreaView style={styles.container}>
-      <Text variant="displayLarge">Thank you</Text>
-      <Button
-        mode="outlined"
-        onPress={onPress}
-        loading={loading}
-        disabled={loading}
-      >
-        Anytime
-      </Button>
-    </SafeAreaView>
+    <Container>
+      <View style={styles.container}>
+        <Text variant="displayLarge">Thank you</Text>
+        <Button
+          mode="outlined"
+          onPress={onPress}
+          loading={loading}
+          disabled={loading}
+        >
+          Anytime
+        </Button>
+      </View>
+    </Container>
   );
 }

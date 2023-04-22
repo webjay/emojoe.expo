@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Text, Button } from 'react-native-paper';
 import type { ScreenPropsStack } from '../../types/navigation';
 import type { Activity } from '../../types/api';
@@ -23,16 +24,16 @@ const styles = StyleSheet.create({
 });
 
 export default function GroupActivityScreen({
-  navigation: { replace },
   route: {
     params: { activityId },
   },
 }: Props) {
+  const { replace } = useRouter();
   const [activity, setActivity] = useState<Activity>();
   const { group } = useGroup(activity?.groupId);
   const onAppreciationPress = useCallback(
     (emoji: Activity['emoji']) => {
-      replace('Thx', { activityId, actionIdentifier: emoji });
+      replace(`/activity/${activityId}/thx?actionIdentifier=${emoji}`);
     },
     [activityId, replace],
   );

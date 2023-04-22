@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { Auth } from '@aws-amplify/auth';
-
-async function signOut() {
-  await Auth.signOut();
-}
+import { useRouter } from 'expo-router';
 
 export default function ExitScreen() {
+  const { replace } = useRouter();
   useEffect(() => {
-    signOut();
-  }, []);
+    Auth.signOut().then(() => {
+      replace('/');
+    })
+  }, [replace]);
   return null;
 }

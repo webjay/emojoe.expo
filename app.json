@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "dk.webcom.emojoe",
-      "buildNumber": "4",
+      "buildNumber": "5",
       "associatedDomains": ["applinks:emojoe.app"],
       "appStoreUrl": "https://apps.apple.com/us/app/emojoe/id1540478554"
     },

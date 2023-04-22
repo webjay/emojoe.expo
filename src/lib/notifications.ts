@@ -29,6 +29,7 @@ function androidChannelConf() {
 }
 
 async function setActivityCategory() {
+  if (Platform.OS === 'web') return;
   await Notifications.deleteNotificationCategoryAsync('activity');
   const actions = Object.keys(emoRecognition).map((key) => ({
     identifier: key,

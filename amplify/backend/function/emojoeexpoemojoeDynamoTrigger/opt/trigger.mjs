@@ -6,7 +6,12 @@ import { query, get } from './dynamo.mjs';
 const expo = new Expo();
 const sendPushNotificationsAsync = expo.sendPushNotificationsAsync.bind(expo);
 
-const appScheme = 'emojoe2';
+// const appScheme = 'emojoe2';
+
+function firstName(name) {
+  if (!name) return '🃟';
+  return name.split(' ')[0];
+}
 
 function getProfilesBySubId(subId) {
   return query({
@@ -70,19 +75,27 @@ function sendExpoNotifications(notifications) {
  * @param {{ id: string, emoji: string, groupId: string, owner: string }} activity
  * @returns {import('expo-server-sdk').ExpoPushMessage[]}
  */
-async function activityToExpoPushMessages({ id, groupId, emoji, owner }) {
+async function activityToExpoPushMessages({
+  id: activityId,
+  groupId,
+  emoji,
+  owner,
+}) {
   const groupMemberships = await getGroupMembershipsByGroupId(groupId);
   const profiles = await Promise.all(
     groupMemberships.map(({ profileId }) => getProfile(profileId)),
+  );
+  const ownerProfile = profiles.find(
+    ({ owner: profileOwner }) => profileOwner === owner,
   );
   return profiles
     .filter(({ owner: profileOwner }) => profileOwner !== owner)
     .map(({ pushToken }) => ({
       to: pushToken,
-      title: `Activity: ${emoji}`,
+      title: `${firstName(ownerProfile.name)} just ➡️ ${emoji}`,
       data: {
-        url: `${appScheme}:///activity/${id}`,
-        activityId: id,
+        url: `https://emojoe.app/activity/${activityId}`,
+        // activityId,
       },
       channelId: 'activity',
       categoryId: 'activity',
@@ -98,9 +111,10 @@ async function recognitionToExpoPushMessage({ activityId, emoji }) {
   const [profile] = await getProfilesBySubId(activity.owner.substring(0, 36));
   return {
     to: profile.pushToken,
-    title: `Recognition: ${emoji}`,
+    title: `You just received ${emoji}`,
     data: {
-      url: `${appScheme}:///`,
+      url: `https://emojoe.app/activity/${activityId}`,
+      emoji,
     },
     channelId: 'recognition',
     // categoryId: 'recognition',
@@ -127,7 +141,6 @@ function recordHandler({ dynamodb: { NewImage } }) {
  * @type {import('@types/aws-lambda').DynamoDBStreamHandler}
  */
 export default async function handler({ Records }) {
-  console.log(JSON.stringify(Records));
   const notifications = await Promise.all(Records.map(recordHandler));
   await sendExpoNotifications(notifications.flat()).then(handleReceiptChunks);
 }

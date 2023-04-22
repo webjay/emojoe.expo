@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import { storageGet, storageSet } from '../lib/storage';
 
 enum OnBoardStatus {
@@ -9,7 +9,7 @@ enum OnBoardStatus {
 const OnBoardStatusKey = 'OnBoardStatus';
 
 export default function OnBoard() {
-  const { navigate } = useNavigation();
+  const { push: navigate } = useRouter();
   useEffect(() => {
     async function onBoard() {
       const onBoardStatus = await storageGet(OnBoardStatusKey);
@@ -18,7 +18,7 @@ export default function OnBoard() {
           break;
         default:
           await storageSet(OnBoardStatusKey, OnBoardStatus.GroupChoice);
-          navigate('OnboardGroup');
+          navigate('/onboard/group');
           break;
       }
     }
