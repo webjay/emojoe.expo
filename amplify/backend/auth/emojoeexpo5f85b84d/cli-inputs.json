@@ -61,6 +61,6 @@
     },
     "breakCircularDependency": true,
     "dependsOn": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"emojoe2://\",\"exp://127.0.0.1:19000/--/\",\"exp://u.expo.dev/update/24ff540e-9762-4d5d-b34a-ed5f29467c7d//--/\",\"https://auth.expo.io/@emojoe/do/\"],\"LogoutURLs\":[\"emojoe2://\",\"exp://127.0.0.1:19000/--/\",\"exp://u.expo.dev/update/24ff540e-9762-4d5d-b34a-ed5f29467c7d//--/\",\"https://auth.expo.io/@emojoe/do/\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"emojoe2://\",\"exp://127.0.0.1:19000/--/\",\"https://emojoe.app/\"],\"LogoutURLs\":[\"emojoe2://\",\"exp://127.0.0.1:19000/--/\"]}"
   }
 }
