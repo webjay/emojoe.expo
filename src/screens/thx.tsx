@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useNavigation, useSearchParams } from 'expo-router';
+import { useRouter, useSearchParams } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { Text, Button } from 'react-native-paper';
 import Container from '@src/components/Container';
@@ -20,12 +20,12 @@ const styles = StyleSheet.create({
 });
 
 export default function ThxScreen() {
-  const { navigate } = useNavigation();
+  const { replace: redirect } = useRouter();
   const { activityId, actionIdentifier } = useSearchParams<SearchParams>();
   const [loading, setLoading] = useState<boolean>();
   const onPress = useCallback(() => {
-    navigate('Drawer', { screen: 'Home' });
-  }, [navigate]);
+    redirect('/');
+  }, [redirect]);
   useEffect(() => {
     if (!activityId || !actionIdentifier) return;
     setLoading(true);
