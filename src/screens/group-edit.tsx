@@ -1,40 +1,58 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { useRouter } from 'expo-router';
+import { TextInput, Button } from 'react-native-paper';
+import Container from '@src/components/Container';
 import type { ScreenPropsStack } from '../types/navigation';
-import HeaderButtonGroupEdit from '../components/HeaderButtonGroupEdit';
 import useGroup from '../hooks/useGroup';
+import { groupCreate, groupUpdate } from '../lib/api';
 
 type Props = ScreenPropsStack<'GroupEdit'>;
 
 const styles = StyleSheet.create({
   container: {
     margin: 10,
+    gap: 20,
   },
 });
 
-export default function GroupEditScreen({ navigation: { setOptions }, route: { params } }: Props) {
+export default function GroupEditScreen({ route: { params } }: Props) {
+  const { push: navigate } = useRouter();
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const groupId = params?.groupId;
   const { group } = useGroup(groupId);
+  const groupSave = useCallback(async () => {
+    if (!name) return;
+    if (groupId) {
+      setLoading(true);
+      await groupUpdate(groupId, { name });
+      setLoading(false);
+      navigate('/groups');
+    } else {
+      setLoading(true);
+      const { id } = await groupCreate({ name });
+      setLoading(false);
+      navigate(`/group/${id}/emoji`);
+    }
+  }, [name, groupId, navigate]);
   useEffect(() => {
     if (!group) return;
     setName(group.name);
   }, [group]);
-  const headerRight = useCallback(() => <HeaderButtonGroupEdit name={name} groupId={groupId} />, [name, groupId]);
-  useEffect(() => {
-    setOptions({ headerRight });
-    if (groupId) {
-      setOptions({ title: 'Edit Group' });
-    }
-  }, [headerRight, setOptions, groupId]);
   return (
-    <SafeAreaView style={styles.container}>
-      <TextInput
-        label="Group Name"
-        value={name}
-        onChangeText={setName}
-      />
-    </SafeAreaView>
+    <Container>
+      <SafeAreaView style={styles.container}>
+        <TextInput label="Group Name" value={name} onChangeText={setName} />
+        <Button
+          mode="contained"
+          onPress={groupSave}
+          loading={loading}
+          disabled={!name || loading}
+        >
+          Save
+        </Button>
+      </SafeAreaView>
+    </Container>
   );
 }

@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, SafeAreaView, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { openSettings } from 'expo-linking';
-import { Switch, Text, Snackbar } from 'react-native-paper';
+import { useRouter } from 'expo-router';
+import { Appbar, Switch, Text, Snackbar } from 'react-native-paper';
+import Container from '@src/components/Container';
 import { hasPermission, getPushToken } from '../lib/notifications';
 import { profileUpdate } from '../lib/api';
-// import type { ScreenPropsDrawer } from '../types/navigation';
-
-// type Props = ScreenPropsDrawer<'Settings'>;
 
 const styles = StyleSheet.create({
   container: {
@@ -26,6 +25,7 @@ const snacktion = {
 };
 
 function SettingsScreen() {
+  const { push: navigate } = useRouter();
   const [notificationsValue, setNotificationsValue] = useState(false);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const onNotificationsValueChange = useCallback((value: boolean) => {
@@ -49,22 +49,28 @@ function SettingsScreen() {
     hasPermission().then(setNotificationsValue);
   }, []);
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.segment}>
-        <Switch
-          value={notificationsValue}
-          onValueChange={onNotificationsValueChange}
-        />
-        <Text variant="labelLarge">Notifications</Text>
+    <Container safeArea={false}>
+      <Appbar.Header mode="small">
+        <Appbar.Content title="Settings" />
+        <Appbar.Action icon="logout" onPress={() => navigate('/logout')} />
+      </Appbar.Header>
+      <View style={styles.container}>
+        <View style={styles.segment}>
+          <Switch
+            value={notificationsValue}
+            onValueChange={onNotificationsValueChange}
+          />
+          <Text variant="labelLarge">Notifications</Text>
+        </View>
+        <Snackbar
+          visible={snackbarVisible}
+          onDismiss={onDismissSnackBar}
+          action={snacktion}
+        >
+          Please allow notifications in settings
+        </Snackbar>
       </View>
-      <Snackbar
-        visible={snackbarVisible}
-        onDismiss={onDismissSnackBar}
-        action={snacktion}
-      >
-        Please allow notifications in settings
-      </Snackbar>
-    </SafeAreaView>
+    </Container>
   );
 }
 

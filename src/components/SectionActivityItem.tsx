@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import type { ActivityItem } from '../types/common';
@@ -8,7 +8,7 @@ import AnimatedFlexView from './AnimatedFlexView';
 import Emoji from './Emoji';
 
 type Props = {
-  item: ActivityItem[]
+  item: ActivityItem[];
 };
 
 const styles = StyleSheet.create({
@@ -41,10 +41,12 @@ const styles = StyleSheet.create({
 
 export default function SectionActivityItem({ item }: Props) {
   const {
-    colors: {
-      secondaryContainer: borderColor,
-    },
+    colors: { secondaryContainer: borderColor },
   } = useTheme();
+  const actions = useMemo(
+    () => item.sort(({ createdAt: a }, { createdAt: b }) => a.localeCompare(b)),
+    [item],
+  );
   if (item.length === 0) return null;
   const [{ profileId }] = item;
   return (
@@ -53,7 +55,7 @@ export default function SectionActivityItem({ item }: Props) {
         <NameChip profileId={profileId} />
         <View style={styles.chipSpace} />
       </View>
-      {item.sort(({ createdAt: a }, { createdAt: b }) => a.localeCompare(b)).map(({ createdAt, emoji }) => (
+      {actions.map(({ createdAt, emoji }) => (
         <View key={createdAt} style={styles.emojiView}>
           <AnimatedFlexView flex={dayProgressFlex(createdAt)} />
           <Emoji emoji={emoji} style={[styles.emoji, { borderColor }]} />

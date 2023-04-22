@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { createURL } from 'expo-linking';
 import type { ShareAction } from 'react-native';
 import { StyleSheet, Share, SafeAreaView } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Text, Button } from 'react-native-paper';
 import type { ScreenPropsStack } from '../types/navigation';
 import useGroup from '../hooks/useGroup';
@@ -17,25 +18,38 @@ const styles = StyleSheet.create({
   },
 });
 
+function getURL(groupId: string) {
+  const path = `/group/${groupId}/join`;
+  if (process.env.NODE_ENV === 'development') {
+    return createURL(path);
+  }
+  return `https://emojoe.app${path}`;
+}
+
 export default function GroupInviteScreen({
   route: {
     params: { groupId },
   },
-  navigation: { navigate },
 }: Props) {
+  const { push: navigate } = useRouter();
   const [shareAction, setShareAction] = useState<ShareAction>();
   const { group } = useGroup(groupId);
   const onInvitePress = useCallback(async () => {
     if (!group) return;
-    const url = createURL(`/group/join/${groupId}`);
+    const url = getURL(groupId);
     const dialogTitle = group.name;
     const subject = `Please join ${dialogTitle}`;
     const message = `Please join the group: ${dialogTitle}.\n${url}`;
-    const action = await Share.share({ message }, { dialogTitle, subject });
-    setShareAction(action);
+    const action = await Share.share(
+      { message },
+      { dialogTitle, subject },
+    ).catch(() => {});
+    if (action) {
+      setShareAction(action);
+    }
   }, [group, groupId]);
   const onCancelPress = useCallback(() => {
-    navigate('Home');
+    navigate('/');
   }, [navigate]);
   const cancelButtonTitle =
     shareAction?.action !== 'dismissedAction' ? 'Done' : 'Nevermind';

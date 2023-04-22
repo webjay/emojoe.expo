@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useSearchParams } from 'expo-router';
 import { StyleSheet, SectionList, View } from 'react-native';
 import type { SectionListRenderItem } from 'react-native';
-import type { ScreenPropsStack } from '../types/navigation';
+import Container from '@src/components/Container';
 import useGroup from '../hooks/useGroup';
 import type { Activity } from '../types/api';
 import { groupGetActivities } from '../lib/api';
@@ -17,14 +17,13 @@ import type {
 } from '../types/common';
 import { toDateString, dayTitle } from '../lib/date';
 
-type Props = ScreenPropsStack<'GroupActivities'>;
+type SearchParams = {
+  groupId: string;
+};
 
 type SectionsMap = Map<string, ActivitySectionMap>;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   sectionFooter: {
     height: 20,
   },
@@ -74,16 +73,14 @@ const renderItem: SectionListRenderItem<ActivityItem[]> = ({ item }) => (
   <SectionActivityItem item={item} />
 );
 
-export default function GroupActivitiesScreen({
-  route: {
-    params: { groupId },
-  },
-}: Props) {
+export default function GroupActivitiesScreen() {
+  const { groupId } = useSearchParams<SearchParams>();
   const { setOptions } = useNavigation();
   const { group } = useGroup(groupId);
   const [sections, setSections] = useState<ActivitySection[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const loadData = useCallback(async () => {
+    if (!groupId) return;
     setRefreshing(true);
     await groupGetActivities(groupId)
       .then(makeSections)
@@ -99,7 +96,7 @@ export default function GroupActivitiesScreen({
     setOptions({ title: group.name });
   }, [group, setOptions]);
   return (
-    <View style={styles.container}>
+    <Container>
       <SectionList
         sections={sections}
         renderSectionHeader={renderSectionHeader}
@@ -108,9 +105,10 @@ export default function GroupActivitiesScreen({
         onRefresh={loadData}
         refreshing={refreshing}
         stickySectionHeadersEnabled
+        showsVerticalScrollIndicator={false}
         ListEmptyComponent={refreshing ? null : Empty}
         ListFooterComponent={SafeAreaBottom}
       />
-    </View>
+    </Container>
   );
 }
