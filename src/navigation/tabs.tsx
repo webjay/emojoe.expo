@@ -16,11 +16,11 @@ const routes = {
   },
   '(tabs)/groups': {
     title: 'Groups',
-    icon: 'group',
+    icon: 'all-inclusive',
   },
   '(tabs)/profile': {
     title: 'Profile',
-    icon: 'account-circle',
+    icon: 'face',
   },
 };
 
