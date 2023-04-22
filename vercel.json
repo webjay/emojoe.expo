@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/group/:groupId",
+      "destination": "/"
+    },
+    {
+      "source": "/activity/:activityId",
+      "destination": "/"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/privacy.html",
+      "destination": "https://www.emojoe.app/privacy.html",
+      "permanent": true
+    },
+    {
+      "source": "/terms.html",
+      "destination": "https://www.emojoe.app/terms.html",
+      "permanent": true
+    }
+  ]
+}
