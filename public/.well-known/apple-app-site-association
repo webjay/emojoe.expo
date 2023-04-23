@@ -5,8 +5,7 @@
       {
         "appID": "745J59SAV3.dk.webcom.emojoe",
         "paths": [
-          "/activity/*",
-          "/group/*"
+          "/*"
         ]
       }
     ]
