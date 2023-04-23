@@ -8,4 +8,4 @@ export const handleCreateActivity = (groupId: Activity['groupId'], emoji: Activi
   runAfterInteractions(() => activityCreate(groupId, emoji));
 
 export const handleCreateRecognition = (activityId: Activity['id'], emoji: Activity['emoji']) =>
-  runAfterInteractions(recognitionCreate(activityId, emoji));
+  runAfterInteractions(() => recognitionCreate(activityId, emoji));
