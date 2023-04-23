@@ -3,14 +3,18 @@
     "version": ">= 3.9.0"
   },
   "build": {
-    "production": {},
+    "production": {
+      "channel": "production"
+    },
     "development": {
       "extends": "production",
+      "channel": "staging",
       "developmentClient": true,
       "distribution": "internal"
     },
     "preview": {
       "extends": "production",
+      "channel": "staging",
       "distribution": "internal"
     }
   },
