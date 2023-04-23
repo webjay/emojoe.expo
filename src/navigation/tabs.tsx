@@ -35,7 +35,7 @@ function screenOptions({
     tabBarLabelStyle: {
       display: 'none',
     },
-    title: route.title,
+    title: route.title ? `${route.title} | Emojoe` : 'Emojoe',
     tabBarIcon: ({ color, size }) => (
       <MaterialIcons name={route.icon as Icon} color={color} size={size} />
     ),
