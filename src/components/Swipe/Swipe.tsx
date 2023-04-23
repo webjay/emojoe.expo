@@ -1,4 +1,10 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, {
+  useRef,
+  useState,
+  useMemo,
+  useEffect,
+  useCallback,
+} from 'react';
 import type { LayoutChangeEvent } from 'react-native';
 import { View } from 'react-native';
 import Animated, {
@@ -10,6 +16,7 @@ import Animated, {
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import { useTheme, Avatar } from 'react-native-paper';
 import { useRouter } from 'expo-router';
+import { handleCreateActivity } from '@src/lib/task';
 import styles from './Swipe.styles';
 import Goal from '../Goal';
 
@@ -25,15 +32,10 @@ export default function Swipe({ emoji, groupId }: Props) {
   const {
     colors: { surfaceVariant: backgroundColor },
   } = useTheme();
+  const doneRef = useRef(false);
   const [positionEnd, setPositionEnd] = useState(200);
-  const [done, setDone] = useState(false);
+  const [swiped, setSwiped] = useState(false);
   const swipePast = useMemo(() => positionEnd - acceptDistance, [positionEnd]);
-
-  useEffect(() => {
-    if (done) {
-      redirect(`/group/${groupId}/done?emoji=${emoji}`);
-    }
-  }, [done, emoji, groupId, redirect]);
 
   const onLayout = useCallback(
     ({
@@ -49,10 +51,28 @@ export default function Swipe({ emoji, groupId }: Props) {
   const onLeft = useSharedValue(true);
   const position = useSharedValue(0);
 
+  useEffect(() => {
+    if (swiped) {
+      if (doneRef.current) return;
+      doneRef.current = true;
+      handleCreateActivity(groupId, emoji);
+      onLeft.value = false;
+      position.value = withSpring(positionEnd, undefined, () => {
+        runOnJS(redirect)(`/group/${groupId}/done?emoji=${emoji}`);
+      });
+    } else {
+      doneRef.current = false;
+    }
+  }, [swiped, onLeft, position, positionEnd, redirect, groupId, emoji]);
+
   const panGesture = useMemo(
     () =>
       Gesture.Pan()
         .onUpdate(({ translationX }) => {
+          if (translationX > swipePast) {
+            runOnJS(setSwiped)(true);
+            return;
+          }
           if (onLeft.value) {
             position.value = translationX;
           } else {
@@ -63,14 +83,13 @@ export default function Swipe({ emoji, groupId }: Props) {
           if (position.value > swipePast) {
             position.value = withSpring(positionEnd);
             onLeft.value = false;
-            runOnJS(setDone)(true);
           } else {
             position.value = withSpring(0);
             onLeft.value = true;
-            runOnJS(setDone)(false);
+            runOnJS(setSwiped)(false);
           }
         }),
-    [onLeft, position, swipePast, positionEnd],
+    [swipePast, positionEnd, onLeft, position],
   );
 
   const animatedStyle = useAnimatedStyle(() => ({

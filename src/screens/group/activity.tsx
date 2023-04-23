@@ -2,11 +2,12 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text, Button } from 'react-native-paper';
-import type { ScreenPropsStack } from '../../types/navigation';
-import type { Activity } from '../../types/api';
-import { activityGet } from '../../lib/api';
-import useGroup from '../../hooks/useGroup';
-import emoRecognition from '../../lib/recognition.json';
+import { handleCreateRecognition } from '@src/lib/task';
+import type { ScreenPropsStack } from '@src/types/navigation';
+import type { Activity } from '@src/types/api';
+import { activityGet } from '@src/lib/api';
+import useGroup from '@src/hooks/useGroup';
+import emoRecognition from '@src/lib/recognition.json';
 
 type Props = ScreenPropsStack<'GroupActivity'>;
 
@@ -33,6 +34,7 @@ export default function GroupActivityScreen({
   const { group } = useGroup(activity?.groupId);
   const onAppreciationPress = useCallback(
     (emoji: Activity['emoji']) => {
+      handleCreateRecognition(activityId, emoji);
       replace(`/activity/${activityId}/thx?emoji=${emoji}`);
     },
     [activityId, replace],
