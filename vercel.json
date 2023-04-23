@@ -6,7 +6,7 @@
       "destination": "/"
     },
     {
-      "source": "/group/:groupId/*",
+      "source": "/group/:groupId/(.*)",
       "destination": "/"
     },
     {
@@ -14,7 +14,7 @@
       "destination": "/"
     },
     {
-      "source": "/activity/:activityId/*",
+      "source": "/activity/:activityId/(.*)",
       "destination": "/"
     }
   ],
