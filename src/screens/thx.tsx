@@ -7,7 +7,7 @@ import { recognitionCreate } from '../lib/api';
 
 type SearchParams = {
   activityId: string;
-  actionIdentifier: string;
+  emoji: string;
 };
 
 const styles = StyleSheet.create({
@@ -21,18 +21,16 @@ const styles = StyleSheet.create({
 
 export default function ThxScreen() {
   const { replace: redirect } = useRouter();
-  const { activityId, actionIdentifier } = useSearchParams<SearchParams>();
+  const { activityId, emoji } = useSearchParams<SearchParams>();
   const [loading, setLoading] = useState<boolean>();
   const onPress = useCallback(() => {
     redirect('/');
   }, [redirect]);
   useEffect(() => {
-    if (!activityId || !actionIdentifier) return;
+    if (!activityId || !emoji) return;
     setLoading(true);
-    recognitionCreate(activityId, actionIdentifier).then(() =>
-      setLoading(false),
-    );
-  }, [activityId, actionIdentifier]);
+    recognitionCreate(activityId, emoji).then(() => setLoading(false));
+  }, [activityId, emoji]);
   return (
     <Container>
       <View style={styles.container}>

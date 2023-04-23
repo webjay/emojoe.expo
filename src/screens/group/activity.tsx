@@ -33,7 +33,7 @@ export default function GroupActivityScreen({
   const { group } = useGroup(activity?.groupId);
   const onAppreciationPress = useCallback(
     (emoji: Activity['emoji']) => {
-      replace(`/activity/${activityId}/thx?actionIdentifier=${emoji}`);
+      replace(`/activity/${activityId}/thx?emoji=${emoji}`);
     },
     [activityId, replace],
   );
