@@ -135,7 +135,7 @@ export function groupGetActivities(groupId: Group['id']) {
 
 export async function activityCreate(groupId: Group['id'], emoji: GroupMembership['emoji']) {
   const [{ id: groupMembershipActivitiesId }] = await groupMembershipByGroupId(groupId);
-  return API.graphql(graphqlOperation(createActivity, { input: { groupId, groupMembershipActivitiesId, emoji } }));
+  return catchWrap(API.graphql(graphqlOperation(createActivity, { input: { groupId, groupMembershipActivitiesId, emoji } })));
 }
 
 export function activityGet(id: Activity['id']) {

@@ -7,6 +7,7 @@ import {
   DEFAULT_ACTION_IDENTIFIER,
 } from 'expo-notifications';
 import emoRecognition from '@src/lib/recognition.json';
+import { handleCreateRecognition } from '@src/lib/task';
 import Sentry from '@src/lib/sentry';
 
 function logEvent(message: string, extra: Record<string, unknown>) {
@@ -29,6 +30,7 @@ export default function useNotificationListener() {
         return;
       }
       const { emoji } = emoRecognition[actionIdentifier as keyof typeof emoRecognition];
+      handleCreateRecognition(activityId, emoji);
       redirect(`/activity/${activityId}/thx?emoji=${emoji}`);
     });
     return () => {
