@@ -2,6 +2,14 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/groups",
+      "destination": "/"
+    },
+    {
+      "source": "/profile",
+      "destination": "/"
+    },
+    {
       "source": "/group/:groupId",
       "destination": "/"
     },
