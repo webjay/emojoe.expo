@@ -42,11 +42,12 @@ export default function GroupEmojiScreen() {
     <Container>
       <View style={styles.container}>
         <ScrollView
+          showsVerticalScrollIndicator={false}
           style={styles.scrollView}
           contentContainerStyle={styles.contentContainerStyle}
         >
-          {emojiArray.map((emoji) => (
-            <Pressable key={emoji} onPress={() => onEmojiSelect(emoji)}>
+          {emojiArray.map(({ id, emoji }) => (
+            <Pressable key={id} onPress={() => onEmojiSelect(emoji)}>
               <Avatar.Text label={emoji} />
             </Pressable>
           ))}

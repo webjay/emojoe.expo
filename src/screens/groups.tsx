@@ -1,11 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { StyleSheet, InteractionManager } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
 import { Appbar } from 'react-native-paper';
 import Container from '@src/components/Container';
 import useGroupMemberships from '../hooks/useGroupMemberships';
-import Loading from '../components/Loading';
 import Empty from '../components/Empty';
 import ScrollViewRefresh from '../components/ScrollViewRefresh';
 import GroupCard from '../components/GroupCard';
@@ -20,7 +19,6 @@ const styles = StyleSheet.create({
 
 export default function GroupsScreen() {
   const { push: navigate } = useRouter();
-  const [waiting, setWaiting] = useState(true);
   const [hasLoaded, setHasLoaded] = useState(false);
   const { loading, groups, loadData } = useGroupMemberships();
   useEffect(() => {
@@ -30,13 +28,8 @@ export default function GroupsScreen() {
   useFocusEffect(
     useCallback(() => {
       loadData(false);
-      // hack to make sure scrollbars are set for full width
-      InteractionManager.runAfterInteractions(() => {
-        setTimeout(() => setWaiting(false), 500);
-      });
     }, [loadData]),
   );
-  if (waiting) return <Loading />;
   return (
     <Container>
       <Appbar.Header mode="small" statusBarHeight={0}>

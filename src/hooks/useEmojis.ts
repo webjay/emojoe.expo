@@ -8,7 +8,7 @@ type Emoji = {
   }[];
 };
 
-const emojiArray = Object.values<Emoji>(emojis).map(({ skins }) => skins[0].native);
+const emojiArray = Object.values<Emoji>(emojis).map(({ id, skins: [{ native }] }) => ({ id, emoji: native }));
 
 export default function useEmojis() {
   return { emojiArray, loading: false };
