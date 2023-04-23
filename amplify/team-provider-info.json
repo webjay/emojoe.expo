@@ -29,7 +29,7 @@
         },
         "emojoeexpoemojoeDynamoTrigger": {
           "deploymentBucketName": "amplify-emojoeexpo-dev-123601-deployment",
-          "s3Key": "amplify-builds/emojoeexpoemojoeDynamoTrigger-LambdaLayerVersion99c4741e-build.zip"
+          "s3Key": "amplify-builds/emojoeexpoemojoeDynamoTrigger-LambdaLayerVersion70c82e61-build.zip"
         }
       }
     }

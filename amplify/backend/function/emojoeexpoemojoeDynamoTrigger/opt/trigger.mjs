@@ -6,7 +6,8 @@ import { query, get } from './dynamo.mjs';
 const expo = new Expo();
 const sendPushNotificationsAsync = expo.sendPushNotificationsAsync.bind(expo);
 
-// const appScheme = 'emojoe2';
+const appScheme = 'emojoe2://';
+// const appScheme = 'https://emojoe.app/';
 
 function firstName(name) {
   if (!name) return '🃟';
@@ -58,7 +59,7 @@ function getActivity(id) {
 }
 
 function handleReceiptChunks(receiptChunks) {
-  console.log({ receiptChunks });
+  console.log('receiptChunks', JSON.stringify(receiptChunks));
 }
 
 /**
@@ -92,10 +93,11 @@ async function activityToExpoPushMessages({
     .filter(({ owner: profileOwner }) => profileOwner !== owner)
     .map(({ pushToken }) => ({
       to: pushToken,
-      title: `${firstName(ownerProfile.name)} just ➡️ ${emoji}`,
+      title: `${firstName(ownerProfile.name)} ➡️ ${emoji}`,
       data: {
-        url: `https://emojoe.app/activity/${activityId}`,
-        // activityId,
+        url: `${appScheme}activity/${activityId}`,
+        activityId,
+        emoji,
       },
       channelId: 'activity',
       categoryId: 'activity',
@@ -111,9 +113,10 @@ async function recognitionToExpoPushMessage({ activityId, emoji }) {
   const [profile] = await getProfilesBySubId(activity.owner.substring(0, 36));
   return {
     to: profile.pushToken,
-    title: `You just received ${emoji}`,
+    title: `${emoji}`,
     data: {
-      url: `https://emojoe.app/activity/${activityId}`,
+      url: `${appScheme}group/${activity.groupId}`,
+      activityId,
       emoji,
     },
     channelId: 'recognition',
