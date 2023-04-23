@@ -1,11 +1,20 @@
 {
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/group/:groupId",
       "destination": "/"
     },
     {
+      "source": "/group/:groupId/*",
+      "destination": "/"
+    },
+    {
       "source": "/activity/:activityId",
+      "destination": "/"
+    },
+    {
+      "source": "/activity/:activityId/*",
       "destination": "/"
     }
   ],
