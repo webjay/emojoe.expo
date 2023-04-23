@@ -4,7 +4,7 @@
     "name": "Emojoe",
     "slug": "emojoe2",
     "scheme": "emojoe2",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "orientation": "portrait",
     "icon": "./assets/logo_transparent.png",
     "userInterfaceStyle": "automatic",
@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "dk.webcom.emojoe",
-      "buildNumber": "5",
+      "buildNumber": "1",
       "associatedDomains": ["applinks:emojoe.app"],
       "appStoreUrl": "https://apps.apple.com/us/app/emojoe/id1540478554"
     },
