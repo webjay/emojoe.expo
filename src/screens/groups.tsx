@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
@@ -19,14 +19,15 @@ const styles = StyleSheet.create({
 
 export default function GroupsScreen() {
   const { push: navigate } = useRouter();
-  const [hasLoaded, setHasLoaded] = useState(false);
+  const hasLoaded = useRef<boolean>(false);
   const { loading, groups, loadData } = useGroupMemberships();
   useEffect(() => {
     loadData();
-    setHasLoaded(true);
+    hasLoaded.current = true;
   }, [loadData]);
   useFocusEffect(
     useCallback(() => {
+      if (!hasLoaded.current) return;
       loadData(false);
     }, [loadData]),
   );
@@ -41,7 +42,7 @@ export default function GroupsScreen() {
         refetch={loadData}
         style={styles.container}
       >
-        {hasLoaded && !loading && groups.length === 0 && <Empty />}
+        {hasLoaded.current && !loading && groups.length === 0 && <Empty />}
         {groups.map((group) => (
           <GroupCard key={group.groupId} group={group} />
         ))}

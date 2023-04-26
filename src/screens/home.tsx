@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import Container from '@src/components/Container';
@@ -16,14 +16,15 @@ const styles = StyleSheet.create({
 });
 
 export default function HomeScreen() {
+  const hasLoaded = useRef<boolean>(false);
   const { loading, groups, loadData } = useGroupMemberships();
-  const [hasLoaded, setHasLoaded] = useState(false);
   useEffect(() => {
     loadData();
-    setHasLoaded(true);
+    hasLoaded.current = true;
   }, [loadData]);
   useFocusEffect(
     useCallback(() => {
+      if (!hasLoaded.current) return;
       loadData(false);
     }, [loadData]),
   );
@@ -34,7 +35,7 @@ export default function HomeScreen() {
         refetch={loadData}
         style={styles.container}
       >
-        {hasLoaded && !loading && groups.length === 0 && <Empty />}
+        {hasLoaded.current && !loading && groups.length === 0 && <Empty />}
         {groups.map((group) => (
           <GroupAction key={group.groupId} group={group} />
         ))}
