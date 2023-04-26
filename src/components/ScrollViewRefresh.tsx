@@ -7,20 +7,12 @@ type Props = {
   children: ReactNode;
   loading: boolean;
   refetch: () => void;
-  scrollEnabled?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
-function ScrollViewRefresh({
-  children,
-  loading,
-  refetch,
-  scrollEnabled,
-  style,
-}: Props) {
+function ScrollViewRefresh({ children, loading, refetch, style }: Props) {
   return (
     <ScrollView
-      scrollEnabled={scrollEnabled}
       showsVerticalScrollIndicator={false}
       style={style}
       refreshControl={
@@ -33,7 +25,6 @@ function ScrollViewRefresh({
 }
 
 ScrollViewRefresh.defaultProps = {
-  scrollEnabled: true,
   style: undefined,
 };
 
