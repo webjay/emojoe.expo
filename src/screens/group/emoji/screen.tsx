@@ -44,10 +44,10 @@ export default function GroupEmoji() {
   );
   return (
     <Container>
-      <Search search={search} />
       <SectionList
         refreshing={loading}
         sections={sections}
+        ListHeaderComponent={<Search search={search} />}
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItemCallback}
         stickySectionHeadersEnabled
