@@ -1,10 +1,9 @@
 import { Amplify } from '@aws-amplify/core';
 import { createURL } from 'expo-linking';
-import { Platform } from 'react-native'
 import awsConfig from '../aws-exports';
 import urlOpener from './urlOpener';
 
-const redirectUrl = Platform.OS === 'web' ? createURL('/') : createURL('');
+const redirectUrl = createURL('/');
 
 const updatedAwsConfig = {
   ...awsConfig,
