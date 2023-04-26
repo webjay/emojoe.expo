@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme, Text, Badge } from 'react-native-paper';
-import type { ActivitySection } from '../types/common';
+import type { ActivitySection } from '@src/types/common';
 
 type Props = {
   section: ActivitySection;
@@ -15,9 +15,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function SectionActivityHeader({
-  section: { title, data },
-}: Props) {
+function SectionActivityHeader({ section: { title, data } }: Props) {
   const {
     colors: { secondaryContainer: backgroundColor },
   } = useTheme();
@@ -28,3 +26,5 @@ export default function SectionActivityHeader({
     </View>
   );
 }
+
+export default memo(SectionActivityHeader);

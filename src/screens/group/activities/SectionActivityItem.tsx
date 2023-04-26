@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import type { ActivityItem } from '../types/common';
-import { dayProgressFlex } from '../lib/date';
-import NameChip from './NameChip';
-import AnimatedFlexView from './AnimatedFlexView';
-import Emoji from './Emoji';
+import type { ActivityItem } from '@src/types/common';
+import { dayProgressFlex } from '@src/lib/date';
+import NameChip from '@src/components/NameChip';
+import AnimatedFlexView from '@src/components/AnimatedFlexView';
+import Emoji from '@src/components/Emoji';
 
 type Props = {
   item: ActivityItem[];
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function SectionActivityItem({ item }: Props) {
+function SectionActivityItem({ item }: Props) {
   const {
     colors: { secondaryContainer: borderColor },
   } = useTheme();
@@ -64,3 +64,5 @@ export default function SectionActivityItem({ item }: Props) {
     </View>
   );
 }
+
+export default memo(SectionActivityItem);
