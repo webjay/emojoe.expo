@@ -3,19 +3,19 @@ import { useNavigation, useSearchParams } from 'expo-router';
 import { StyleSheet, SectionList, View } from 'react-native';
 import type { SectionListRenderItem } from 'react-native';
 import Container from '@src/components/Container';
-import useGroup from '../hooks/useGroup';
-import type { Activity } from '../types/api';
-import { groupGetActivities } from '../lib/api';
-import SectionActivityHeader from '../components/SectionActivityHeader';
-import SectionActivityItem from '../components/SectionActivityItem';
-import Empty from '../components/Empty';
-import SafeAreaBottom from '../components/SafeAreaBottom';
+import useGroup from '@src/hooks/useGroup';
+import type { Activity } from '@src/types/api';
+import { groupGetActivities } from '@src/lib/api';
+import Empty from '@src/components/Empty';
+import SafeAreaBottom from '@src/components/SafeAreaBottom';
 import type {
   ActivitySection,
   ActivitySectionMap,
   ActivityItem,
-} from '../types/common';
-import { toDateString, dayTitle } from '../lib/date';
+} from '@src/types/common';
+import { toDateString, dayTitle } from '@src/lib/date';
+import SectionActivityHeader from './SectionActivityHeader';
+import SectionActivityItem from './SectionActivityItem';
 
 type SearchParams = {
   groupId: string;
