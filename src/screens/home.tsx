@@ -1,6 +1,7 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
+import { SplashScreen } from 'expo-router';
 import Container from '@src/components/Container';
 import useGroupMemberships from '../hooks/useGroupMemberships';
 import ScrollViewRefresh from '../components/ScrollViewRefresh';
@@ -19,8 +20,9 @@ export default function HomeScreen() {
   const hasLoaded = useRef<boolean>(false);
   const { loading, groups, loadData } = useGroupMemberships();
   useEffect(() => {
-    loadData();
-    hasLoaded.current = true;
+    loadData().then(() => {
+      hasLoaded.current = true;
+    });
   }, [loadData]);
   useFocusEffect(
     useCallback(() => {
@@ -28,6 +30,9 @@ export default function HomeScreen() {
       loadData(false);
     }, [loadData]),
   );
+  if (!hasLoaded.current) {
+    return <SplashScreen />;
+  }
   return (
     <Container>
       <ScrollViewRefresh
