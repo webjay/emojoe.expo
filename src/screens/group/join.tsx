@@ -1,9 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text, Button } from 'react-native-paper';
 import useAuth from '@src/hooks/useAuth';
 import useGroup from '@src/hooks/useGroup';
+import { storageSet, storageGet, storageRemove } from '@src/lib/storage';
 import { handleGroupCreateMembership } from '@src/lib/task';
 
 type Props = {
@@ -23,30 +24,38 @@ const styles = StyleSheet.create({
   },
 });
 
+const hasAcceptedKey = 'hasAccepted';
+const hasAcceptedValue = 'yes';
+
 export default function GroupJoinScreen({
   route: {
     params: { groupId },
   },
 }: Props) {
-  const [hasAccepted, setHasAccepted] = useState<boolean>();
   const { isSignedIn, handleSignIn } = useAuth();
   const { push: navigate, replace: redirect } = useRouter();
   const { group } = useGroup(groupId);
+  const init = useCallback(async () => {
+    const hasAccepted = await storageGet(hasAcceptedKey);
+    if (hasAccepted !== hasAcceptedValue) return;
+    storageRemove(hasAcceptedKey);
+    handleGroupCreateMembership(groupId);
+    redirect(`/group/${groupId}/emoji`);
+  }, [groupId, redirect]);
   const onInviteAccept = useCallback(async () => {
-    setHasAccepted(true);
-  }, []);
-  const onInviteDecline = useCallback(() => {
-    navigate('/');
-  }, [navigate]);
-  useEffect(() => {
-    if (!hasAccepted) return;
+    await storageSet(hasAcceptedKey, hasAcceptedValue);
     if (!isSignedIn) {
       handleSignIn();
       return;
     }
-    handleGroupCreateMembership(groupId);
-    redirect(`/group/${groupId}/emoji`);
-  }, [hasAccepted, isSignedIn, groupId, handleSignIn, redirect]);
+    init();
+  }, [isSignedIn, handleSignIn, init]);
+  const onInviteDecline = useCallback(() => {
+    navigate('/');
+  }, [navigate]);
+  useEffect(() => {
+    init();
+  }, [init]);
   return (
     <SafeAreaView style={styles.container}>
       <Text variant="displayLarge">Join</Text>
