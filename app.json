@@ -6,10 +6,10 @@
     "scheme": "emojoe2",
     "version": "2.1.0",
     "orientation": "portrait",
-    "icon": "./assets/logo_transparent.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/logo_transparent.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#fff"
     },
@@ -30,7 +30,7 @@
       "versionCode": 1,
       "permissions": [],
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo_transparent.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#fff"
       }
     },

@@ -3,11 +3,16 @@ import { StyleSheet, SafeAreaView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { TextInput, Button } from 'react-native-paper';
 import Container from '@src/components/Container';
-import type { ScreenPropsStack } from '../types/navigation';
-import useGroup from '../hooks/useGroup';
-import { groupCreate, groupUpdate } from '../lib/api';
+import useGroup from '@src/hooks/useGroup';
+import { groupCreate, groupUpdate } from '@src/lib/api';
 
-type Props = ScreenPropsStack<'GroupEdit'>;
+type Props = {
+  route: {
+    params: {
+      groupId: string;
+    };
+  };
+};
 
 const styles = StyleSheet.create({
   container: {

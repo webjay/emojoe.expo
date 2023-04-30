@@ -52,50 +52,6 @@ export const listProfiles = /* GraphQL */ `
     }
   }
 `;
-export const getGroup = /* GraphQL */ `
-  query GetGroup($id: ID!) {
-    getGroup(id: $id) {
-      id
-      name
-      memberships {
-        items {
-          id
-          owner
-          profileId
-          groupId
-          emoji
-          createdAt
-          updatedAt
-          profileGroupMembershipsId
-          groupMembershipsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listGroups = /* GraphQL */ `
-  query ListGroups(
-    $filter: ModelGroupFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        memberships {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getGroupMembership = /* GraphQL */ `
   query GetGroupMembership($id: ID!) {
     getGroupMembership(id: $id) {
@@ -457,6 +413,50 @@ export const activitiesByGroupIdAndCreatedAt = /* GraphQL */ `
         createdAt
         updatedAt
         groupMembershipActivitiesId
+      }
+      nextToken
+    }
+  }
+`;
+export const getGroup = /* GraphQL */ `
+  query GetGroup($id: ID!) {
+    getGroup(id: $id) {
+      id
+      name
+      memberships {
+        items {
+          id
+          owner
+          profileId
+          groupId
+          emoji
+          createdAt
+          updatedAt
+          profileGroupMembershipsId
+          groupMembershipsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listGroups = /* GraphQL */ `
+  query ListGroups(
+    $filter: ModelGroupFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        memberships {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       nextToken
     }

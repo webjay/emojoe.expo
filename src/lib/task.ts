@@ -3,6 +3,7 @@ import type { Activity } from '@src/types/api';
 import {
   activityCreate,
   recognitionCreate,
+  groupCreateMembership,
   groupUpdateMembership,
 } from '@src/lib/api';
 
@@ -17,6 +18,9 @@ export const handleCreateRecognition = (
   activityId: Activity['id'],
   emoji: Activity['emoji'],
 ) => runAfterInteractions(() => recognitionCreate(activityId, emoji));
+
+export const handleGroupCreateMembership = (groupId: Activity['groupId']) =>
+  runAfterInteractions(() => groupCreateMembership(groupId));
 
 export const handleGroupSetEmoji = (
   groupId: Activity['groupId'],

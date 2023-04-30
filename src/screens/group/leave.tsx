@@ -1,22 +1,27 @@
 import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
-import type { ScreenPropsStack } from '../types/navigation';
-import { groupDeleteMembership } from '../lib/api';
+import { groupDeleteMembership } from '@src/lib/api';
 
-type Props = ScreenPropsStack<'GroupLeave'>;
+type Props = {
+  route: {
+    params: {
+      groupId: string;
+    };
+  };
+};
 
 export default function GroupLeaveScreen({
   route: {
     params: { groupId },
   },
 }: Props) {
-  const { replace } = useRouter();
+  const { replace: redirect } = useRouter();
   useEffect(() => {
     async function handleGroupLeave() {
       await groupDeleteMembership(groupId);
-      replace('/');
+      redirect('/');
     }
     handleGroupLeave();
-  }, [groupId, replace]);
+  }, [groupId, redirect]);
   return null;
 }

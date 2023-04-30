@@ -4,10 +4,15 @@ import type { ShareAction } from 'react-native';
 import { StyleSheet, Share, SafeAreaView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text, Button } from 'react-native-paper';
-import type { ScreenPropsStack } from '../types/navigation';
-import useGroup from '../hooks/useGroup';
+import useGroup from '@src/hooks/useGroup';
 
-type Props = ScreenPropsStack<'GroupInvite'>;
+type Props = {
+  route: {
+    params: {
+      groupId: string;
+    };
+  };
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +44,7 @@ export default function GroupInviteScreen({
     const url = getURL(groupId);
     const dialogTitle = group.name;
     const subject = `Please join ${dialogTitle}`;
-    const message = `Please join the group: ${dialogTitle}.\n${url}`;
+    const message = `Please join ${dialogTitle}.\n${url}`;
     const action = await Share.share(
       { message },
       { dialogTitle, subject },
@@ -52,7 +57,7 @@ export default function GroupInviteScreen({
     navigate('/');
   }, [navigate]);
   const cancelButtonTitle =
-    shareAction?.action !== 'dismissedAction' ? 'Done' : 'Nevermind';
+    shareAction?.action === 'sharedAction' ? 'Done' : 'Nevermind';
   return (
     <SafeAreaView style={styles.container}>
       <Text variant="displayLarge">Invite</Text>

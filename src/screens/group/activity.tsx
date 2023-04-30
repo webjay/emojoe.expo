@@ -3,13 +3,18 @@ import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text, Button } from 'react-native-paper';
 import { handleCreateRecognition } from '@src/lib/task';
-import type { ScreenPropsStack } from '@src/types/navigation';
 import type { Activity } from '@src/types/api';
 import { activityGet } from '@src/lib/api';
 import useGroup from '@src/hooks/useGroup';
 import emoRecognition from '@src/lib/recognition.json';
 
-type Props = ScreenPropsStack<'GroupActivity'>;
+type Props = {
+  route: {
+    params: {
+      activityId: string;
+    };
+  };
+};
 
 const styles = StyleSheet.create({
   container: {

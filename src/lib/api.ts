@@ -1,6 +1,7 @@
 import { API, graphqlOperation } from '@aws-amplify/api';
 import type { GraphQLResult } from '@aws-amplify/api-graphql';
-import getCognitoUserSub from './cognito';
+import awsConfig from '@src/aws-exports';
+import getCognitoUserSub from '@src/lib/cognito';
 import {
   createProfile,
   updateProfile,
@@ -11,7 +12,7 @@ import {
   deleteGroupMembership,
   createActivity,
   createRecognition,
-} from '../graphql/mutations';
+} from '@src/graphql/mutations';
 import {
   getProfile,
   profilesBySubId,
@@ -20,7 +21,7 @@ import {
   groupMembershipsByGroupIdAndProfileId,
   activitiesByGroupIdAndCreatedAt,
   getActivity,
-} from '../graphql/queries';
+} from '@src/graphql/queries';
 import type {
   Activity,
   Profile,
@@ -32,8 +33,10 @@ import type {
   UpdateGroupInput,
   CreateGroupMembershipInput,
   UpdateGroupMembershipInput,
-} from '../types/api';
-import Sentry from './sentry';
+} from '@src/types/api';
+import Sentry from '@src/lib/sentry';
+
+const authToken = awsConfig.aws_appsync_apiKey;
 
 function filterNullItems(item: Record<string, unknown>) {
   return item !== null;
@@ -48,19 +51,27 @@ function catchWrap<T>(result: Promise<GraphQLResult<T>> | T) {
 
 async function dataExtract<T>(result: Promise<GraphQLResult<T>> | unknown) {
   if (result instanceof Promise) {
-    const { data, errors } = await result.catch((catchedResult) => catchedResult);
+    const { data, errors } = await result.catch((catchedResult) => {
+      Sentry.captureException(catchedResult);
+      return catchedResult;
+    });
     if (errors) {
       Sentry.captureException(errors);
     }
+    if (!data) return null;
     const queryResult = data[Object.keys(data)[0]];
-    return Object.hasOwn(queryResult, 'items') ? queryResult.items.filter(filterNullItems) : queryResult;
+    return Object.hasOwn(queryResult, 'items')
+      ? queryResult.items.filter(filterNullItems)
+      : queryResult;
   }
   return result;
 }
 
 export async function profileCreate(input?: Partial<CreateProfileInput>) {
   const subId = await getCognitoUserSub();
-  return API.graphql(graphqlOperation(createProfile, { input: { ...input, subId } }));
+  return API.graphql(
+    graphqlOperation(createProfile, { input: { ...input, subId } }),
+  );
 }
 
 export function profileGetById(id: Profile['id']): Promise<Profile> {
@@ -69,7 +80,9 @@ export function profileGetById(id: Profile['id']): Promise<Profile> {
 
 export async function profileGetBySubId(): Promise<Profile> {
   const subId = await getCognitoUserSub();
-  const [profile] = await dataExtract(API.graphql(graphqlOperation(profilesBySubId, { subId })));
+  const [profile] = await dataExtract(
+    API.graphql(graphqlOperation(profilesBySubId, { subId })),
+  );
   if (!profile) {
     // TODO: dont
     await profileCreate();
@@ -80,68 +93,132 @@ export async function profileGetBySubId(): Promise<Profile> {
 
 export async function profileUpdate(update: Partial<UpdateProfileInput>) {
   const { id } = await profileGetBySubId();
-  return API.graphql(graphqlOperation(updateProfile, { input: { ...update, id } }));
+  return API.graphql(
+    graphqlOperation(updateProfile, { input: { ...update, id } }),
+  );
 }
 
 export function groupGet(id: Group['id']): Promise<Group> {
   return dataExtract(API.graphql(graphqlOperation(getGroup, { id })));
 }
 
-export async function groupsByProfile(): Promise<GroupMembership[]> {
-  const { id: profileId } = await profileGetBySubId();
-  return dataExtract(API.graphql(graphqlOperation(groupMembershipsByProfileId, { profileId })));
+export function groupGetPublic(id: Group['id']) {
+  return dataExtract(
+    API.graphql({
+      query: getGroup,
+      variables: { id },
+      authMode: 'API_KEY',
+      authToken,
+    }),
+  );
 }
 
-async function groupMembershipByGroupId(groupId: Group['id']): Promise<GroupMembership[]> {
+export async function groupsByProfile(): Promise<GroupMembership[]> {
+  const { id: profileId } = await profileGetBySubId();
+  return dataExtract(
+    API.graphql(graphqlOperation(groupMembershipsByProfileId, { profileId })),
+  );
+}
+
+async function groupMembershipByGroupId(
+  groupId: Group['id'],
+): Promise<GroupMembership[]> {
   const { id: profileId } = await profileGetBySubId();
   const variables = {
     groupId,
     profileId: { eq: profileId },
   };
-  return dataExtract(API.graphql(graphqlOperation(groupMembershipsByGroupIdAndProfileId, variables)));
+  return dataExtract(
+    API.graphql(
+      graphqlOperation(groupMembershipsByGroupIdAndProfileId, variables),
+    ),
+  );
 }
 
-export function groupUpdate(id: UpdateGroupInput['id'], update: Partial<UpdateGroupInput>): Promise<Group> {
-  return dataExtract(API.graphql(graphqlOperation(updateGroup, { input: { ...update, id } })));
+export function groupUpdate(
+  id: UpdateGroupInput['id'],
+  update: Partial<UpdateGroupInput>,
+): Promise<Group> {
+  return dataExtract(
+    API.graphql(graphqlOperation(updateGroup, { input: { ...update, id } })),
+  );
 }
 
-export async function groupCreateMembership(groupId: CreateGroupMembershipInput['groupId']) {
+export async function groupCreateMembership(
+  groupId: CreateGroupMembershipInput['groupId'],
+) {
   const existing = await groupMembershipByGroupId(groupId);
   if (existing.length !== 0) return;
   const { id: profileId } = await profileGetBySubId();
-  await API.graphql(graphqlOperation(createGroupMembership, { input: { profileId, groupId } }));
+  await API.graphql(
+    graphqlOperation(createGroupMembership, { input: { profileId, groupId } }),
+  );
 }
 
 export async function groupCreate(input: CreateGroupInput): Promise<Group> {
-  const group = await dataExtract(API.graphql(graphqlOperation(createGroup, { input })));
+  const group = await dataExtract(
+    API.graphql(graphqlOperation(createGroup, { input })),
+  );
   await groupCreateMembership(group.id);
   return group;
 }
 
-export async function groupUpdateMembership(groupId: Group['id'], update: Partial<UpdateGroupMembershipInput>) {
+export async function groupUpdateMembership(
+  groupId: Group['id'],
+  update: Partial<UpdateGroupMembershipInput>,
+) {
   const [{ id }] = await groupMembershipByGroupId(groupId);
-  return API.graphql(graphqlOperation(updateGroupMembership, { input: { ...update, id } }));
+  return API.graphql(
+    graphqlOperation(updateGroupMembership, { input: { ...update, id } }),
+  );
 }
 
 export async function groupDeleteMembership(groupId: Group['id']) {
   const [{ id }] = await groupMembershipByGroupId(groupId);
-  return API.graphql(graphqlOperation(deleteGroupMembership, { input: { id } }));
+  return API.graphql(
+    graphqlOperation(deleteGroupMembership, { input: { id } }),
+  );
 }
 
 export function groupGetActivities(groupId: Group['id']) {
   const sortDirection = 'DESC';
-  return dataExtract(API.graphql(graphqlOperation(activitiesByGroupIdAndCreatedAt, { groupId, sortDirection })));
+  return dataExtract(
+    API.graphql(
+      graphqlOperation(activitiesByGroupIdAndCreatedAt, {
+        groupId,
+        sortDirection,
+      }),
+    ),
+  );
 }
 
-export async function activityCreate(groupId: Group['id'], emoji: GroupMembership['emoji']) {
-  const [{ id: groupMembershipActivitiesId }] = await groupMembershipByGroupId(groupId);
-  return catchWrap(API.graphql(graphqlOperation(createActivity, { input: { groupId, groupMembershipActivitiesId, emoji } })));
+export async function activityCreate(
+  groupId: Group['id'],
+  emoji: GroupMembership['emoji'],
+) {
+  const [{ id: groupMembershipActivitiesId }] = await groupMembershipByGroupId(
+    groupId,
+  );
+  return catchWrap(
+    API.graphql(
+      graphqlOperation(createActivity, {
+        input: { groupId, groupMembershipActivitiesId, emoji },
+      }),
+    ),
+  );
 }
 
 export function activityGet(id: Activity['id']) {
   return dataExtract(API.graphql(graphqlOperation(getActivity, { id })));
 }
 
-export function recognitionCreate(activityId: Activity['id'], emoji: Activity['emoji']) {
-  return catchWrap(API.graphql(graphqlOperation(createRecognition, { input: { activityId, emoji } })));
+export function recognitionCreate(
+  activityId: Activity['id'],
+  emoji: Activity['emoji'],
+) {
+  return catchWrap(
+    API.graphql(
+      graphqlOperation(createRecognition, { input: { activityId, emoji } }),
+    ),
+  );
 }

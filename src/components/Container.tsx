@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainerStyle: {
-    minHeight: '100%',
+    flexGrow: 1,
   },
   surface: {
     flex: 1,

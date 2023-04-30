@@ -296,20 +296,6 @@ export type ModelProfileConnection = {
   nextToken?: string | null,
 };
 
-export type ModelGroupFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  and?: Array< ModelGroupFilterInput | null > | null,
-  or?: Array< ModelGroupFilterInput | null > | null,
-  not?: ModelGroupFilterInput | null,
-};
-
-export type ModelGroupConnection = {
-  __typename: "ModelGroupConnection",
-  items:  Array<Group | null >,
-  nextToken?: string | null,
-};
-
 export type ModelGroupMembershipFilterInput = {
   id?: ModelIDInput | null,
   owner?: ModelStringInput | null,
@@ -378,6 +364,20 @@ export type ModelStringKeyConditionInput = {
   beginsWith?: string | null,
 };
 
+export type ModelGroupFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  and?: Array< ModelGroupFilterInput | null > | null,
+  or?: Array< ModelGroupFilterInput | null > | null,
+  not?: ModelGroupFilterInput | null,
+};
+
+export type ModelGroupConnection = {
+  __typename: "ModelGroupConnection",
+  items:  Array<Group | null >,
+  nextToken?: string | null,
+};
+
 export type ModelSubscriptionProfileFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   subId?: ModelSubscriptionStringInput | null,
@@ -417,13 +417,6 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionGroupFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionGroupFilterInput | null > | null,
-  or?: Array< ModelSubscriptionGroupFilterInput | null > | null,
-};
-
 export type ModelSubscriptionGroupMembershipFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   profileId?: ModelSubscriptionIDInput | null,
@@ -449,6 +442,13 @@ export type ModelSubscriptionRecognitionFilterInput = {
   createdAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionRecognitionFilterInput | null > | null,
   or?: Array< ModelSubscriptionRecognitionFilterInput | null > | null,
+};
+
+export type ModelSubscriptionGroupFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionGroupFilterInput | null > | null,
+  or?: Array< ModelSubscriptionGroupFilterInput | null > | null,
 };
 
 export type CreateProfileMutationVariables = {
@@ -1087,60 +1087,6 @@ export type ListProfilesQuery = {
   } | null,
 };
 
-export type GetGroupQueryVariables = {
-  id: string,
-};
-
-export type GetGroupQuery = {
-  getGroup?:  {
-    __typename: "Group",
-    id: string,
-    name: string,
-    memberships?:  {
-      __typename: "ModelGroupMembershipConnection",
-      items:  Array< {
-        __typename: "GroupMembership",
-        id: string,
-        owner?: string | null,
-        profileId: string,
-        groupId: string,
-        emoji?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        profileGroupMembershipsId?: string | null,
-        groupMembershipsId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListGroupsQueryVariables = {
-  filter?: ModelGroupFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListGroupsQuery = {
-  listGroups?:  {
-    __typename: "ModelGroupConnection",
-    items:  Array< {
-      __typename: "Group",
-      id: string,
-      name: string,
-      memberships?:  {
-        __typename: "ModelGroupMembershipConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
 export type GetGroupMembershipQueryVariables = {
   id: string,
 };
@@ -1532,6 +1478,60 @@ export type ActivitiesByGroupIdAndCreatedAtQuery = {
   } | null,
 };
 
+export type GetGroupQueryVariables = {
+  id: string,
+};
+
+export type GetGroupQuery = {
+  getGroup?:  {
+    __typename: "Group",
+    id: string,
+    name: string,
+    memberships?:  {
+      __typename: "ModelGroupMembershipConnection",
+      items:  Array< {
+        __typename: "GroupMembership",
+        id: string,
+        owner?: string | null,
+        profileId: string,
+        groupId: string,
+        emoji?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        profileGroupMembershipsId?: string | null,
+        groupMembershipsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListGroupsQueryVariables = {
+  filter?: ModelGroupFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListGroupsQuery = {
+  listGroups?:  {
+    __typename: "ModelGroupConnection",
+    items:  Array< {
+      __typename: "Group",
+      id: string,
+      name: string,
+      memberships?:  {
+        __typename: "ModelGroupMembershipConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type OnCreateProfileSubscriptionVariables = {
   filter?: ModelSubscriptionProfileFilterInput | null,
   owner?: string | null,
@@ -1614,96 +1614,6 @@ export type OnDeleteProfileSubscription = {
     name?: string | null,
     pushToken?: string | null,
     groupMemberships?:  {
-      __typename: "ModelGroupMembershipConnection",
-      items:  Array< {
-        __typename: "GroupMembership",
-        id: string,
-        owner?: string | null,
-        profileId: string,
-        groupId: string,
-        emoji?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        profileGroupMembershipsId?: string | null,
-        groupMembershipsId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateGroupSubscriptionVariables = {
-  filter?: ModelSubscriptionGroupFilterInput | null,
-};
-
-export type OnCreateGroupSubscription = {
-  onCreateGroup?:  {
-    __typename: "Group",
-    id: string,
-    name: string,
-    memberships?:  {
-      __typename: "ModelGroupMembershipConnection",
-      items:  Array< {
-        __typename: "GroupMembership",
-        id: string,
-        owner?: string | null,
-        profileId: string,
-        groupId: string,
-        emoji?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        profileGroupMembershipsId?: string | null,
-        groupMembershipsId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateGroupSubscriptionVariables = {
-  filter?: ModelSubscriptionGroupFilterInput | null,
-};
-
-export type OnUpdateGroupSubscription = {
-  onUpdateGroup?:  {
-    __typename: "Group",
-    id: string,
-    name: string,
-    memberships?:  {
-      __typename: "ModelGroupMembershipConnection",
-      items:  Array< {
-        __typename: "GroupMembership",
-        id: string,
-        owner?: string | null,
-        profileId: string,
-        groupId: string,
-        emoji?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        profileGroupMembershipsId?: string | null,
-        groupMembershipsId?: string | null,
-      } | null >,
-      nextToken?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteGroupSubscriptionVariables = {
-  filter?: ModelSubscriptionGroupFilterInput | null,
-};
-
-export type OnDeleteGroupSubscription = {
-  onDeleteGroup?:  {
-    __typename: "Group",
-    id: string,
-    name: string,
-    memberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
         __typename: "GroupMembership",
@@ -2100,6 +2010,96 @@ export type OnDeleteRecognitionSubscription = {
     owner?: string | null,
     activityId: string,
     emoji: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateGroupSubscriptionVariables = {
+  filter?: ModelSubscriptionGroupFilterInput | null,
+};
+
+export type OnCreateGroupSubscription = {
+  onCreateGroup?:  {
+    __typename: "Group",
+    id: string,
+    name: string,
+    memberships?:  {
+      __typename: "ModelGroupMembershipConnection",
+      items:  Array< {
+        __typename: "GroupMembership",
+        id: string,
+        owner?: string | null,
+        profileId: string,
+        groupId: string,
+        emoji?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        profileGroupMembershipsId?: string | null,
+        groupMembershipsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateGroupSubscriptionVariables = {
+  filter?: ModelSubscriptionGroupFilterInput | null,
+};
+
+export type OnUpdateGroupSubscription = {
+  onUpdateGroup?:  {
+    __typename: "Group",
+    id: string,
+    name: string,
+    memberships?:  {
+      __typename: "ModelGroupMembershipConnection",
+      items:  Array< {
+        __typename: "GroupMembership",
+        id: string,
+        owner?: string | null,
+        profileId: string,
+        groupId: string,
+        emoji?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        profileGroupMembershipsId?: string | null,
+        groupMembershipsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteGroupSubscriptionVariables = {
+  filter?: ModelSubscriptionGroupFilterInput | null,
+};
+
+export type OnDeleteGroupSubscription = {
+  onDeleteGroup?:  {
+    __typename: "Group",
+    id: string,
+    name: string,
+    memberships?:  {
+      __typename: "ModelGroupMembershipConnection",
+      items:  Array< {
+        __typename: "GroupMembership",
+        id: string,
+        owner?: string | null,
+        profileId: string,
+        groupId: string,
+        emoji?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        profileGroupMembershipsId?: string | null,
+        groupMembershipsId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,

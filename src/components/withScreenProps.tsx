@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { ComponentType, ComponentProps } from 'react';
+import type { ComponentType, ComponentProps } from 'react';
+import React from 'react';
 import { useSearchParams } from 'expo-router';
 
 type Props = {

@@ -17,7 +17,12 @@ type Profile
 
 type Group
   @model
-  @auth(rules: [{ allow: private, operations: [create, read, update] }]) {
+  @auth(
+    rules: [
+      { allow: private, operations: [create, read, update] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
   id: ID!
   name: String!
   memberships: [GroupMembership] @hasMany

@@ -92,78 +92,6 @@ export const onDeleteProfile = /* GraphQL */ `
     }
   }
 `;
-export const onCreateGroup = /* GraphQL */ `
-  subscription OnCreateGroup($filter: ModelSubscriptionGroupFilterInput) {
-    onCreateGroup(filter: $filter) {
-      id
-      name
-      memberships {
-        items {
-          id
-          owner
-          profileId
-          groupId
-          emoji
-          createdAt
-          updatedAt
-          profileGroupMembershipsId
-          groupMembershipsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateGroup = /* GraphQL */ `
-  subscription OnUpdateGroup($filter: ModelSubscriptionGroupFilterInput) {
-    onUpdateGroup(filter: $filter) {
-      id
-      name
-      memberships {
-        items {
-          id
-          owner
-          profileId
-          groupId
-          emoji
-          createdAt
-          updatedAt
-          profileGroupMembershipsId
-          groupMembershipsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteGroup = /* GraphQL */ `
-  subscription OnDeleteGroup($filter: ModelSubscriptionGroupFilterInput) {
-    onDeleteGroup(filter: $filter) {
-      id
-      name
-      memberships {
-        items {
-          id
-          owner
-          profileId
-          groupId
-          emoji
-          createdAt
-          updatedAt
-          profileGroupMembershipsId
-          groupMembershipsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateGroupMembership = /* GraphQL */ `
   subscription OnCreateGroupMembership(
     $filter: ModelSubscriptionGroupMembershipFilterInput
@@ -492,6 +420,78 @@ export const onDeleteRecognition = /* GraphQL */ `
       owner
       activityId
       emoji
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateGroup = /* GraphQL */ `
+  subscription OnCreateGroup($filter: ModelSubscriptionGroupFilterInput) {
+    onCreateGroup(filter: $filter) {
+      id
+      name
+      memberships {
+        items {
+          id
+          owner
+          profileId
+          groupId
+          emoji
+          createdAt
+          updatedAt
+          profileGroupMembershipsId
+          groupMembershipsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateGroup = /* GraphQL */ `
+  subscription OnUpdateGroup($filter: ModelSubscriptionGroupFilterInput) {
+    onUpdateGroup(filter: $filter) {
+      id
+      name
+      memberships {
+        items {
+          id
+          owner
+          profileId
+          groupId
+          emoji
+          createdAt
+          updatedAt
+          profileGroupMembershipsId
+          groupMembershipsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteGroup = /* GraphQL */ `
+  subscription OnDeleteGroup($filter: ModelSubscriptionGroupFilterInput) {
+    onDeleteGroup(filter: $filter) {
+      id
+      name
+      memberships {
+        items {
+          id
+          owner
+          profileId
+          groupId
+          emoji
+          createdAt
+          updatedAt
+          profileGroupMembershipsId
+          groupMembershipsId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }

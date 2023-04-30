@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useRouter } from 'expo-router';
+import { usePathname, useRouter } from 'expo-router';
 import { storageGet, storageSet } from '../lib/storage';
 
 enum OnBoardStatus {
@@ -9,6 +9,7 @@ enum OnBoardStatus {
 const OnBoardStatusKey = 'OnBoardStatus';
 
 export default function OnBoard() {
+  const pathname = usePathname();
   const { push: navigate } = useRouter();
   useEffect(() => {
     async function onBoard() {
@@ -22,7 +23,8 @@ export default function OnBoard() {
           break;
       }
     }
+    if (pathname.endsWith('/join')) return;
     onBoard();
-  }, [navigate]);
+  }, [pathname, navigate]);
   return null;
 }

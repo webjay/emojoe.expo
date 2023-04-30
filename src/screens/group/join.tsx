@@ -1,12 +1,18 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text, Button } from 'react-native-paper';
-import type { ScreenPropsStack } from '../types/navigation';
-import useGroup from '../hooks/useGroup';
-import { groupCreateMembership } from '../lib/api';
+import useAuth from '@src/hooks/useAuth';
+import useGroup from '@src/hooks/useGroup';
+import { handleGroupCreateMembership } from '@src/lib/task';
 
-type Props = ScreenPropsStack<'GroupJoin'>;
+type Props = {
+  route: {
+    params: {
+      groupId: string;
+    };
+  };
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -22,15 +28,25 @@ export default function GroupJoinScreen({
     params: { groupId },
   },
 }: Props) {
-  const { push: navigate, replace } = useRouter();
+  const [hasAccepted, setHasAccepted] = useState<boolean>();
+  const { isSignedIn, handleSignIn } = useAuth();
+  const { push: navigate, replace: redirect } = useRouter();
   const { group } = useGroup(groupId);
   const onInviteAccept = useCallback(async () => {
-    await groupCreateMembership(groupId);
-    replace(`/group/${groupId}/emoji`);
-  }, [groupId, replace]);
+    setHasAccepted(true);
+  }, []);
   const onInviteDecline = useCallback(() => {
     navigate('/');
   }, [navigate]);
+  useEffect(() => {
+    if (!hasAccepted) return;
+    if (!isSignedIn) {
+      handleSignIn();
+      return;
+    }
+    handleGroupCreateMembership(groupId);
+    redirect(`/group/${groupId}/emoji`);
+  }, [hasAccepted, isSignedIn, groupId, handleSignIn, redirect]);
   return (
     <SafeAreaView style={styles.container}>
       <Text variant="displayLarge">Join</Text>

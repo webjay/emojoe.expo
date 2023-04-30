@@ -1,7 +1,6 @@
 import React, { useRef, useCallback, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
-import { SplashScreen } from 'expo-router';
 import Container from '@src/components/Container';
 import useGroupMemberships from '../hooks/useGroupMemberships';
 import ScrollViewRefresh from '../components/ScrollViewRefresh';
@@ -30,9 +29,6 @@ export default function HomeScreen() {
       loadData(false);
     }, [loadData]),
   );
-  if (!hasLoaded.current) {
-    return <SplashScreen />;
-  }
   return (
     <Container>
       <ScrollViewRefresh

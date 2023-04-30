@@ -4,8 +4,9 @@ import Sentry from '@src/lib/sentry';
 
 export default function useSentry() {
   useEffect(() => {
-    getCognitoUserSub().then((sub) => {
-      Sentry.setUser({ id: sub });
+    getCognitoUserSub().then((id) => {
+      if (!id) return;
+      Sentry.setUser({ id });
     });
   }, []);
 }
