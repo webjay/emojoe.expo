@@ -7,7 +7,7 @@ export default function ExitScreen() {
   useEffect(() => {
     Auth.signOut().then(() => {
       replace('/');
-    })
+    });
   }, [replace]);
   return null;
 }
