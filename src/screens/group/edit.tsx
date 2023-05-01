@@ -1,10 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { TextInput, Button } from 'react-native-paper';
+import { TextInput, Button, Text } from 'react-native-paper';
 import Container from '@src/components/Container';
+import EmojiButton from '@src/components/EmojiButton';
 import useGroup from '@src/hooks/useGroup';
 import { groupCreate, groupUpdate } from '@src/lib/api';
+import groups from '@src/lib/groups.json';
+
+type Groups = {
+  [key: string]: {
+    emoji: string;
+    name: string;
+  };
+};
 
 type Props = {
   route: {
@@ -16,8 +25,18 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    justifyContent: 'space-between',
     margin: 10,
+  },
+  createSection: {
     gap: 20,
+  },
+  groupsSection: {},
+  row: {
+    marginTop: 10,
+    flexDirection: 'row',
+    gap: 10,
   },
 });
 
@@ -47,17 +66,35 @@ export default function GroupEditScreen({ route: { params } }: Props) {
   }, [group]);
   return (
     <Container>
-      <SafeAreaView style={styles.container}>
-        <TextInput label="Group Name" value={name} onChangeText={setName} />
-        <Button
-          mode="contained"
-          onPress={groupSave}
-          loading={loading}
-          disabled={!name || loading}
-        >
-          Save
-        </Button>
-      </SafeAreaView>
+      <View style={styles.container}>
+        <View style={styles.createSection}>
+          <TextInput label="Group Name" value={name} onChangeText={setName} />
+          <Button
+            mode="contained"
+            onPress={groupSave}
+            loading={loading}
+            disabled={!name || loading}
+          >
+            {groupId ? 'Save' : 'Create'}
+          </Button>
+        </View>
+        {!groupId && (
+          <View style={styles.groupsSection}>
+            <View>
+              <Text variant="bodyLarge">Or join a public group?</Text>
+            </View>
+            <View style={styles.row}>
+              {Object.entries(groups as Groups).map(([id, { emoji }]) => (
+                <EmojiButton
+                  key={id}
+                  href={`/group/${id}/join`}
+                  emoji={emoji}
+                />
+              ))}
+            </View>
+          </View>
+        )}
+      </View>
     </Container>
   );
 }

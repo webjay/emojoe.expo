@@ -2,7 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { Text, Chip, Button } from 'react-native-paper';
 import { useRouter } from 'expo-router';
-import { groupCreateMembership, groupUpdateMembership } from '../../lib/api';
+import { groupCreateMembership, groupUpdateMembership } from '@src/lib/api';
+import groups from '@src/lib/groups.json';
 
 type Groups = {
   [key: string]: {
@@ -45,29 +46,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const groups: Groups = {
-  '613ec295-d346-4987-9dac-6c2dcbaea041': {
-    emoji: '🧘',
-    name: 'Meditation',
-  },
-  '22af81b1-07ad-46f5-ba73-da4c4502f8fe': {
-    emoji: '🏋️',
-    name: 'Exercise',
-  },
-  '5ee934fa-9555-447a-bbdf-9b585c9ef714': {
-    emoji: '📚',
-    name: 'Study',
-  },
-  'df1d0023-1814-434e-8ab1-f4fd5a526392': {
-    emoji: '🚰',
-    name: 'Hydration',
-  },
-  '8463e3bd-a7cc-4979-a2a4-adcbfcb6cb4e': {
-    emoji: '🚶',
-    name: 'Walk',
-  },
-};
-
 const navNext = '/onboard/notifications';
 
 export default function OnboardGroupScreen() {
@@ -93,7 +71,7 @@ export default function OnboardGroupScreen() {
     await Promise.all(
       selected.map((selectedGroupId) =>
         groupUpdateMembership(selectedGroupId, {
-          emoji: groups[selectedGroupId].emoji,
+          emoji: (groups as Groups)[selectedGroupId].emoji,
         }),
       ),
     );
