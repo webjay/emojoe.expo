@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useRouter, useSearchParams } from 'expo-router';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, TouchableRipple } from 'react-native-paper';
 import AnimateConfetti from '@src/components/AnimateConfetti';
 
 type SearchParams = {
@@ -13,7 +13,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
+  },
+  touchable: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
@@ -53,9 +59,11 @@ export default function DoneScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <AnimateConfetti />
-      <Button icon="party-popper" mode="elevated" onPress={handlePress}>
-        {randomWord()}
-      </Button>
+      <TouchableRipple style={styles.touchable} onPress={handlePress}>
+        <Button icon="party-popper" mode="elevated">
+          {randomWord()}
+        </Button>
+      </TouchableRipple>
     </SafeAreaView>
   );
 }
