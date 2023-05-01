@@ -3,15 +3,13 @@ import {
   initNotifications,
   hasPermission,
   getPushToken,
-} from '../lib/notifications';
-import { profileUpdate } from '../lib/api';
+} from '@src/lib/notifications';
+import { profileUpdate } from '@src/lib/api';
 import useSentry from './useSentry';
-import useCompleteAuthSession from './useCompleteAuthSession';
 import useNotificationListener from './useNotificationListener';
 
 export default function useInit() {
   useSentry();
-  useCompleteAuthSession();
   useNotificationListener();
   const storeCurrentPushToken = useCallback(async () => {
     if (await hasPermission()) {

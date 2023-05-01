@@ -1,4 +1,3 @@
-import '@src/lib/amplify';
 import React from 'react';
 import { usePathname } from 'expo-router';
 import useAuth from '@src/hooks/useAuth';

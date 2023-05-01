@@ -2,6 +2,7 @@ import React from 'react';
 import { ThemeProvider } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { Provider as PaperProvider } from 'react-native-paper';
+import '@src/lib/amplify';
 import { wrap } from '@src/lib/sentry';
 import useNavigationTheme from '@src/hooks/useNavigationTheme';
 import Authenticator from '@src/components/Authenticator';

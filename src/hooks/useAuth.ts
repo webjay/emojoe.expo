@@ -1,11 +1,12 @@
-import '../lib/amplify';
 import { useState, useCallback, useEffect } from 'react';
 import { Auth } from '@aws-amplify/auth';
 import { Hub } from '@aws-amplify/core';
 import type { HubCallback } from '@aws-amplify/core';
 import Sentry from '@src/lib/sentry';
+import useCompleteAuthSession from './useCompleteAuthSession';
 
 export default function useAuth() {
+  useCompleteAuthSession();
   const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null);
   const check = useCallback(() => {
     Auth.currentAuthenticatedUser()
