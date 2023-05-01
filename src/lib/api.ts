@@ -120,7 +120,7 @@ export async function groupsByProfile(): Promise<GroupMembership[]> {
   );
 }
 
-async function groupMembershipByGroupId(
+export async function groupMembershipByProfileAndGroupId(
   groupId: Group['id'],
 ): Promise<GroupMembership[]> {
   const { id: profileId } = await profileGetBySubId();
@@ -147,7 +147,7 @@ export function groupUpdate(
 export async function groupCreateMembership(
   groupId: CreateGroupMembershipInput['groupId'],
 ) {
-  const existing = await groupMembershipByGroupId(groupId);
+  const existing = await groupMembershipByProfileAndGroupId(groupId);
   if (existing.length !== 0) return;
   const { id: profileId } = await profileGetBySubId();
   await API.graphql(
@@ -167,14 +167,14 @@ export async function groupUpdateMembership(
   groupId: Group['id'],
   update: Partial<UpdateGroupMembershipInput>,
 ) {
-  const [{ id }] = await groupMembershipByGroupId(groupId);
+  const [{ id }] = await groupMembershipByProfileAndGroupId(groupId);
   return API.graphql(
     graphqlOperation(updateGroupMembership, { input: { ...update, id } }),
   );
 }
 
 export async function groupDeleteMembership(groupId: Group['id']) {
-  const [{ id }] = await groupMembershipByGroupId(groupId);
+  const [{ id }] = await groupMembershipByProfileAndGroupId(groupId);
   return API.graphql(
     graphqlOperation(deleteGroupMembership, { input: { id } }),
   );
@@ -196,9 +196,8 @@ export async function activityCreate(
   groupId: Group['id'],
   emoji: GroupMembership['emoji'],
 ) {
-  const [{ id: groupMembershipActivitiesId }] = await groupMembershipByGroupId(
-    groupId,
-  );
+  const [{ id: groupMembershipActivitiesId }] =
+    await groupMembershipByProfileAndGroupId(groupId);
   return catchWrap(
     API.graphql(
       graphqlOperation(createActivity, {

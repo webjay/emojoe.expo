@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text, Button } from 'react-native-paper';
 import useAuth from '@src/hooks/useAuth';
 import useGroup from '@src/hooks/useGroup';
 import { storageSet, storageGet, storageRemove } from '@src/lib/storage';
 import { handleGroupCreateMembership } from '@src/lib/task';
+import { groupMembershipByProfileAndGroupId } from '@src/lib/api';
 
 type Props = {
   route: {
@@ -22,6 +23,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     margin: 10,
   },
+  header: {
+    alignItems: 'center',
+    gap: 20,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20,
+  },
 });
 
 const hasAcceptedKey = 'hasAccepted';
@@ -35,6 +45,7 @@ export default function GroupJoinScreen({
   const { isSignedIn, handleSignIn } = useAuth();
   const { push: navigate, replace: redirect } = useRouter();
   const { group } = useGroup(groupId);
+  const [emoji, setEmoji] = useState<string>();
   const init = useCallback(async () => {
     const hasAccepted = await storageGet(hasAcceptedKey);
     if (hasAccepted !== hasAcceptedValue) return;
@@ -54,18 +65,33 @@ export default function GroupJoinScreen({
     navigate('/');
   }, [navigate]);
   useEffect(() => {
+    if (!groupId) return;
+    groupMembershipByProfileAndGroupId(groupId).then(
+      ([{ emoji: groupEmoji }]) => {
+        if (!groupEmoji) return;
+        setEmoji(groupEmoji);
+      },
+    );
+  }, [groupId]);
+  useEffect(() => {
     init();
   }, [init]);
   return (
     <SafeAreaView style={styles.container}>
-      <Text variant="displayLarge">Join</Text>
-      <Text variant="headlineLarge">{group?.name}</Text>
-      <Button mode="contained" onPress={onInviteAccept}>
-        Join
-      </Button>
-      <Button mode="outlined" onPress={onInviteDecline}>
-        Nevermind
-      </Button>
+      <View style={styles.header}>
+        <Text variant="headlineLarge">
+          Care to join {emoji} {group?.name}?
+        </Text>
+        <Text variant="bodyLarge">
+          Building a habit is best done with accountability partners.
+        </Text>
+      </View>
+      <View style={styles.row}>
+        <Button onPress={onInviteDecline}>Nevermind</Button>
+        <Button mode="contained" onPress={onInviteAccept}>
+          Join
+        </Button>
+      </View>
     </SafeAreaView>
   );
 }
