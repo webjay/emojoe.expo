@@ -4,7 +4,7 @@
     "name": "Emojoe",
     "slug": "emojoe2",
     "scheme": "emojoe2",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "automatic",
@@ -23,7 +23,7 @@
       "bundleIdentifier": "dk.webcom.emojoe",
       "buildNumber": "1",
       "associatedDomains": ["applinks:emojoe.app", "applinks:www.emojoe.app"],
-      "appStoreUrl": "https://apps.apple.com/us/app/emojoe/id1540478554"
+      "appStoreUrl": "https://apps.apple.com/app/emojoe/id1540478554"
     },
     "android": {
       "package": "dk.webcom.emojoe",
