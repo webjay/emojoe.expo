@@ -35,7 +35,9 @@
       }
     },
     "web": {
-      "bundler": "metro"
+      "bundler": "metro",
+      "name": "Emojoe",
+      "description": "Build a habit"
     },
     "hooks": {
       "postPublish": [
