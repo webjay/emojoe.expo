@@ -2,20 +2,24 @@ import { useState, useCallback, useEffect } from 'react';
 import { Auth } from '@aws-amplify/auth';
 import { Hub } from '@aws-amplify/core';
 import type { HubCallback } from '@aws-amplify/core';
+import { maybeCompleteAuthSession } from 'expo-web-browser';
 import Sentry from '@src/lib/sentry';
-import useCompleteAuthSession from './useCompleteAuthSession';
 
 export default function useAuth() {
-  useCompleteAuthSession();
   const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null);
   const check = useCallback(() => {
     Auth.currentAuthenticatedUser()
-      .then(() => setIsSignedIn(true))
+      .then(() => {
+        setIsSignedIn(true);
+      })
       .catch((error) => {
         setIsSignedIn(false);
-        if (error.message !== 'The user is not authenticated') {
+        if (error !== 'The user is not authenticated') {
           Sentry.captureException(error);
         }
+      })
+      .finally(() => {
+        maybeCompleteAuthSession();
       });
   }, []);
   const handleSignIn = useCallback(() => {
