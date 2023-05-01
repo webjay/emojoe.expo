@@ -8,11 +8,15 @@ type Props = {
   children: JSX.Element;
 };
 
+function pathPass(pathname: string) {
+  return ['/join', '/logout'].some((pathEnd) => pathname.endsWith(pathEnd));
+}
+
 function Authenticator({ children }: Props) {
   const pathname = usePathname();
   const { isSignedIn, handleSignIn } = useAuth();
   if (isSignedIn === true) return children;
-  if (pathname.endsWith('/join')) return children;
+  if (pathPass(pathname)) return children;
   if (isSignedIn === null) return <Loading />;
   return <SignIn handleSignIn={handleSignIn} />;
 }
