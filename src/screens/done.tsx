@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useRouter, useSearchParams } from 'expo-router';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-paper';
+import AnimateConfetti from '@src/components/AnimateConfetti';
 
 type SearchParams = {
   groupId: string;
@@ -46,12 +47,12 @@ function randomWord() {
 export default function DoneScreen() {
   const { replace: redirect } = useRouter();
   const { groupId } = useSearchParams<SearchParams>();
-  const handlePress = useCallback(
-    () => redirect(`/group/${groupId}/activities`),
-    [groupId, redirect],
-  );
+  const handlePress = useCallback(() => {
+    redirect(`/group/${groupId}/activities`);
+  }, [groupId, redirect]);
   return (
     <SafeAreaView style={styles.container}>
+      <AnimateConfetti />
       <Button icon="party-popper" mode="elevated" onPress={handlePress}>
         {randomWord()}
       </Button>
