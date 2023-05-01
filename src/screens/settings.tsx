@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 import { openSettings } from 'expo-linking';
 import { useRouter } from 'expo-router';
 import { Appbar, Switch, Text, Snackbar } from 'react-native-paper';
@@ -59,6 +59,7 @@ function SettingsScreen() {
           <Switch
             value={notificationsValue}
             onValueChange={onNotificationsValueChange}
+            disabled={Platform.OS === 'web'}
           />
           <Text variant="labelLarge">Notifications</Text>
         </View>
