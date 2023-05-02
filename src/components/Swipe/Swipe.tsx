@@ -25,7 +25,7 @@ type Props = {
   groupId: string;
 };
 
-const acceptDistance = 30;
+const acceptDistance = 50;
 
 export default function Swipe({ emoji, groupId }: Props) {
   const { replace: redirect } = useRouter();
