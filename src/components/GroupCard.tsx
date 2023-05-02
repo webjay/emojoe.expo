@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useRouter, Link } from 'expo-router';
-import { Card, Avatar, Button, Text } from 'react-native-paper';
-import type { GroupMembership } from '../types/api';
+import { Card, Button, Text } from 'react-native-paper';
+import type { GroupMembership } from '@src/types/api';
+import EmojiButton from '@src/components/EmojiButton';
 
 type Props = {
   group: GroupMembership;
@@ -30,15 +31,11 @@ export default function GroupCard({
     ({ size }: { size: number }) => JSX.Element
   >(
     ({ size }) => (
-      <Link href={`/group/${groupId}/emoji`} asChild>
-        <TouchableOpacity>
-          <Avatar.Text
-            size={size}
-            label={emoji || '🃟'}
-            labelStyle={styles.emoji}
-          />
-        </TouchableOpacity>
-      </Link>
+      <EmojiButton
+        href={`/group/${groupId}/emoji`}
+        emoji={emoji || '🃟'}
+        size={size}
+      />
     ),
     [emoji, groupId],
   );
@@ -46,7 +43,12 @@ export default function GroupCard({
     <Card style={styles.card}>
       <Card.Title
         title={
-          <Text onPress={() => navigate(`/group/${groupId}/edit`)}>{name}</Text>
+          <Text
+            variant="headlineSmall"
+            onPress={() => navigate(`/group/${groupId}/edit`)}
+          >
+            {name}
+          </Text>
         }
         left={cardTitleLeft}
       />

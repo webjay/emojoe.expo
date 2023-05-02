@@ -3,9 +3,10 @@ import { createURL } from 'expo-linking';
 import type { ShareAction } from 'react-native';
 import { StyleSheet, Share, SafeAreaView, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Text, Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import useGroup from '@src/hooks/useGroup';
 import { groupMembershipByProfileAndGroupId } from '@src/lib/api';
+import EmojiTitle from '@src/components/EmojiTitle';
 
 type Props = {
   route: {
@@ -20,11 +21,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    margin: 10,
-  },
-  header: {
-    alignItems: 'center',
-    gap: 20,
+    margin: 20,
   },
   row: {
     flexDirection: 'row',
@@ -80,14 +77,11 @@ export default function GroupInviteScreen({
     shareAction?.action === 'sharedAction' ? 'Done' : 'Nevermind';
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text variant="headlineLarge">
-          Send an invite for {emoji} {group?.name}
-        </Text>
-        <Text variant="bodyLarge">
-          Building a habit is best done with an accountability partner.
-        </Text>
-      </View>
+      <EmojiTitle
+        title="Send an invite for"
+        emoji={emoji || ''}
+        name={group?.name || ''}
+      />
       <View style={styles.row}>
         <Button onPress={onCancelPress}>{cancelButtonTitle}</Button>
         <Button mode="contained" onPress={onInvitePress}>

@@ -1,12 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Text, Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import { handleCreateRecognition } from '@src/lib/task';
 import type { Activity } from '@src/types/api';
 import { activityGet } from '@src/lib/api';
 import useGroup from '@src/hooks/useGroup';
 import emoRecognition from '@src/lib/recognition.json';
+import EmojiTitle from '@src/components/EmojiTitle';
 
 type Props = {
   route: {
@@ -49,8 +50,11 @@ export default function GroupActivityScreen({
   }, [activityId]);
   return (
     <SafeAreaView style={styles.container}>
-      <Text variant="headlineLarge">{group?.name}</Text>
-      <Text variant="displayLarge">{activity?.emoji}</Text>
+      <EmojiTitle
+        title=""
+        emoji={activity?.emoji || ''}
+        name={group?.name || ''}
+      />
       <View style={styles.buttons}>
         {Object.entries(emoRecognition).map(([key, { emoji }]) => (
           <Button

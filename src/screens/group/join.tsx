@@ -1,12 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Text, Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import useAuth from '@src/hooks/useAuth';
 import useGroup from '@src/hooks/useGroup';
 import { storageSet, storageGet, storageRemove } from '@src/lib/storage';
 import { handleGroupCreateMembership } from '@src/lib/task';
 import { groupMembershipByProfileAndGroupId } from '@src/lib/api';
+import EmojiTitle from '@src/components/EmojiTitle';
 
 type Props = {
   route: {
@@ -21,11 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    margin: 10,
-  },
-  header: {
-    alignItems: 'center',
-    gap: 20,
+    margin: 20,
   },
   row: {
     flexDirection: 'row',
@@ -78,14 +75,11 @@ export default function GroupJoinScreen({
   }, [init]);
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text variant="headlineLarge">
-          Care to join {emoji} {group?.name}?
-        </Text>
-        <Text variant="bodyLarge">
-          Building a habit is best done with accountability partners.
-        </Text>
-      </View>
+      <EmojiTitle
+        title="Care to join"
+        emoji={emoji || ''}
+        name={group?.name || ''}
+      />
       <View style={styles.row}>
         <Button onPress={onInviteDecline}>Nevermind</Button>
         <Button mode="contained" onPress={onInviteAccept}>

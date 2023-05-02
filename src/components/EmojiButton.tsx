@@ -6,6 +6,7 @@ import { Avatar } from 'react-native-paper';
 type Props = {
   href: string;
   emoji: string;
+  size?: number;
 };
 
 const styles = StyleSheet.create({
@@ -14,12 +15,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function EmojiButton({ href, emoji }: Props) {
+function EmojiButton({ href, emoji, size }: Props) {
   return (
     <Link href={href} asChild>
       <TouchableOpacity>
-        <Avatar.Text label={emoji} labelStyle={styles.emoji} />
+        <Avatar.Text label={emoji} size={size} labelStyle={styles.emoji} />
       </TouchableOpacity>
     </Link>
   );
 }
+
+EmojiButton.defaultProps = {
+  size: 32,
+};
+
+export default EmojiButton;
