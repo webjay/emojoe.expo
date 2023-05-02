@@ -62,6 +62,7 @@ export const getGroupMembership = /* GraphQL */ `
       group {
         id
         name
+        emoji
         memberships {
           nextToken
         }
@@ -119,6 +120,7 @@ export const listGroupMemberships = /* GraphQL */ `
         group {
           id
           name
+          emoji
           createdAt
           updatedAt
         }
@@ -159,6 +161,7 @@ export const getActivity = /* GraphQL */ `
         group {
           id
           name
+          emoji
           createdAt
           updatedAt
         }
@@ -302,6 +305,7 @@ export const groupMembershipsByProfileId = /* GraphQL */ `
         group {
           id
           name
+          emoji
           createdAt
           updatedAt
         }
@@ -352,6 +356,7 @@ export const groupMembershipsByGroupIdAndProfileId = /* GraphQL */ `
         group {
           id
           name
+          emoji
           createdAt
           updatedAt
         }
@@ -423,6 +428,7 @@ export const getGroup = /* GraphQL */ `
     getGroup(id: $id) {
       id
       name
+      emoji
       memberships {
         items {
           id
@@ -452,6 +458,7 @@ export const listGroups = /* GraphQL */ `
       items {
         id
         name
+        emoji
         memberships {
           nextToken
         }

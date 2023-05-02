@@ -98,6 +98,7 @@ export type Group = {
   __typename: "Group",
   id: string,
   name: string,
+  emoji?: string | null,
   memberships?: ModelGroupMembershipConnection | null,
   createdAt: string,
   updatedAt: string,
@@ -136,10 +137,12 @@ export type DeleteProfileInput = {
 export type CreateGroupInput = {
   id?: string | null,
   name: string,
+  emoji?: string | null,
 };
 
 export type ModelGroupConditionInput = {
   name?: ModelStringInput | null,
+  emoji?: ModelStringInput | null,
   and?: Array< ModelGroupConditionInput | null > | null,
   or?: Array< ModelGroupConditionInput | null > | null,
   not?: ModelGroupConditionInput | null,
@@ -148,6 +151,7 @@ export type ModelGroupConditionInput = {
 export type UpdateGroupInput = {
   id: string,
   name?: string | null,
+  emoji?: string | null,
 };
 
 export type DeleteGroupInput = {
@@ -367,6 +371,7 @@ export type ModelStringKeyConditionInput = {
 export type ModelGroupFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
+  emoji?: ModelStringInput | null,
   and?: Array< ModelGroupFilterInput | null > | null,
   or?: Array< ModelGroupFilterInput | null > | null,
   not?: ModelGroupFilterInput | null,
@@ -447,6 +452,7 @@ export type ModelSubscriptionRecognitionFilterInput = {
 export type ModelSubscriptionGroupFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
+  emoji?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionGroupFilterInput | null > | null,
   or?: Array< ModelSubscriptionGroupFilterInput | null > | null,
 };
@@ -563,6 +569,7 @@ export type CreateGroupMutation = {
     __typename: "Group",
     id: string,
     name: string,
+    emoji?: string | null,
     memberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -594,6 +601,7 @@ export type UpdateGroupMutation = {
     __typename: "Group",
     id: string,
     name: string,
+    emoji?: string | null,
     memberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -625,6 +633,7 @@ export type DeleteGroupMutation = {
     __typename: "Group",
     id: string,
     name: string,
+    emoji?: string | null,
     memberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -662,6 +671,7 @@ export type CreateGroupMembershipMutation = {
       __typename: "Group",
       id: string,
       name: string,
+      emoji?: string | null,
       memberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -721,6 +731,7 @@ export type UpdateGroupMembershipMutation = {
       __typename: "Group",
       id: string,
       name: string,
+      emoji?: string | null,
       memberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -780,6 +791,7 @@ export type DeleteGroupMembershipMutation = {
       __typename: "Group",
       id: string,
       name: string,
+      emoji?: string | null,
       memberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -845,6 +857,7 @@ export type CreateActivityMutation = {
         __typename: "Group",
         id: string,
         name: string,
+        emoji?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -896,6 +909,7 @@ export type UpdateActivityMutation = {
         __typename: "Group",
         id: string,
         name: string,
+        emoji?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -947,6 +961,7 @@ export type DeleteActivityMutation = {
         __typename: "Group",
         id: string,
         name: string,
+        emoji?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1102,6 +1117,7 @@ export type GetGroupMembershipQuery = {
       __typename: "Group",
       id: string,
       name: string,
+      emoji?: string | null,
       memberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -1164,6 +1180,7 @@ export type ListGroupMembershipsQuery = {
         __typename: "Group",
         id: string,
         name: string,
+        emoji?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1212,6 +1229,7 @@ export type GetActivityQuery = {
         __typename: "Group",
         id: string,
         name: string,
+        emoji?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1364,6 +1382,7 @@ export type GroupMembershipsByProfileIdQuery = {
         __typename: "Group",
         id: string,
         name: string,
+        emoji?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1413,6 +1432,7 @@ export type GroupMembershipsByGroupIdAndProfileIdQuery = {
         __typename: "Group",
         id: string,
         name: string,
+        emoji?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1487,6 +1507,7 @@ export type GetGroupQuery = {
     __typename: "Group",
     id: string,
     name: string,
+    emoji?: string | null,
     memberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -1521,6 +1542,7 @@ export type ListGroupsQuery = {
       __typename: "Group",
       id: string,
       name: string,
+      emoji?: string | null,
       memberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -1650,6 +1672,7 @@ export type OnCreateGroupMembershipSubscription = {
       __typename: "Group",
       id: string,
       name: string,
+      emoji?: string | null,
       memberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -1709,6 +1732,7 @@ export type OnUpdateGroupMembershipSubscription = {
       __typename: "Group",
       id: string,
       name: string,
+      emoji?: string | null,
       memberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -1768,6 +1792,7 @@ export type OnDeleteGroupMembershipSubscription = {
       __typename: "Group",
       id: string,
       name: string,
+      emoji?: string | null,
       memberships?:  {
         __typename: "ModelGroupMembershipConnection",
         nextToken?: string | null,
@@ -1833,6 +1858,7 @@ export type OnCreateActivitySubscription = {
         __typename: "Group",
         id: string,
         name: string,
+        emoji?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1884,6 +1910,7 @@ export type OnUpdateActivitySubscription = {
         __typename: "Group",
         id: string,
         name: string,
+        emoji?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -1935,6 +1962,7 @@ export type OnDeleteActivitySubscription = {
         __typename: "Group",
         id: string,
         name: string,
+        emoji?: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -2024,6 +2052,7 @@ export type OnCreateGroupSubscription = {
     __typename: "Group",
     id: string,
     name: string,
+    emoji?: string | null,
     memberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -2054,6 +2083,7 @@ export type OnUpdateGroupSubscription = {
     __typename: "Group",
     id: string,
     name: string,
+    emoji?: string | null,
     memberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {
@@ -2084,6 +2114,7 @@ export type OnDeleteGroupSubscription = {
     __typename: "Group",
     id: string,
     name: string,
+    emoji?: string | null,
     memberships?:  {
       __typename: "ModelGroupMembershipConnection",
       items:  Array< {

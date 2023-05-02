@@ -105,6 +105,7 @@ export const onCreateGroupMembership = /* GraphQL */ `
       group {
         id
         name
+        emoji
         memberships {
           nextToken
         }
@@ -156,6 +157,7 @@ export const onUpdateGroupMembership = /* GraphQL */ `
       group {
         id
         name
+        emoji
         memberships {
           nextToken
         }
@@ -207,6 +209,7 @@ export const onDeleteGroupMembership = /* GraphQL */ `
       group {
         id
         name
+        emoji
         memberships {
           nextToken
         }
@@ -263,6 +266,7 @@ export const onCreateActivity = /* GraphQL */ `
         group {
           id
           name
+          emoji
           createdAt
           updatedAt
         }
@@ -308,6 +312,7 @@ export const onUpdateActivity = /* GraphQL */ `
         group {
           id
           name
+          emoji
           createdAt
           updatedAt
         }
@@ -353,6 +358,7 @@ export const onDeleteActivity = /* GraphQL */ `
         group {
           id
           name
+          emoji
           createdAt
           updatedAt
         }
@@ -430,6 +436,7 @@ export const onCreateGroup = /* GraphQL */ `
     onCreateGroup(filter: $filter) {
       id
       name
+      emoji
       memberships {
         items {
           id
@@ -454,6 +461,7 @@ export const onUpdateGroup = /* GraphQL */ `
     onUpdateGroup(filter: $filter) {
       id
       name
+      emoji
       memberships {
         items {
           id
@@ -478,6 +486,7 @@ export const onDeleteGroup = /* GraphQL */ `
     onDeleteGroup(filter: $filter) {
       id
       name
+      emoji
       memberships {
         items {
           id

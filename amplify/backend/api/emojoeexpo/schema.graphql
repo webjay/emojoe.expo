@@ -25,6 +25,7 @@ type Group
   ) {
   id: ID!
   name: String!
+  emoji: String
   memberships: [GroupMembership] @hasMany
 }
 
