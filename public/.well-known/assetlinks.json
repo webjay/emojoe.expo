@@ -1,1 +1,14 @@
-{}
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "dk.webcom.emojoe",
+      "sha256_cert_fingerprints": [
+        "69:7B:BE:F8:58:91:E7:E0:E8:B3:99:63:C9:66:06:27:33:13:B6:DE:83:56:BF:05:16:F8:A4:AB:41:A1:84:2B"
+      ]
+    }
+  }
+]
