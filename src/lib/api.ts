@@ -60,6 +60,7 @@ async function dataExtract<T>(result: Promise<GraphQLResult<T>> | unknown) {
     }
     if (!data) return null;
     const queryResult = data[Object.keys(data)[0]];
+    if (!queryResult) return null;
     return Object.hasOwn(queryResult, 'items')
       ? queryResult.items.filter(filterNullItems)
       : queryResult;
