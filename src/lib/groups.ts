@@ -8,7 +8,7 @@ type Groups = {
 export default {
   '613ec295-d346-4987-9dac-6c2dcbaea041': {
     emoji: '🧘',
-    name: 'Meditation',
+    name: 'Meditate',
   },
   '22af81b1-07ad-46f5-ba73-da4c4502f8fe': {
     emoji: '🏋️',
