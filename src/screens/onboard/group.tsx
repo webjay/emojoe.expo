@@ -3,14 +3,7 @@ import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { Text, Chip, Button } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { groupCreateMembership, groupUpdateMembership } from '@src/lib/api';
-import groups from '@src/lib/groups.json';
-
-type Groups = {
-  [key: string]: {
-    emoji: string;
-    name: string;
-  };
-};
+import groups from '@src/lib/groups';
 
 const styles = StyleSheet.create({
   container: {
@@ -71,7 +64,7 @@ export default function OnboardGroupScreen() {
     await Promise.all(
       selected.map((selectedGroupId) =>
         groupUpdateMembership(selectedGroupId, {
-          emoji: (groups as Groups)[selectedGroupId].emoji,
+          emoji: groups[selectedGroupId].emoji,
         }),
       ),
     );

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Button } from 'react-native-paper';
@@ -6,7 +6,6 @@ import useAuth from '@src/hooks/useAuth';
 import useGroup from '@src/hooks/useGroup';
 import { storageSet, storageGet, storageRemove } from '@src/lib/storage';
 import { handleGroupCreateMembership } from '@src/lib/task';
-import { groupMembershipByProfileAndGroupId } from '@src/lib/api';
 import EmojiTitle from '@src/components/EmojiTitle';
 
 type Props = {
@@ -42,7 +41,6 @@ export default function GroupJoinScreen({
   const { isSignedIn, handleSignIn } = useAuth();
   const { push: navigate, replace: redirect } = useRouter();
   const { group } = useGroup(groupId);
-  const [emoji, setEmoji] = useState<string>();
   const init = useCallback(async () => {
     const hasAccepted = await storageGet(hasAcceptedKey);
     if (hasAccepted !== hasAcceptedValue) return;
@@ -62,22 +60,13 @@ export default function GroupJoinScreen({
     navigate('/');
   }, [navigate]);
   useEffect(() => {
-    if (!groupId) return;
-    groupMembershipByProfileAndGroupId(groupId).then(
-      ([{ emoji: groupEmoji }]) => {
-        if (!groupEmoji) return;
-        setEmoji(groupEmoji);
-      },
-    );
-  }, [groupId]);
-  useEffect(() => {
     init();
   }, [init]);
   return (
     <SafeAreaView style={styles.container}>
       <EmojiTitle
         title="Care to join"
-        emoji={emoji || ''}
+        emoji={group?.emoji || ''}
         name={group?.name || ''}
       />
       <View style={styles.row}>

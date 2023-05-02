@@ -1,9 +1,11 @@
 import type { Emoji } from '@emoji-mart/data';
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'expo-router';
 import { SectionList } from 'react-native';
 import { handleGroupSetEmoji } from '@src/lib/task';
+import { groupUpdateMembership } from '@src/lib/api';
 import Container from '@src/components/Container';
+import Loading from '@src/components/Loading';
 import Search from './Search';
 import SectionHeader from './SectionHeader';
 import SectionItem from './SectionItem';
@@ -18,6 +20,11 @@ type Item = {
   emojis: Emoji[];
 };
 
+async function handleSetEmoji(groupId: string, emoji: string) {
+  await groupUpdateMembership(groupId, { emoji });
+  handleGroupSetEmoji(groupId, emoji);
+}
+
 const renderSectionHeader = ({ section }: { section: { title: string } }) => (
   <SectionHeader section={section} />
 );
@@ -27,13 +34,16 @@ const renderItem = (item: Item, onEmojiSelect: (emoji: string) => void) => (
 );
 
 export default function GroupEmoji() {
+  const [isWorking, setIsWorking] = useState<boolean>(false);
   const { loading, sections, search } = useEmojis();
   const { groupId } = useSearchParams<SearchParams>();
   const { push: navigate } = useRouter();
   const onEmojiSelect = useCallback(
-    (emoji: string) => {
+    async (emoji: string) => {
       if (!groupId) return;
-      handleGroupSetEmoji(groupId, emoji);
+      setIsWorking(true);
+      await handleSetEmoji(groupId, emoji);
+      setIsWorking(false);
       navigate(`/group/${groupId}/invite`);
     },
     [groupId, navigate],
@@ -42,6 +52,7 @@ export default function GroupEmoji() {
     ({ item }: { item: Item }) => renderItem(item, onEmojiSelect),
     [onEmojiSelect],
   );
+  if (isWorking) return <Loading />;
   return (
     <Container>
       <SectionList

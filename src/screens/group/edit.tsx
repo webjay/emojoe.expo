@@ -6,14 +6,7 @@ import Container from '@src/components/Container';
 import EmojiButton from '@src/components/EmojiButton';
 import useGroup from '@src/hooks/useGroup';
 import { groupCreate, groupUpdate } from '@src/lib/api';
-import groups from '@src/lib/groups.json';
-
-type Groups = {
-  [key: string]: {
-    emoji: string;
-    name: string;
-  };
-};
+import groups from '@src/lib/groups';
 
 type Props = {
   route: {
@@ -85,7 +78,7 @@ export default function GroupEditScreen({ route: { params } }: Props) {
               <Text variant="bodyLarge">Or join a public group?</Text>
             </View>
             <View style={styles.row}>
-              {Object.entries(groups as Groups).map(([id, { emoji }]) => (
+              {Object.entries(groups).map(([id, { emoji }]) => (
                 <EmojiButton
                   key={id}
                   href={`/group/${id}/join`}

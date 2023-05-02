@@ -1,5 +1,5 @@
 import { useSearchParams } from 'expo-router';
-import groups from '@src/lib/groups.json';
+import groups from '@src/lib/groups';
 
 const groupMap = new Map(
   Object.entries(groups).map(([key, { emoji }]) => [emoji, key]),

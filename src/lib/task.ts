@@ -4,7 +4,8 @@ import {
   activityCreate,
   recognitionCreate,
   groupCreateMembership,
-  groupUpdateMembership,
+  groupGet,
+  groupUpdate,
 } from '@src/lib/api';
 
 export const { runAfterInteractions } = InteractionManager;
@@ -25,4 +26,10 @@ export const handleGroupCreateMembership = (groupId: Activity['groupId']) =>
 export const handleGroupSetEmoji = (
   groupId: Activity['groupId'],
   emoji: Activity['emoji'],
-) => runAfterInteractions(() => groupUpdateMembership(groupId, { emoji }));
+) =>
+  runAfterInteractions(async () => {
+    const { emoji: groupEmoji } = await groupGet(groupId);
+    if (!groupEmoji) {
+      groupUpdate(groupId, { emoji });
+    }
+  });

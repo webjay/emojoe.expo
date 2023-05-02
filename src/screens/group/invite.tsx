@@ -7,6 +7,7 @@ import { Button } from 'react-native-paper';
 import useGroup from '@src/hooks/useGroup';
 import { groupMembershipByProfileAndGroupId } from '@src/lib/api';
 import EmojiTitle from '@src/components/EmojiTitle';
+import groups from '@src/lib/groups';
 
 type Props = {
   route: {
@@ -31,7 +32,10 @@ const styles = StyleSheet.create({
 });
 
 function getURL(groupId: string) {
-  const path = `/group/${groupId}/join`;
+  const isPublic = groupId in groups;
+  const path = isPublic
+    ? `/join/${groups[groupId].emoji}`
+    : `/group/${groupId}/join`;
   if (process.env.NODE_ENV === 'development') {
     return createURL(path);
   }
