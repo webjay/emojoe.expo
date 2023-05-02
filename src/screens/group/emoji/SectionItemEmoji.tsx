@@ -8,15 +8,22 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  avatar: {
+  avatarContainer: {
     margin: 5,
+  },
+  avatar: {
+    transform: [{ rotateY: '180deg' }],
   },
 });
 
 function SectionItemEmoji({ onEmojiSelect, emoji }: Props) {
   return (
     <Pressable onPress={() => onEmojiSelect(emoji)}>
-      <Avatar.Text label={emoji} style={styles.avatar} />
+      <Avatar.Text
+        label={emoji}
+        style={styles.avatarContainer}
+        labelStyle={styles.avatar}
+      />
     </Pressable>
   );
 }
