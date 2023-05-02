@@ -25,12 +25,16 @@ const styles = StyleSheet.create({
   createSection: {
     gap: 20,
   },
-  groupsSection: {},
   row: {
     marginTop: 10,
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 10,
+  },
+  public: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -39,7 +43,11 @@ export default function GroupEditScreen({ route: { params } }: Props) {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const groupId = params?.groupId;
+  const isPublic = groupId in groups;
   const { group } = useGroup(groupId);
+  const handleGroupCreateButtonPress = useCallback(() => {
+    navigate('/group/create');
+  }, [navigate]);
   const groupSave = useCallback(async () => {
     if (!name) return;
     if (groupId) {
@@ -62,18 +70,23 @@ export default function GroupEditScreen({ route: { params } }: Props) {
     <Container>
       <View style={styles.container}>
         <View style={styles.createSection}>
-          <TextInput label="Group Name" value={name} onChangeText={setName} />
+          <TextInput
+            label="Group Name"
+            value={name}
+            disabled={isPublic}
+            onChangeText={setName}
+          />
           <Button
             mode="contained"
             onPress={groupSave}
             loading={loading}
-            disabled={!name || loading}
+            disabled={isPublic || !name || loading}
           >
             {groupId ? 'Save' : 'Create'}
           </Button>
         </View>
         {!groupId && (
-          <View style={styles.groupsSection}>
+          <View>
             <View>
               <Text variant="bodyLarge">Or join a public group?</Text>
             </View>
@@ -86,6 +99,17 @@ export default function GroupEditScreen({ route: { params } }: Props) {
                 />
               ))}
             </View>
+          </View>
+        )}
+        {isPublic && (
+          <View style={styles.public}>
+            <Text variant="bodyLarge">
+              This is a public group, thus the name can not be changed, but you
+              can create your own group?
+            </Text>
+            <Button compact onPress={handleGroupCreateButtonPress}>
+              Create group
+            </Button>
           </View>
         )}
       </View>
