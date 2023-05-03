@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
 });
 
 export default function AnimateConfetti() {
-  if (Platform.OS === 'web') return null;
+  if (Platform.OS === 'web' || Platform.OS === 'android') return null;
   return (
     <LottieView
       source={animation}
