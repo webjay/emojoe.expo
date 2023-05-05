@@ -1,2 +1,5 @@
 !aws-exports.js
-amplify/*
+amplify/**/*
+_assets/**/*
+.vscode/**/*
+public/**/*
