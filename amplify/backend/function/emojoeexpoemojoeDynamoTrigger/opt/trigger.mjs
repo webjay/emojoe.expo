@@ -59,11 +59,13 @@ function getActivity(id) {
 }
 
 function handleReceipts(notifications, receipts) {
+  const createdAt = new Date().toISOString();
   const putRequests = receipts.map((receipt, index) => ({
     PutRequest: {
       Item: {
         ...notifications[index],
         ...receipt,
+        createdAt,
       },
     },
   }));
