@@ -5,6 +5,7 @@ import {
   QueryCommand,
   PutCommand,
   DeleteCommand,
+  BatchWriteCommand,
 } from '@aws-sdk/lib-dynamodb';
 
 const docClient = DynamoDBDocumentClient.from(
@@ -25,8 +26,14 @@ function put(TableName, Item) {
   return docClient.send(new PutCommand({ TableName, Item }));
 }
 
+function batchWrite(TableName, requests) {
+  return docClient.send(
+    new BatchWriteCommand({ RequestItems: { [TableName]: requests } }),
+  );
+}
+
 function remove(TableName, Key) {
   return docClient.send(new DeleteCommand({ TableName, Key }));
 }
 
-export { docClient, get, query, put, remove };
+export { docClient, get, query, put, remove, batchWrite };

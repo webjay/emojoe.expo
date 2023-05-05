@@ -431,6 +431,45 @@ export const onDeleteRecognition = /* GraphQL */ `
     }
   }
 `;
+export const onCreateNotification = /* GraphQL */ `
+  subscription OnCreateNotification(
+    $filter: ModelSubscriptionNotificationFilterInput
+    $owner: String
+  ) {
+    onCreateNotification(filter: $filter, owner: $owner) {
+      id
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateNotification = /* GraphQL */ `
+  subscription OnUpdateNotification(
+    $filter: ModelSubscriptionNotificationFilterInput
+    $owner: String
+  ) {
+    onUpdateNotification(filter: $filter, owner: $owner) {
+      id
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteNotification = /* GraphQL */ `
+  subscription OnDeleteNotification(
+    $filter: ModelSubscriptionNotificationFilterInput
+    $owner: String
+  ) {
+    onDeleteNotification(filter: $filter, owner: $owner) {
+      id
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateGroup = /* GraphQL */ `
   subscription OnCreateGroup($filter: ModelSubscriptionGroupFilterInput) {
     onCreateGroup(filter: $filter) {

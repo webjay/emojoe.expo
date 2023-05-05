@@ -15,6 +15,9 @@
       ],
       "Activity:@model(appsync)": [
         "read"
+      ],
+      "Notification:@model(appsync)": [
+        "create"
       ]
     }
   }

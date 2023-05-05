@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import { unmarshall } from '@aws-sdk/util-dynamodb';
 import { Expo } from 'expo-server-sdk';
-import { query, get } from './dynamo.mjs';
+import { query, get, batchWrite } from './dynamo.mjs';
 
 const expo = new Expo();
 const sendPushNotificationsAsync = expo.sendPushNotificationsAsync.bind(expo);
@@ -58,8 +58,20 @@ function getActivity(id) {
   });
 }
 
-function handleReceiptChunks(receiptChunks) {
-  console.log('receiptChunks', JSON.stringify(receiptChunks));
+function handleReceipts(notifications, receipts) {
+  const putRequests = receipts.map((receipt, index) => ({
+    PutRequest: {
+      Item: {
+        ...notifications[index],
+        ...receipt,
+      },
+    },
+  }));
+  if (putRequests.length === 0) return Promise.resolve();
+  return batchWrite(
+    process.env.API_EMOJOEEXPO_NOTIFICATIONTABLE_NAME,
+    putRequests,
+  );
 }
 
 /**
@@ -145,5 +157,7 @@ function recordHandler({ dynamodb: { NewImage } }) {
  */
 export default async function handler({ Records }) {
   const notifications = await Promise.all(Records.map(recordHandler));
-  await sendExpoNotifications(notifications.flat()).then(handleReceiptChunks);
+  const notificationsFlat = notifications.flat();
+  const receiptChunks = await sendExpoNotifications(notificationsFlat);
+  await handleReceipts(notificationsFlat, receiptChunks.flat());
 }

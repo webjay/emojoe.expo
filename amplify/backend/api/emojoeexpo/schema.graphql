@@ -80,3 +80,9 @@ type Recognition
   emoji: String!
   createdAt: AWSDateTime!
 }
+
+type Notification @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  createdAt: AWSDateTime!
+}
