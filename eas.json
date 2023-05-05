@@ -9,7 +9,7 @@
     "development": {
       "extends": "production",
       "channel": "staging",
-      "developmentClient": true,
+      "developmentClient": false,
       "distribution": "internal"
     },
     "preview": {

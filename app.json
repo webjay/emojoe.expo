@@ -13,10 +13,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#fff"
     },
-    "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/4d6fa508-0b6d-450a-a519-aba3de6dadda"
-    },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
@@ -64,14 +60,17 @@
         }
       ]
     },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    },
     "plugins": ["sentry-expo"],
     "extra": {
       "eas": {
         "projectId": "4d6fa508-0b6d-450a-a519-aba3de6dadda"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/4d6fa508-0b6d-450a-a519-aba3de6dadda"
     }
   }
 }
