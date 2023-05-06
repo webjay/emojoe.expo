@@ -286,11 +286,13 @@ export type DeleteRecognitionInput = {
 export type CreateNotificationInput = {
   id?: string | null,
   owner?: string | null,
+  pushTokenGroup: string,
   createdAt?: string | null,
 };
 
 export type ModelNotificationConditionInput = {
   owner?: ModelStringInput | null,
+  pushTokenGroup?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   and?: Array< ModelNotificationConditionInput | null > | null,
   or?: Array< ModelNotificationConditionInput | null > | null,
@@ -301,6 +303,7 @@ export type Notification = {
   __typename: "Notification",
   id: string,
   owner?: string | null,
+  pushTokenGroup: string,
   createdAt: string,
   updatedAt: string,
 };
@@ -308,6 +311,7 @@ export type Notification = {
 export type UpdateNotificationInput = {
   id: string,
   owner?: string | null,
+  pushTokenGroup?: string | null,
   createdAt?: string | null,
 };
 
@@ -377,6 +381,7 @@ export type ModelRecognitionConnection = {
 export type ModelNotificationFilterInput = {
   id?: ModelIDInput | null,
   owner?: ModelStringInput | null,
+  pushTokenGroup?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   and?: Array< ModelNotificationFilterInput | null > | null,
   or?: Array< ModelNotificationFilterInput | null > | null,
@@ -498,6 +503,7 @@ export type ModelSubscriptionRecognitionFilterInput = {
 
 export type ModelSubscriptionNotificationFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  pushTokenGroup?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
   or?: Array< ModelSubscriptionNotificationFilterInput | null > | null,
@@ -1106,6 +1112,7 @@ export type CreateNotificationMutation = {
     __typename: "Notification",
     id: string,
     owner?: string | null,
+    pushTokenGroup: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1121,6 +1128,7 @@ export type UpdateNotificationMutation = {
     __typename: "Notification",
     id: string,
     owner?: string | null,
+    pushTokenGroup: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1136,6 +1144,7 @@ export type DeleteNotificationMutation = {
     __typename: "Notification",
     id: string,
     owner?: string | null,
+    pushTokenGroup: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1440,6 +1449,7 @@ export type GetNotificationQuery = {
     __typename: "Notification",
     id: string,
     owner?: string | null,
+    pushTokenGroup: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1458,6 +1468,7 @@ export type ListNotificationsQuery = {
       __typename: "Notification",
       id: string,
       owner?: string | null,
+      pushTokenGroup: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1626,6 +1637,30 @@ export type ActivitiesByGroupIdAndCreatedAtQuery = {
       createdAt: string,
       updatedAt: string,
       groupMembershipActivitiesId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type NotificationsByPushTokenGroupAndCreatedAtQueryVariables = {
+  pushTokenGroup: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelNotificationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type NotificationsByPushTokenGroupAndCreatedAtQuery = {
+  notificationsByPushTokenGroupAndCreatedAt?:  {
+    __typename: "ModelNotificationConnection",
+    items:  Array< {
+      __typename: "Notification",
+      id: string,
+      owner?: string | null,
+      pushTokenGroup: string,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2186,6 +2221,7 @@ export type OnCreateNotificationSubscription = {
     __typename: "Notification",
     id: string,
     owner?: string | null,
+    pushTokenGroup: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2201,6 +2237,7 @@ export type OnUpdateNotificationSubscription = {
     __typename: "Notification",
     id: string,
     owner?: string | null,
+    pushTokenGroup: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2216,6 +2253,7 @@ export type OnDeleteNotificationSubscription = {
     __typename: "Notification",
     id: string,
     owner?: string | null,
+    pushTokenGroup: string,
     createdAt: string,
     updatedAt: string,
   } | null,

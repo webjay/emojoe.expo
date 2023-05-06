@@ -17,7 +17,8 @@
         "read"
       ],
       "Notification:@model(appsync)": [
-        "create"
+        "create",
+        "read"
       ]
     }
   }

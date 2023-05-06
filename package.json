@@ -11,7 +11,7 @@
     "build:android": "ENTRY_FILE=index.js eas build --platform android",
     "amplify": "amplify",
     "repack": "rm package-lock.json && rm -rf node_modules && npm install",
-    "lint": "eslint ./src/ --ext .jsx,.js,.tsx,.ts",
+    "lint": "eslint ./src/ --ext .jsx,.js,.mjs,.tsx,.ts",
     "typecheck": "tsc --strict --noEmit --incremental false",
     "start": "npx expo start",
     "start:clear": "npx expo start --clear"

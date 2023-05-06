@@ -439,6 +439,7 @@ export const onCreateNotification = /* GraphQL */ `
     onCreateNotification(filter: $filter, owner: $owner) {
       id
       owner
+      pushTokenGroup
       createdAt
       updatedAt
     }
@@ -452,6 +453,7 @@ export const onUpdateNotification = /* GraphQL */ `
     onUpdateNotification(filter: $filter, owner: $owner) {
       id
       owner
+      pushTokenGroup
       createdAt
       updatedAt
     }
@@ -465,6 +467,7 @@ export const onDeleteNotification = /* GraphQL */ `
     onDeleteNotification(filter: $filter, owner: $owner) {
       id
       owner
+      pushTokenGroup
       createdAt
       updatedAt
     }

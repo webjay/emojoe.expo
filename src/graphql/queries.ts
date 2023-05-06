@@ -256,6 +256,7 @@ export const getNotification = /* GraphQL */ `
     getNotification(id: $id) {
       id
       owner
+      pushTokenGroup
       createdAt
       updatedAt
     }
@@ -271,6 +272,7 @@ export const listNotifications = /* GraphQL */ `
       items {
         id
         owner
+        pushTokenGroup
         createdAt
         updatedAt
       }
@@ -445,6 +447,34 @@ export const activitiesByGroupIdAndCreatedAt = /* GraphQL */ `
         createdAt
         updatedAt
         groupMembershipActivitiesId
+      }
+      nextToken
+    }
+  }
+`;
+export const notificationsByPushTokenGroupAndCreatedAt = /* GraphQL */ `
+  query NotificationsByPushTokenGroupAndCreatedAt(
+    $pushTokenGroup: String!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    notificationsByPushTokenGroupAndCreatedAt(
+      pushTokenGroup: $pushTokenGroup
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        owner
+        pushTokenGroup
+        createdAt
+        updatedAt
       }
       nextToken
     }

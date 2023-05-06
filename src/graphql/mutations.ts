@@ -523,6 +523,7 @@ export const createNotification = /* GraphQL */ `
     createNotification(input: $input, condition: $condition) {
       id
       owner
+      pushTokenGroup
       createdAt
       updatedAt
     }
@@ -536,6 +537,7 @@ export const updateNotification = /* GraphQL */ `
     updateNotification(input: $input, condition: $condition) {
       id
       owner
+      pushTokenGroup
       createdAt
       updatedAt
     }
@@ -549,6 +551,7 @@ export const deleteNotification = /* GraphQL */ `
     deleteNotification(input: $input, condition: $condition) {
       id
       owner
+      pushTokenGroup
       createdAt
       updatedAt
     }

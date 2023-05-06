@@ -83,6 +83,7 @@ type Recognition
 
 type Notification @model @auth(rules: [{ allow: owner }]) {
   id: ID!
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  owner: String @auth(rules: [{ allow: owner, operations: [read] }])
+  pushTokenGroup: String! @index(sortKeyFields: ["createdAt"])
   createdAt: AWSDateTime!
 }
