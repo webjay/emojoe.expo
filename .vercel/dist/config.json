@@ -1,7 +1,7 @@
 {
   "version": 3,
   "overrides": {
-    "/.well-known/apple-app-site-association": {
+    ".well-known/apple-app-site-association": {
       "contentType": "application/json"
     }
   }
