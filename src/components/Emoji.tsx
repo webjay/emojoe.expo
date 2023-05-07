@@ -15,7 +15,9 @@ const styles = StyleSheet.create({
 });
 
 export default function Emoji({ emoji, style }: Props) {
-  return <Avatar.Text size={40} label={emoji || '🃟'} style={[styles.emoji, style]} />;
+  return (
+    <Avatar.Text size={40} label={emoji || '🃟'} style={[styles.emoji, style]} />
+  );
 }
 
 Emoji.defaultProps = {

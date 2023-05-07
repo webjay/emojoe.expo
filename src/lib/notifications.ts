@@ -24,8 +24,14 @@ async function getPushToken() {
 function androidChannelConf() {
   if (Platform.OS !== 'android') return;
   const importance = Notifications.AndroidImportance.DEFAULT;
-  Notifications.setNotificationChannelAsync('activity', { name: 'Activity', importance });
-  Notifications.setNotificationChannelAsync('recognition', { name: 'Recognition', importance });
+  Notifications.setNotificationChannelAsync('activity', {
+    name: 'Activity',
+    importance,
+  });
+  Notifications.setNotificationChannelAsync('recognition', {
+    name: 'Recognition',
+    importance,
+  });
 }
 
 async function setActivityCategory() {
@@ -46,11 +52,10 @@ function initNotifications() {
 
 async function hasPermission() {
   const { granted, ios } = await Notifications.getPermissionsAsync();
-  return granted === true || ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL;
+  return (
+    granted === true ||
+    ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
+  );
 }
 
-export {
-  initNotifications,
-  getPushToken,
-  hasPermission,
-};
+export { initNotifications, getPushToken, hasPermission };

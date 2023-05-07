@@ -7,7 +7,9 @@ Sentry.init({
   // debug: true,
 });
 
-export function wrap<P extends Record<string, any>>(children: React.ComponentType<P>) {
+export function wrap<P extends Record<string, any>>(
+  children: React.ComponentType<P>,
+) {
   if (Platform.OS === 'web') {
     return Sentry.Browser.withErrorBoundary(children, { fallback: undefined });
   }

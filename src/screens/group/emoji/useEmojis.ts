@@ -8,10 +8,10 @@ import { runAfterInteractions } from '@src/lib/task';
 type Section = {
   key: string;
   title: string;
-  data: ReadonlyArray<{
+  data: readonly {
     key: string;
     emojis: Emoji[];
-  }>;
+  }[];
 };
 
 type EmojiSection = SectionListData<

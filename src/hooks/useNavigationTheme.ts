@@ -13,5 +13,8 @@ const { LightTheme, DarkTheme } = adaptNavigationTheme({
 
 export default function useNavigationTheme() {
   const colorScheme = useColorScheme();
-  return useMemo(() => colorScheme === 'dark' ? DarkTheme : LightTheme, [colorScheme]);
+  return useMemo(
+    () => (colorScheme === 'dark' ? DarkTheme : LightTheme),
+    [colorScheme],
+  );
 }
