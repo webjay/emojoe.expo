@@ -165,6 +165,13 @@ function sendExpoNotifications(notifications) {
   return Promise.all(notificationChunks.map(sendPushNotificationsAsync));
 }
 
+function profilesUniqueByPushToken(profiles) {
+  return profiles.filter(
+    ({ pushToken }, index) =>
+      index === profiles.findIndex(({ pushToken: pt }) => pushToken === pt),
+  );
+}
+
 /**
  * @param {{ id: string, emoji: string, groupId: string, owner: string }} activity
  * @returns {import('expo-server-sdk').ExpoPushMessage[]}
@@ -183,7 +190,7 @@ async function activityToExpoPushMessages({
     ({ owner: profileOwner }) => profileOwner === owner,
   );
   const profilesFiltered = await profilesWithoutRecentGroupActivity(
-    profiles,
+    profilesUniqueByPushToken(profiles),
     groupId,
   );
   return profilesFiltered
