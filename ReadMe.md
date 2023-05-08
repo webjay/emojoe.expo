@@ -29,7 +29,7 @@
 
 ### Schema
 
-    amplify/backend/api/doapp/schema.graphql
+    amplify/backend/api/emojoeexpo/schema.graphql
 
 ### Hacks
 
