@@ -17,6 +17,7 @@ import {
   getProfile,
   profilesBySubId,
   getGroup,
+  activitiesByGroupMembershipActivitiesIdAndCreatedAt,
   groupMembershipsByProfileId,
   groupMembershipsByGroupIdAndProfileId,
   activitiesByGroupIdAndCreatedAt,
@@ -111,6 +112,20 @@ export function groupGetPublic(id: Group['id']) {
       authMode: 'API_KEY',
       authToken,
     }),
+  );
+}
+
+export async function getActivitiesByGroupMembershipId(
+  groupMembershipActivitiesId: GroupMembership['id'],
+): Promise<Activity[]> {
+  const sortDirection = 'DESC';
+  return dataExtract(
+    API.graphql(
+      graphqlOperation(activitiesByGroupMembershipActivitiesIdAndCreatedAt, {
+        groupMembershipActivitiesId,
+        sortDirection,
+      }),
+    ),
   );
 }
 

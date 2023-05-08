@@ -88,9 +88,9 @@ export const getGroupMembership = /* GraphQL */ `
           owner
           groupId
           emoji
+          groupMembershipActivitiesId
           createdAt
           updatedAt
-          groupMembershipActivitiesId
         }
         nextToken
       }
@@ -183,9 +183,9 @@ export const getActivity = /* GraphQL */ `
         profileGroupMembershipsId
         groupMembershipsId
       }
+      groupMembershipActivitiesId
       createdAt
       updatedAt
-      groupMembershipActivitiesId
     }
   }
 `;
@@ -212,9 +212,9 @@ export const listActivities = /* GraphQL */ `
           profileGroupMembershipsId
           groupMembershipsId
         }
+        groupMembershipActivitiesId
         createdAt
         updatedAt
-        groupMembershipActivitiesId
       }
       nextToken
     }
@@ -444,9 +444,50 @@ export const activitiesByGroupIdAndCreatedAt = /* GraphQL */ `
           profileGroupMembershipsId
           groupMembershipsId
         }
+        groupMembershipActivitiesId
         createdAt
         updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const activitiesByGroupMembershipActivitiesIdAndCreatedAt = /* GraphQL */ `
+  query ActivitiesByGroupMembershipActivitiesIdAndCreatedAt(
+    $groupMembershipActivitiesId: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelActivityFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    activitiesByGroupMembershipActivitiesIdAndCreatedAt(
+      groupMembershipActivitiesId: $groupMembershipActivitiesId
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        owner
+        groupId
+        emoji
+        groupMembership {
+          id
+          owner
+          profileId
+          groupId
+          emoji
+          createdAt
+          updatedAt
+          profileGroupMembershipsId
+          groupMembershipsId
+        }
         groupMembershipActivitiesId
+        createdAt
+        updatedAt
       }
       nextToken
     }

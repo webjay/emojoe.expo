@@ -131,9 +131,9 @@ export const onCreateGroupMembership = /* GraphQL */ `
           owner
           groupId
           emoji
+          groupMembershipActivitiesId
           createdAt
           updatedAt
-          groupMembershipActivitiesId
         }
         nextToken
       }
@@ -183,9 +183,9 @@ export const onUpdateGroupMembership = /* GraphQL */ `
           owner
           groupId
           emoji
+          groupMembershipActivitiesId
           createdAt
           updatedAt
-          groupMembershipActivitiesId
         }
         nextToken
       }
@@ -235,9 +235,9 @@ export const onDeleteGroupMembership = /* GraphQL */ `
           owner
           groupId
           emoji
+          groupMembershipActivitiesId
           createdAt
           updatedAt
-          groupMembershipActivitiesId
         }
         nextToken
       }
@@ -288,9 +288,9 @@ export const onCreateActivity = /* GraphQL */ `
         profileGroupMembershipsId
         groupMembershipsId
       }
+      groupMembershipActivitiesId
       createdAt
       updatedAt
-      groupMembershipActivitiesId
     }
   }
 `;
@@ -334,9 +334,9 @@ export const onUpdateActivity = /* GraphQL */ `
         profileGroupMembershipsId
         groupMembershipsId
       }
+      groupMembershipActivitiesId
       createdAt
       updatedAt
-      groupMembershipActivitiesId
     }
   }
 `;
@@ -380,9 +380,9 @@ export const onDeleteActivity = /* GraphQL */ `
         profileGroupMembershipsId
         groupMembershipsId
       }
+      groupMembershipActivitiesId
       createdAt
       updatedAt
-      groupMembershipActivitiesId
     }
   }
 `;
