@@ -1,4 +1,5 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useCallback, useMemo } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import type { Activity } from '@src/types/api';
 import { getActivitiesByGroupMembershipId } from '@src/lib/api';
 
@@ -43,8 +44,9 @@ export default function useGroupStats(
     () => (streak ? 'rocket-launch' : 'tortoise'),
     [streak],
   );
-  useEffect(() => {
+  const getData = useCallback(() => {
     getActivitiesByGroupMembershipId(id).then(countStreak).then(setStreak);
   }, [id]);
+  useFocusEffect(useCallback(getData, [getData]));
   return { streak, streakProgress, streakIcon };
 }
