@@ -2,37 +2,31 @@ import { useState, useCallback, useMemo } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import type { Activity } from '@src/types/api';
 import { getActivitiesByGroupMembershipId } from '@src/lib/api';
-
-const streakPeriodMS = 48 * 60 * 60 * 1000;
-
-function isNotWithinStreak(
-  createdAt1: Activity['createdAt'],
-  createdAt2: Activity['createdAt'],
-) {
-  const timeDiff =
-    new Date(createdAt1).getTime() - new Date(createdAt2).getTime();
-  return timeDiff > streakPeriodMS;
-}
+import { hasDayGap, isSameDay, isYesterday, isToday } from '@src/lib/date';
 
 function countStreak(activities: Activity[]) {
-  if (activities.length === 0) return 0;
-  if (isNotWithinStreak(new Date().toISOString(), activities[0].createdAt)) {
-    return 0;
-  }
-  const activityStreakStopIndex = activities.findIndex(
-    (activity, index, array) => {
-      if (!activity || !activity.createdAt) return true;
-      const previousActivity = array[index + 1];
-      if (!previousActivity) return true;
-      if (index === 0) {
-        return isNotWithinStreak(new Date().toISOString(), activity.createdAt);
+  const streakActivities: Activity[] = [];
+  activities.some((activity, index) => {
+    const activityDate = new Date(activity.createdAt);
+    if (index === 0) {
+      if (isToday(activityDate) || isYesterday(activityDate)) {
+        streakActivities.push(activity);
+        return false;
       }
-      return isNotWithinStreak(activity.createdAt, previousActivity.createdAt);
-    },
-  );
-  if (activityStreakStopIndex === -1) return activities.length;
-  if (activities.length === 1) return activityStreakStopIndex;
-  return activityStreakStopIndex + 1;
+      return true;
+    }
+    const previousActivity = streakActivities[streakActivities.length - 1];
+    const previousActivityDate = new Date(previousActivity.createdAt);
+    if (isSameDay(previousActivityDate, activityDate)) {
+      return false;
+    }
+    if (hasDayGap(previousActivityDate, activityDate)) {
+      streakActivities.push(activity);
+      return false;
+    }
+    return true;
+  });
+  return streakActivities.length;
 }
 
 export default function useGroupStats(
