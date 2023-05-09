@@ -5,16 +5,16 @@
   "license": "UNLICENSED",
   "main": "./src/index.ts",
   "scripts": {
-    "expo": "expo",
+    "expo": "expo-internal",
     "eas": "eas",
-    "build": "expo export --platform web",
+    "build": "expo-internal export --platform web",
     "build:android": "ENTRY_FILE=index.js eas build --platform android",
     "amplify": "amplify",
     "repack": "rm package-lock.json && rm -rf node_modules && npm install",
     "lint": "eslint ./src/ --ext .jsx,.js,.mjs,.tsx,.ts",
     "typecheck": "tsc --strict --noEmit --incremental false",
-    "start": "expo start",
-    "start:clear": "expo start --clear"
+    "start": "expo-internal start",
+    "start:clear": "expo-internal start --clear"
   },
   "dependencies": {
     "@aws-amplify/api": "5.0.31",
