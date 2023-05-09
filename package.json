@@ -5,16 +5,16 @@
   "license": "UNLICENSED",
   "main": "./src/index.ts",
   "scripts": {
-    "expo": "npx expo",
+    "expo": "expo",
     "eas": "eas",
-    "build": "npx expo export --platform web",
+    "build": "expo export --platform web",
     "build:android": "ENTRY_FILE=index.js eas build --platform android",
     "amplify": "amplify",
     "repack": "rm package-lock.json && rm -rf node_modules && npm install",
     "lint": "eslint ./src/ --ext .jsx,.js,.mjs,.tsx,.ts",
     "typecheck": "tsc --strict --noEmit --incremental false",
-    "start": "npx expo start",
-    "start:clear": "npx expo start --clear"
+    "start": "expo start",
+    "start:clear": "expo start --clear"
   },
   "dependencies": {
     "@aws-amplify/api": "5.0.31",
@@ -57,6 +57,7 @@
   "devDependencies": {
     "@aws-amplify/cli": "11.1.1",
     "@babel/core": "^7.21.8",
+    "@expo/cli": "0.7.1",
     "@types/react": "~18.0.27",
     "@types/react-native": "~0.71.6",
     "eas-cli": "3.12.0",
