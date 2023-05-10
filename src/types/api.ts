@@ -1681,6 +1681,31 @@ export type ActivitiesByGroupMembershipActivitiesIdAndCreatedAtQuery = {
   } | null,
 };
 
+export type RecognitionsByActivityIdAndCreatedAtQueryVariables = {
+  activityId: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelRecognitionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type RecognitionsByActivityIdAndCreatedAtQuery = {
+  recognitionsByActivityIdAndCreatedAt?:  {
+    __typename: "ModelRecognitionConnection",
+    items:  Array< {
+      __typename: "Recognition",
+      id: string,
+      owner?: string | null,
+      activityId: string,
+      emoji: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type NotificationsByPushTokenGroupAndCreatedAtQueryVariables = {
   pushTokenGroup: string,
   createdAt?: ModelStringKeyConditionInput | null,

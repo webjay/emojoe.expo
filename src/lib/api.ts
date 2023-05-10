@@ -18,6 +18,7 @@ import {
   profilesBySubId,
   getGroup,
   activitiesByGroupMembershipActivitiesIdAndCreatedAt,
+  recognitionsByActivityIdAndCreatedAt,
   groupMembershipsByProfileId,
   groupMembershipsByGroupIdAndProfileId,
   activitiesByGroupIdAndCreatedAt,
@@ -25,6 +26,7 @@ import {
 } from '@src/graphql/queries';
 import type {
   Activity,
+  Recognition,
   Profile,
   Group,
   GroupMembership,
@@ -124,6 +126,18 @@ export async function getActivitiesByGroupMembershipId(
       graphqlOperation(activitiesByGroupMembershipActivitiesIdAndCreatedAt, {
         groupMembershipActivitiesId,
         sortDirection,
+      }),
+    ),
+  );
+}
+
+export async function getRecognitionByActivityId(
+  activityId: Activity['id'],
+): Promise<Recognition[]> {
+  return dataExtract(
+    API.graphql(
+      graphqlOperation(recognitionsByActivityIdAndCreatedAt, {
+        activityId,
       }),
     ),
   );

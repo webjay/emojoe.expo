@@ -493,6 +493,35 @@ export const activitiesByGroupMembershipActivitiesIdAndCreatedAt = /* GraphQL */
     }
   }
 `;
+export const recognitionsByActivityIdAndCreatedAt = /* GraphQL */ `
+  query RecognitionsByActivityIdAndCreatedAt(
+    $activityId: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelRecognitionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    recognitionsByActivityIdAndCreatedAt(
+      activityId: $activityId
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        owner
+        activityId
+        emoji
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const notificationsByPushTokenGroupAndCreatedAt = /* GraphQL */ `
   query NotificationsByPushTokenGroupAndCreatedAt(
     $pushTokenGroup: String!

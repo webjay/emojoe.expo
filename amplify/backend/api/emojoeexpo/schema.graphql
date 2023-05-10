@@ -77,7 +77,7 @@ type Recognition
         { allow: private, operations: [read] }
       ]
     )
-  activityId: ID!
+  activityId: ID! @index(sortKeyFields: ["createdAt"])
   emoji: String!
   createdAt: AWSDateTime!
 }
