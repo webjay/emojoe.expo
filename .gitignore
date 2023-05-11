@@ -86,4 +86,9 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
 *.zip
+
+# security
+team-provider-info.json
+aws-exports.js
