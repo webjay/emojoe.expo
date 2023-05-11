@@ -8,7 +8,6 @@
     "init": "amplify pull --appId d249ll2h4fem2z --envName dev",
     "expo": "expo-internal",
     "eas": "eas",
-    "prebuild": "./amplify-init.sh",
     "build": "expo-internal export --platform web",
     "build:android": "ENTRY_FILE=index.js eas build --platform android",
     "amplify": "amplify",
