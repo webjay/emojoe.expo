@@ -21,8 +21,7 @@ AWSCLOUDFORMATIONCONFIG="{\
 AMPLIFY="{\
 \"projectName\":\"emojoeexpo\",\
 \"appId\":\"d249ll2h4fem2z\",\
-\"envName\":\"dev\",\
-\"defaultEditor\":\"code\"\
+\"envName\":\"dev\"
 }"
 
 FRONTEND="{\
@@ -33,4 +32,5 @@ FRONTEND="{\
 PROVIDERS="{\
 \"awscloudformation\":$AWSCLOUDFORMATIONCONFIG}"
 
-npm run amplify pull -- --providers $PROVIDERS --amplify $AMPLIFY --frontend $FRONTEND --yes
+# npm run amplify pull -- --providers $PROVIDERS --amplify $AMPLIFY --frontend $FRONTEND --yes
+npm run amplify pull -- --providers $PROVIDERS --amplify $AMPLIFY --yes
