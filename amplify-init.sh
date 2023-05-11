@@ -14,8 +14,8 @@ AWSCLOUDFORMATIONCONFIG="{\
 \"configLevel\":\"project\",\
 \"useProfile\":false,\
 \"profileName\":\"default\",\
-\"accessKeyId\":\"AWS_ACCESS_KEY_ID\",\
-\"secretAccessKey\":\"AWS_SECRET_ACCESS_KEY\",\
+\"accessKeyId\":\"${AWS_ACCESS_KEY_ID}\",\
+\"secretAccessKey\":\"${AWS_SECRET_ACCESS_KEY}\",\
 \"region\":\"eu-central-1\"\
 }"
 
