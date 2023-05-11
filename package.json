@@ -57,7 +57,7 @@
     "sentry-expo": "~6.1.1"
   },
   "devDependencies": {
-    "@aws-amplify/cli": "11.1.1",
+    "@aws-amplify/cli": "10.0.0",
     "@babel/core": "^7.21.8",
     "@expo/cli": "0.7.1",
     "@types/react": "~18.0.27",
