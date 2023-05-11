@@ -5,6 +5,7 @@ import type { ActivityItem } from '@src/types/common';
 import { dayProgressFlex } from '@src/lib/date';
 import NameChip from '@src/components/NameChip';
 import AnimatedFlexView from '@src/components/AnimatedFlexView';
+import Recognition from '@src/components/Recognition';
 import Emoji from '@src/components/Emoji';
 
 type Props = {
@@ -27,12 +28,15 @@ const styles = StyleSheet.create({
   chipSpace: {
     flexGrow: 1,
   },
-  emojiView: {
+  emojiAnimatedView: {
     position: 'absolute',
     left: '30%',
     right: 0,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  emojiView: {
+    justifyContent: 'center',
   },
   emoji: {
     borderWidth: StyleSheet.hairlineWidth,
@@ -55,10 +59,13 @@ function SectionActivityItem({ item }: Props) {
         <NameChip profileId={profileId} />
         <View style={styles.chipSpace} />
       </View>
-      {actions.map(({ createdAt, emoji }) => (
-        <View key={createdAt} style={styles.emojiView}>
+      {actions.map(({ id, createdAt, emoji }) => (
+        <View key={createdAt} style={styles.emojiAnimatedView}>
           <AnimatedFlexView flex={dayProgressFlex(createdAt)} />
-          <Emoji emoji={emoji} style={[styles.emoji, { borderColor }]} />
+          <View style={styles.emojiView}>
+            <Emoji emoji={emoji} style={[styles.emoji, { borderColor }]} />
+            <Recognition activityId={id} />
+          </View>
         </View>
       ))}
     </View>
