@@ -32,4 +32,4 @@ AUTHCONFIG="{\
 CATEGORIES="{\
 \"auth\":$AUTHCONFIG}"
 
-npm run amplify pull -- --providers $PROVIDERS --amplify $AMPLIFY --categories $CATEGORIES --yes
+npm run amplify init -- --providers $PROVIDERS --amplify $AMPLIFY --categories $CATEGORIES --yes
