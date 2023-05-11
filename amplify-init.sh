@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-# IFS='|'
+IFS='|'
 
 REACTCONFIG="{\
 \"SourceDir\":\"src\",\
@@ -33,5 +33,4 @@ FRONTEND="{\
 PROVIDERS="{\
 \"awscloudformation\":$AWSCLOUDFORMATIONCONFIG}"
 
-# npm run amplify pull -- --providers $PROVIDERS --amplify $AMPLIFY --frontend $FRONTEND --yes
-npm run amplify pull -- --providers $PROVIDERS --amplify $AMPLIFY --yes
+npm run amplify pull -- --providers $PROVIDERS --amplify $AMPLIFY --frontend $FRONTEND --yes
