@@ -21,7 +21,7 @@ AWSCLOUDFORMATIONCONFIG="{\
 AMPLIFY="{\
 \"projectName\":\"emojoeexpo\",\
 \"appId\":\"d249ll2h4fem2z\",\
-\"envName\":\"dev\"
+\"envName\":\"dev\"\
 }"
 
 FRONTEND="{\
