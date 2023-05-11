@@ -14,7 +14,8 @@
     "lint": "eslint ./src/ --ext .jsx,.js,.mjs,.tsx,.ts",
     "typecheck": "tsc --strict --noEmit --incremental false",
     "start": "expo-internal start",
-    "start:clear": "expo-internal start --clear"
+    "start:clear": "expo-internal start --clear",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@aws-amplify/api": "5.0.31",
@@ -58,6 +59,7 @@
     "@aws-amplify/cli": "11.1.1",
     "@babel/core": "^7.21.8",
     "@expo/cli": "0.7.1",
+    "@graphql-codegen/cli": "3.3.1",
     "@types/react": "~18.0.27",
     "@types/react-native": "~0.71.6",
     "eas-cli": "3.12.0",
@@ -70,7 +72,8 @@
     "eslint-plugin-jsx-a11y": "6.7.1",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "@graphql-codegen/client-preset": "3.0.1"
   },
   "overrides": {
     "metro": "0.76.0",
