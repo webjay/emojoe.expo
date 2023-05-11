@@ -8,7 +8,7 @@
     "init": "amplify pull --appId d249ll2h4fem2z --envName dev",
     "expo": "expo-internal",
     "eas": "eas",
-    "prebuild": "./amplify-init.sh",
+    "vercel-prebuild": "./amplify-init.sh",
     "build": "expo-internal export --platform web",
     "build:android": "ENTRY_FILE=index.js eas build --platform android",
     "amplify": "amplify",
@@ -57,7 +57,7 @@
     "sentry-expo": "~6.1.1"
   },
   "devDependencies": {
-    "@aws-amplify/cli": "10.0.0",
+    "@aws-amplify/cli": "12.0.0",
     "@babel/core": "^7.21.8",
     "@expo/cli": "0.7.1",
     "@types/react": "~18.0.27",

@@ -1,5 +1,6 @@
 {
   "outputDirectory": "dist",
+  "buildCommand": "npm run vercel-prebuild && npm run build",
   "rewrites": [
     {
       "source": "/group/:groupId",
