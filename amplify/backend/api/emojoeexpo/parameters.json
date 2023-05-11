@@ -1,7 +1,7 @@
 {
   "AppSyncApiName": "emojoeexpo",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": true,
+  "DynamoDBEnableServerSideEncryption": false,
   "AuthCognitoUserPoolId": {
     "Fn::GetAtt": [
       "authemojoeexpo5f85b84d",
