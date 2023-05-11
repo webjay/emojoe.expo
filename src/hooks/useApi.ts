@@ -1,15 +1,9 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function useApi<R>(
-  method: (...args: any[]) => Promise<R>,
-  ...parameters: Parameters<typeof method>
-) {
+export default function useApi<R>(request: Function) {
   const [data, setData] = useState<R>();
-  const request = useCallback(() => {
-    method(...parameters).then(setData);
-  }, [method, parameters]);
   useEffect(() => {
-    request();
+    request().then(setData);
   }, [request]);
   return {
     data,

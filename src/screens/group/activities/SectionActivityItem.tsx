@@ -5,7 +5,7 @@ import type { ActivityItem } from '@src/types/common';
 import { dayProgressFlex } from '@src/lib/date';
 import NameChip from '@src/components/NameChip';
 import AnimatedFlexView from '@src/components/AnimatedFlexView';
-import Recognition from '@src/components/Recognition';
+import RecognitionEmojis from '@src/components/RecognitionEmojis';
 import Emoji from '@src/components/Emoji';
 
 type Props = {
@@ -64,7 +64,7 @@ function SectionActivityItem({ item }: Props) {
           <AnimatedFlexView flex={dayProgressFlex(createdAt)} />
           <View style={styles.emojiView}>
             <Emoji emoji={emoji} style={[styles.emoji, { borderColor }]} />
-            <Recognition activityId={id} />
+            <RecognitionEmojis activityId={id} />
           </View>
         </View>
       ))}

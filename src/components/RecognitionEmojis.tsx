@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
+import React, { useCallback, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import useApi from '@src/hooks/useApi';
+import type { Recognition } from '@src/types/api';
 import { getRecognitionByActivityId } from '@src/lib/api';
 
 type Props = {
@@ -26,8 +27,10 @@ function transform(index: number, negative = false) {
   return { transform: [{ rotate: `${degree}deg` }] };
 }
 
-function Recognition({ activityId }: Props) {
-  const { data } = useApi(getRecognitionByActivityId, activityId);
+function RecognitionEmojis({ activityId }: Props) {
+  const { data } = useApi<Recognition[]>(
+    useCallback(() => getRecognitionByActivityId(activityId), [activityId]),
+  );
   if (!data) return null;
   return (
     <>
@@ -45,4 +48,4 @@ function Recognition({ activityId }: Props) {
   );
 }
 
-export default memo(Recognition);
+export default memo(RecognitionEmojis);
