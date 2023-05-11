@@ -5,8 +5,10 @@
   "license": "UNLICENSED",
   "main": "./src/index.ts",
   "scripts": {
+    "init": "amplify pull --appId d249ll2h4fem2z --envName dev --yes",
     "expo": "expo-internal",
     "eas": "eas",
+    "prebuild": "npm run init",
     "build": "expo-internal export --platform web",
     "build:android": "ENTRY_FILE=index.js eas build --platform android",
     "amplify": "amplify",
