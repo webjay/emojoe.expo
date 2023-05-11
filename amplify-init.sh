@@ -1,14 +1,6 @@
 #!/bin/bash
 
 set -e
-# IFS='|'
-
-# REACTCONFIG="{\
-# \"SourceDir\":\"src\",\
-# \"DistributionDir\":\"dist\",\
-# \"BuildCommand\":\"npm run-script build\",\
-# \"StartCommand\":\"npm run-script start\"\
-# }"
 
 AWSCLOUDFORMATIONCONFIG="{\
 \"configLevel\":\"project\",\
@@ -32,5 +24,12 @@ FRONTEND="{\
 PROVIDERS="{\
 \"awscloudformation\":$AWSCLOUDFORMATIONCONFIG}"
 
-# npm run amplify pull -- --providers $PROVIDERS --amplify $AMPLIFY --frontend $FRONTEND --yes
-npm run amplify pull -- --providers $PROVIDERS --amplify $AMPLIFY --yes
+AUTHCONFIG="{\
+\"googleAppIdUserPool\": \"${AMPLIFY_GOOGLE_CLIENT_ID}\",\
+\"googleAppSecretUserPool\": \"${AMPLIFY_GOOGLE_CLIENT_SECRET}\"\
+}"
+
+CATEGORIES="{\
+\"auth\":$AUTHCONFIG}"
+
+npm run amplify pull -- --providers $PROVIDERS --amplify $AMPLIFY --categories $CATEGORIES --yes
