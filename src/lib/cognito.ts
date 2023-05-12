@@ -1,6 +1,10 @@
 import { Auth } from '@aws-amplify/auth';
 import Sentry from './sentry';
 
+export function userDelete() {
+  return Auth.deleteUser();
+}
+
 export default async function getCognitoUserSub() {
   try {
     const user = await Auth.currentAuthenticatedUser();

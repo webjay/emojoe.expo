@@ -1,11 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, View, Platform } from 'react-native';
+import { StyleSheet, View, Platform, Alert } from 'react-native';
 import { openSettings } from 'expo-linking';
 import { useRouter } from 'expo-router';
-import { Appbar, Switch, Text, Snackbar } from 'react-native-paper';
+import {
+  Appbar,
+  Switch,
+  Text,
+  Snackbar,
+  Divider,
+  Button,
+} from 'react-native-paper';
 import Container from '@src/components/Container';
-import { hasPermission, getPushToken } from '../lib/notifications';
-import { profileUpdate } from '../lib/api';
+import { hasPermission, getPushToken } from '@src/lib/notifications';
+import { profileUpdate } from '@src/lib/api';
+import { userDelete } from '@src/lib/cognito';
 
 const styles = StyleSheet.create({
   container: {
@@ -45,6 +53,34 @@ function SettingsScreen() {
     }
   }, []);
   const onDismissSnackBar = useCallback(() => setSnackbarVisible(false), []);
+  const handleAccountDelete = useCallback(() => userDelete(), []);
+  const onPressDelete = useCallback(() => {
+    if (Platform.OS === 'web') {
+      // eslint-disable-next-line no-alert
+      if (window.confirm('Are you sure?')) {
+        handleAccountDelete();
+      }
+      return;
+    }
+    Alert.alert(
+      'Delete account',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete my account',
+          style: 'destructive',
+          onPress: handleAccountDelete,
+        },
+      ],
+      {
+        cancelable: true,
+      },
+    );
+  }, [handleAccountDelete]);
   useEffect(() => {
     hasPermission().then(setNotificationsValue);
   }, []);
@@ -62,6 +98,12 @@ function SettingsScreen() {
             disabled={Platform.OS === 'web'}
           />
           <Text variant="labelLarge">Notifications</Text>
+        </View>
+        <Divider />
+        <View style={styles.segment}>
+          <Button mode="outlined" onPress={onPressDelete}>
+            Delete account
+          </Button>
         </View>
         <Snackbar
           visible={snackbarVisible}
