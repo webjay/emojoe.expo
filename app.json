@@ -23,7 +23,7 @@
     },
     "android": {
       "package": "dk.webcom.emojoe",
-      "versionCode": 1,
+      "versionCode": 10,
       "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
