@@ -16,8 +16,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   groups: {
-    padding: 10,
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 10,
@@ -32,7 +30,6 @@ const styles = StyleSheet.create({
     paddingLeft: 2,
   },
   buttons: {
-    flex: 1,
     flexDirection: 'row',
     gap: 30,
     alignItems: 'center',
