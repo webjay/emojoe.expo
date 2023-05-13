@@ -6,9 +6,13 @@ import { hasDayGap, isSameDay, isYesterday, isToday } from '@src/lib/date';
 
 function countStreak(activities: Activity[]) {
   const streakActivities: Activity[] = [];
+  let today = false;
   activities.some((activity, index) => {
     const activityDate = new Date(activity.createdAt);
     if (index === 0) {
+      if (isToday(activityDate)) {
+        today = true;
+      }
       if (isToday(activityDate) || isYesterday(activityDate)) {
         streakActivities.push(activity);
         return false;
@@ -26,21 +30,37 @@ function countStreak(activities: Activity[]) {
     }
     return true;
   });
-  return streakActivities.length;
+  return {
+    streakLength: streakActivities.length,
+    today,
+  };
 }
 
 export default function useGroupStats(
   id: Activity['groupMembershipActivitiesId'],
 ) {
   const [streak, setStreak] = useState<number>(0);
-  const streakProgress = useMemo(() => streak / 7, [streak]);
+  const [doneToday, setDoneToday] = useState(false);
+  const streakProgressWeek = useMemo(() => streak / 7, [streak]);
+  const streakProgressMonth = useMemo(() => streak / 30, [streak]);
   const streakIcon = useMemo(
     () => (streak ? 'rocket-launch' : 'tortoise'),
     [streak],
   );
   const getData = useCallback(() => {
-    getActivitiesByGroupMembershipId(id).then(countStreak).then(setStreak);
+    getActivitiesByGroupMembershipId(id)
+      .then(countStreak)
+      .then(({ streakLength, today }) => {
+        setStreak(streakLength);
+        setDoneToday(today);
+      });
   }, [id]);
   useFocusEffect(useCallback(getData, [getData]));
-  return { streak, streakProgress, streakIcon };
+  return {
+    streak,
+    streakProgressWeek,
+    streakProgressMonth,
+    streakIcon,
+    doneToday,
+  };
 }

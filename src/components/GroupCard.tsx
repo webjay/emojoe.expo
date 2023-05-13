@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Card, ProgressBar, Text, Chip } from 'react-native-paper';
+import { Card, ProgressBar, Text, Chip, Tooltip } from 'react-native-paper';
 import type { GroupMembership } from '@src/types/api';
 import useGroupStats from '@src/hooks/useGroupStats';
 import EmojiButton from '@src/components/EmojiButton';
@@ -30,10 +30,16 @@ const styles = StyleSheet.create({
   },
   progressView: {
     flex: 1,
+    gap: 5,
     justifyContent: 'flex-end',
   },
   progress: {
+    width: 100,
     borderRadius: 10,
+  },
+  chips: {
+    flexDirection: 'row',
+    gap: 10,
   },
 });
 
@@ -46,7 +52,13 @@ export default function GroupCard({
   },
 }: Props) {
   const { push: navigate } = useRouter();
-  const { streak, streakProgress, streakIcon } = useGroupStats(id);
+  const {
+    streak,
+    streakProgressWeek,
+    streakProgressMonth,
+    streakIcon,
+    doneToday,
+  } = useGroupStats(id);
   const onPressTitle = useCallback(
     () => navigate(`/group/${groupId}/edit`),
     [groupId, navigate],
@@ -80,13 +92,24 @@ export default function GroupCard({
       <Card.Content>
         <View style={styles.content}>
           <View style={styles.progressView}>
-            <ProgressBar
-              animatedValue={streakProgress}
-              style={styles.progress}
-            />
+            <Tooltip title="Week progress">
+              <ProgressBar
+                animatedValue={streakProgressWeek}
+                style={styles.progress}
+              />
+            </Tooltip>
+            <Tooltip title="Month progress">
+              <ProgressBar
+                animatedValue={streakProgressMonth}
+                style={styles.progress}
+              />
+            </Tooltip>
           </View>
-          <View>
-            <Chip icon={streakIcon}>{streak}</Chip>
+          <View style={styles.chips}>
+            {doneToday && <Chip icon="check-decagram">Done</Chip>}
+            <Tooltip title="Streak length">
+              <Chip icon={streakIcon}>{streak}</Chip>
+            </Tooltip>
           </View>
         </View>
       </Card.Content>
