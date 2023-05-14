@@ -4,7 +4,7 @@
     "name": "Emojoe",
     "slug": "emojoe2",
     "scheme": "emojoe2",
-    "version": "2.2.0",
+    "version": "2.2.1",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "automatic",
@@ -23,7 +23,7 @@
     },
     "android": {
       "package": "dk.webcom.emojoe",
-      "versionCode": 10,
+      "versionCode": 11,
       "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo_transparent_no-text.png",
