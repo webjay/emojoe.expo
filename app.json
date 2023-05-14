@@ -19,7 +19,10 @@
       "bundleIdentifier": "dk.webcom.emojoe",
       "buildNumber": "1",
       "associatedDomains": ["applinks:emojoe.app"],
-      "appStoreUrl": "https://apps.apple.com/app/emojoe/id1540478554"
+      "appStoreUrl": "https://apps.apple.com/app/emojoe/id1540478554",
+      "entitlements": {
+        "com.apple.developer.applesignin": ["Default"]
+      }
     },
     "android": {
       "package": "dk.webcom.emojoe",
