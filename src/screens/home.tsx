@@ -2,11 +2,12 @@ import React, { useRef, useCallback, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import Container from '@src/components/Container';
-import useGroupMemberships from '../hooks/useGroupMemberships';
-import ScrollViewRefresh from '../components/ScrollViewRefresh';
-import GroupAction from '../components/GroupAction';
-import SafeAreaBottom from '../components/SafeAreaBottom';
-import Empty from '../components/Empty';
+import useGroupMemberships from '@src/hooks/useGroupMemberships';
+import ScrollViewRefresh from '@src/components/ScrollViewRefresh';
+import GroupAction from '@src/components/GroupAction';
+import SafeAreaBottom from '@src/components/SafeAreaBottom';
+import Empty from '@src/components/Empty';
+import Howto from '@src/components/Howto';
 
 const styles = StyleSheet.create({
   container: {
@@ -42,6 +43,7 @@ export default function HomeScreen() {
         ))}
         <SafeAreaBottom />
       </ScrollViewRefresh>
+      <Howto />
     </Container>
   );
 }
