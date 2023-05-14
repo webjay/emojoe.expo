@@ -10,6 +10,7 @@
     "eas": "eas",
     "build": "expo-internal export --platform web",
     "build:android": "ENTRY_FILE=index.js eas build --platform android",
+    "build:ios": "eas build --platform ios",
     "amplify": "amplify",
     "repack": "rm package-lock.json && rm -rf node_modules && npm install",
     "lint": "eslint ./src/ --ext .jsx,.js,.mjs,.tsx,.ts",
