@@ -14,14 +14,6 @@
         "authConfig": {
           "additionalAuthenticationProviders": [
             {
-              "apiKeyConfig": {
-                "apiKeyExpirationDate": "2024-05-16T13:47:53.533Z",
-                "apiKeyExpirationDays": 365,
-                "description": "Emojoe public"
-              },
-              "authenticationType": "API_KEY"
-            },
-            {
               "authenticationType": "AWS_IAM"
             }
           ],

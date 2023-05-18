@@ -20,7 +20,7 @@ type Group
   @auth(
     rules: [
       { allow: private, operations: [create, read, update] }
-      { allow: public, operations: [read] }
+      { allow: public, operations: [read], provider: iam }
     ]
   ) {
   id: ID!

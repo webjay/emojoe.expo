@@ -1,6 +1,5 @@
 import { API, graphqlOperation } from '@aws-amplify/api';
 import type { GraphQLResult } from '@aws-amplify/api-graphql';
-import awsConfig from '@src/aws-exports';
 import getCognitoUserSub from '@src/lib/cognito';
 import {
   createProfile,
@@ -38,8 +37,6 @@ import type {
   UpdateGroupMembershipInput,
 } from '@src/types/api';
 import Sentry from '@src/lib/sentry';
-
-const authToken = awsConfig.aws_appsync_apiKey;
 
 function filterNullItems(item: Record<string, unknown>) {
   return item !== null;
@@ -111,8 +108,7 @@ export function groupGetPublic(id: Group['id']) {
     API.graphql({
       query: getGroup,
       variables: { id },
-      authMode: 'API_KEY',
-      authToken,
+      authMode: 'AWS_IAM',
     }),
   );
 }
