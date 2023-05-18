@@ -4,7 +4,7 @@
     "name": "Emojoe",
     "slug": "emojoe2",
     "scheme": "emojoe2",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "automatic",
@@ -13,26 +13,20 @@
       "resizeMode": "contain",
       "backgroundColor": "#fff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "dk.webcom.emojoe",
       "buildNumber": "1",
-      "associatedDomains": [
-        "applinks:emojoe.app"
-      ],
+      "associatedDomains": ["applinks:emojoe.app"],
       "appStoreUrl": "https://apps.apple.com/app/emojoe/id1540478554",
       "entitlements": {
-        "com.apple.developer.applesignin": [
-          "Default"
-        ]
+        "com.apple.developer.applesignin": ["Default"]
       }
     },
     "android": {
       "package": "dk.webcom.emojoe",
-      "versionCode": 11,
+      "versionCode": 12,
       "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo_transparent_1000.png",
@@ -49,10 +43,7 @@
               "pathPrefix": "/"
             }
           ],
-          "category": [
-            "BROWSABLE",
-            "DEFAULT"
-          ]
+          "category": ["BROWSABLE", "DEFAULT"]
         }
       ]
     },
@@ -72,9 +63,7 @@
         }
       ]
     },
-    "plugins": [
-      "sentry-expo"
-    ],
+    "plugins": ["sentry-expo"],
     "extra": {
       "eas": {
         "projectId": "4d6fa508-0b6d-450a-a519-aba3de6dadda"
