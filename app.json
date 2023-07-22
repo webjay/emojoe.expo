@@ -13,15 +13,21 @@
       "resizeMode": "contain",
       "backgroundColor": "#fff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "dk.webcom.emojoe",
-      "buildNumber": "1",
-      "associatedDomains": ["applinks:emojoe.app"],
+      "buildNumber": "2",
+      "associatedDomains": [
+        "applinks:emojoe.app"
+      ],
       "appStoreUrl": "https://apps.apple.com/app/emojoe/id1540478554",
       "entitlements": {
-        "com.apple.developer.applesignin": ["Default"]
+        "com.apple.developer.applesignin": [
+          "Default"
+        ]
       }
     },
     "android": {
@@ -43,7 +49,10 @@
               "pathPrefix": "/"
             }
           ],
-          "category": ["BROWSABLE", "DEFAULT"]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ]
     },
@@ -63,7 +72,10 @@
         }
       ]
     },
-    "plugins": ["sentry-expo"],
+    "plugins": [
+      "sentry-expo",
+      "expo-router"
+    ],
     "extra": {
       "eas": {
         "projectId": "4d6fa508-0b6d-450a-a519-aba3de6dadda"
@@ -71,9 +83,6 @@
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/4d6fa508-0b6d-450a-a519-aba3de6dadda"
     }
   }
 }

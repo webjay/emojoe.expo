@@ -52,10 +52,6 @@ export default function Tab() {
         name="(stack)"
         options={{ href: null, headerShown: false }}
       />
-      <Tabs.Screen
-        name="[...unmatched]"
-        options={{ href: null, headerShown: false }}
-      />
     </Tabs>
   );
 }

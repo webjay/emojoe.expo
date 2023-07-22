@@ -5,9 +5,8 @@
 
 ## Expo
 
-- `npm run expo install -- --check` to upgrade Expo and any relevant packages.
-- `npm run eas update` to ship an update.
-- `npm run eas build -- --profile preview --platform ios` for internal distribution.
+- `npx expo-doctor` to check health.
+- `npx expo install --fix` to upgrade all dependencies to match Expo SDK.
 
 ### Links
 

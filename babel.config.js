@@ -2,7 +2,7 @@ const paths = [
   'module-resolver',
   {
     alias: {
-      '@app': './app',
+      '@app': './src/app',
       '@src': './src',
     },
   },
@@ -16,9 +16,7 @@ module.exports = function config(api) {
     plugins: [
       paths,
       'react-native-paper/babel',
-      require.resolve('expo-router/babel'),
-      // fix for web: Export namespace should be first transformed by @babel/plugin-proposal-export-namespace-from
-      '@babel/plugin-proposal-export-namespace-from',
+      'expo-router/babel',
       // Reanimated plugin has to be listed last.
       'react-native-reanimated/plugin',
     ],
