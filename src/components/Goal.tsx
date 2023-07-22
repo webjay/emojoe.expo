@@ -1,11 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, memo } from 'react';
 import { useRouter } from 'expo-router';
-import { Pressable, LayoutChangeEvent, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { useTheme, Avatar } from 'react-native-paper';
 
 type Props = {
   groupId: string;
-  onLayout: (event: LayoutChangeEvent) => void;
 };
 
 const styles = StyleSheet.create({
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Goal({ groupId, onLayout }: Props) {
+function Goal({ groupId }: Props) {
   const { push: navigate } = useRouter();
   const {
     colors: { surfaceVariant: backgroundColor },
@@ -23,8 +22,10 @@ export default function Goal({ groupId, onLayout }: Props) {
     navigate(`/group/${groupId}/activities`);
   }, [groupId, navigate]);
   return (
-    <Pressable onPress={onPress} style={styles.container} onLayout={onLayout}>
+    <Pressable onPress={onPress} style={styles.container}>
       <Avatar.Text size={40} label="" style={{ backgroundColor }} />
     </Pressable>
   );
 }
+
+export default memo(Goal);

@@ -19,8 +19,4 @@ export default StyleSheet.create({
     zIndex: 1,
     elevation: 1,
   },
-  emoji: {
-    transform: [{ rotateY: '180deg' }],
-    userSelect: 'none',
-  },
 });

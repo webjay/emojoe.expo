@@ -1,10 +1,4 @@
-import React, {
-  useRef,
-  useState,
-  useMemo,
-  useEffect,
-  useCallback,
-} from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import type { LayoutChangeEvent } from 'react-native';
 import { View } from 'react-native';
 import Animated, {
@@ -13,11 +7,16 @@ import Animated, {
   withSpring,
   runOnJS,
 } from 'react-native-reanimated';
-import { GestureDetector, Gesture } from 'react-native-gesture-handler';
-import { useTheme, Avatar } from 'react-native-paper';
+import {
+  Gesture,
+  GestureHandlerRootView,
+  GestureDetector,
+} from 'react-native-gesture-handler';
+import { useTheme } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import { handleCreateActivity } from '@src/lib/task';
 import styles from './Swipe.styles';
+import Emoji from '../Emoji';
 import Goal from '../Goal';
 
 type Props = {
@@ -25,71 +24,64 @@ type Props = {
   groupId: string;
 };
 
-const acceptDistance = 50;
+const emojiSize = 60;
+const goalX = 20 + emojiSize;
+const acceptPercentage = 0.65;
 
 export default function Swipe({ emoji, groupId }: Props) {
-  const { replace: redirect } = useRouter();
+  // const { replace: goto } = useRouter();
+  const { push: goto } = useRouter();
   const {
     colors: { surfaceVariant: backgroundColor },
   } = useTheme();
-  const doneRef = useRef(false);
   const [positionEnd, setPositionEnd] = useState(200);
-  const [swiped, setSwiped] = useState(false);
-  const swipePast = useMemo(() => positionEnd - acceptDistance, [positionEnd]);
+  const [swipePast, setSwipePast] = useState(positionEnd);
+
+  const position = useSharedValue(0);
+  const onLeft = useSharedValue(true);
+  const locked = useSharedValue(false);
 
   const onLayout = useCallback(
     ({
       nativeEvent: {
-        layout: { x },
+        layout: { x, width },
       },
     }: LayoutChangeEvent) => {
-      setPositionEnd(x);
+      setPositionEnd(x + width - goalX);
+      setSwipePast(Math.round((x + width) * acceptPercentage));
     },
     [],
   );
 
-  const onLeft = useSharedValue(true);
-  const position = useSharedValue(0);
-
-  useEffect(() => {
-    if (swiped) {
-      if (doneRef.current) return;
-      doneRef.current = true;
-      handleCreateActivity(groupId, emoji);
-      onLeft.value = false;
-      position.value = withSpring(positionEnd, undefined, () => {
-        runOnJS(redirect)(`/group/${groupId}/done?emoji=${emoji}`);
-      });
-    } else {
-      doneRef.current = false;
-    }
-  }, [swiped, onLeft, position, positionEnd, redirect, groupId, emoji]);
+  const handleSwipeDone = useCallback(() => {
+    handleCreateActivity(groupId, emoji);
+    position.value = withSpring(positionEnd, { duration: 1500 }, () => {
+      locked.value = false;
+      runOnJS(goto)(`/group/${groupId}/done?emoji=${emoji}`);
+    });
+  }, [emoji, groupId, locked, position, positionEnd, goto]);
 
   const panGesture = useMemo(
     () =>
       Gesture.Pan()
         .onUpdate(({ translationX }) => {
+          if (locked.value) return;
           if (translationX > swipePast) {
-            runOnJS(setSwiped)(true);
-            return;
-          }
-          if (onLeft.value) {
+            locked.value = true;
+            onLeft.value = false;
+            runOnJS(handleSwipeDone)();
+          } else if (onLeft.value) {
             position.value = translationX;
           } else {
-            position.value = swipePast + translationX;
+            position.value = positionEnd + translationX;
           }
         })
         .onEnd(() => {
-          if (position.value > swipePast) {
-            position.value = withSpring(positionEnd);
-            onLeft.value = false;
-          } else {
-            position.value = withSpring(0);
-            onLeft.value = true;
-            runOnJS(setSwiped)(false);
-          }
+          if (locked.value) return;
+          position.value = withSpring(0);
+          onLeft.value = true;
         }),
-    [swipePast, positionEnd, onLeft, position],
+    [locked, swipePast, onLeft, handleSwipeDone, position, positionEnd],
   );
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -97,14 +89,14 @@ export default function Swipe({ emoji, groupId }: Props) {
   }));
 
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView onLayout={onLayout} style={styles.container}>
       <View style={[styles.slide, { backgroundColor }]} />
       <GestureDetector gesture={panGesture}>
         <Animated.View style={[styles.animation, animatedStyle]}>
-          <Avatar.Text size={60} label={emoji} labelStyle={styles.emoji} />
+          <Emoji emoji={emoji} size={emojiSize} />
         </Animated.View>
       </GestureDetector>
-      <Goal groupId={groupId} onLayout={onLayout} />
-    </View>
+      <Goal groupId={groupId} />
+    </GestureHandlerRootView>
   );
 }
