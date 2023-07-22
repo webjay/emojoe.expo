@@ -18,7 +18,7 @@ function logEvent(message: string, extra: Record<string, unknown>) {
 export default function useNotificationListener() {
   const { replace: redirect } = useRouter();
   useEffect(() => {
-    if (Platform.OS === 'web') return;
+    if (Platform.OS === 'web') return undefined;
     const notificationListener = addNotificationReceivedListener(
       ({
         request: {
