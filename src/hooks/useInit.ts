@@ -1,4 +1,5 @@
 import { useEffect, useCallback } from 'react';
+import { Platform } from 'react-native';
 import {
   initNotifications,
   hasPermission,
@@ -20,6 +21,7 @@ export default function useInit() {
     }
   }, []);
   useEffect(() => {
+    if (Platform.OS === 'web') return;
     initNotifications();
     storeCurrentPushToken();
   }, [storeCurrentPushToken]);

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
   addNotificationReceivedListener,
@@ -17,6 +18,7 @@ function logEvent(message: string, extra: Record<string, unknown>) {
 export default function useNotificationListener() {
   const { replace: redirect } = useRouter();
   useEffect(() => {
+    if (Platform.OS === 'web') return;
     const notificationListener = addNotificationReceivedListener(
       ({
         request: {
