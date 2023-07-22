@@ -1,17 +1,13 @@
 {
   "build": {
-    "production": {
-      "channel": "production"
-    },
+    "production": {},
     "development": {
       "extends": "production",
-      "channel": "staging",
       "developmentClient": false,
       "distribution": "internal"
     },
     "preview": {
       "extends": "production",
-      "channel": "staging",
       "distribution": "internal"
     }
   },
