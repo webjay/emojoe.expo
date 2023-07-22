@@ -62,6 +62,6 @@
     },
     "breakCircularDependency": true,
     "dependsOn": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"emojoe2://\",\"https://emojoe.app/\",\"exp://127.0.0.1:19000/--/\",\"exp://192.168.0.2:19000/--/\",\"http://localhost:8081/\"],\"LogoutURLs\":[\"emojoe2://\",\"https://emojoe.app/\",\"exp://127.0.0.1:19000/--/\",\"exp://192.168.0.2:19000/--/\",\"http://localhost:8081/\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"emojoe2://\",\"https://emojoe.app/\",\"exp://127.0.0.1:8081/--/\",\"exp://192.168.0.2:8081/--/\",\"http://localhost:8081/\"],\"LogoutURLs\":[\"emojoe2://\",\"https://emojoe.app/\",\"exp://127.0.0.1:8081/--/\",\"exp://192.168.0.2:8081/--/\",\"http://localhost:8081/\"]}"
   }
 }
