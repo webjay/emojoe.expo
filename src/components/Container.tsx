@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
   surface: {
     flex: 1,
     width: '100%',
-    maxWidth: '800px',
-    marginVertical: '10px',
+    maxWidth: 800,
+    marginVertical: 10,
     marginHorizontal: 'auto',
   },
 });
