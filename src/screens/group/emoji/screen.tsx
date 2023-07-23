@@ -63,6 +63,7 @@ export default function GroupEmoji() {
         renderItem={renderItemCallback}
         stickySectionHeadersEnabled
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       />
     </Container>
   );
