@@ -55,10 +55,13 @@ export default function Swipe({ emoji, groupId }: Props) {
 
   const handleSwipeDone = useCallback(() => {
     handleCreateActivity(groupId, emoji);
-    position.value = withSpring(positionEnd, { duration: 1500 }, () => {
+    position.value = withSpring(positionEnd, { duration: 1000 }, () => {
       locked.value = false;
-      runOnJS(goto)(`/group/${groupId}/done?emoji=${emoji}`);
+      // runOnJS(goto)(`/group/${groupId}/done?emoji=${emoji}`);
     });
+    setTimeout(() => {
+      goto(`/group/${groupId}/done?emoji=${emoji}`);
+    }, 500);
   }, [emoji, groupId, locked, position, positionEnd, goto]);
 
   const panGesture = useMemo(
