@@ -4,6 +4,6 @@
   "main": "index.mjs",
   "license": "UNLICENSED",
   "devDependencies": {
-    "@types/aws-lambda": "8.10.114"
+    "@types/aws-lambda": "8.10.119"
   }
 }
