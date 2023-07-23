@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useNavigation, useSearchParams } from 'expo-router';
+import { useNavigation, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, SectionList, View } from 'react-native';
 import type { SectionListRenderItem } from 'react-native';
 import Container from '@src/components/Container';
@@ -74,7 +74,7 @@ const renderItem: SectionListRenderItem<ActivityItem[]> = ({ item }) => (
 );
 
 export default function GroupActivitiesScreen() {
-  const { groupId } = useSearchParams<SearchParams>();
+  const { groupId } = useLocalSearchParams<SearchParams>();
   const { setOptions } = useNavigation();
   const { group } = useGroup(groupId);
   const [sections, setSections] = useState<ActivitySection[]>([]);

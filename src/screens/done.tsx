@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useRouter, useSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import { Button, TouchableRipple } from 'react-native-paper';
 import AnimateConfetti from '@src/components/AnimateConfetti';
@@ -52,7 +52,7 @@ function randomWord() {
 
 export default function DoneScreen() {
   const { replace: redirect } = useRouter();
-  const { groupId } = useSearchParams<SearchParams>();
+  const { groupId } = useLocalSearchParams<SearchParams>();
   const handlePress = useCallback(() => {
     redirect(`/group/${groupId}/activities`);
   }, [groupId, redirect]);

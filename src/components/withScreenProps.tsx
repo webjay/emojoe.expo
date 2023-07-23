@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import type { ComponentType, ComponentProps } from 'react';
 import React from 'react';
-import { useSearchParams, Stack } from 'expo-router';
+import { useLocalSearchParams, Stack } from 'expo-router';
 
 type Props = {
   route: {
-    params: ReturnType<typeof useSearchParams>;
+    params: ReturnType<typeof useLocalSearchParams>;
   };
 };
 
@@ -14,7 +14,7 @@ function withScreenProps<P>(
   title?: string,
 ) {
   function ComponentWithScreenProps(props: ComponentProps<typeof Component>) {
-    const params = useSearchParams();
+    const params = useLocalSearchParams();
     return (
       <>
         {title && <Stack.Screen options={{ title: `${title} | Emojoe` }} />}

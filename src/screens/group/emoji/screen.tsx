@@ -1,6 +1,6 @@
 import type { Emoji } from '@emoji-mart/data';
 import React, { useState, useCallback } from 'react';
-import { useRouter, useSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { SectionList } from 'react-native';
 import { handleGroupSetEmoji } from '@src/lib/task';
 import { groupUpdateMembership } from '@src/lib/api';
@@ -36,7 +36,7 @@ const renderItem = (item: Item, onEmojiSelect: (emoji: string) => void) => (
 export default function GroupEmoji() {
   const [isWorking, setIsWorking] = useState<boolean>(false);
   const { loading, sections, search } = useEmojis();
-  const { groupId } = useSearchParams<SearchParams>();
+  const { groupId } = useLocalSearchParams<SearchParams>();
   const { push: navigate } = useRouter();
   const onEmojiSelect = useCallback(
     async (emoji: string) => {
