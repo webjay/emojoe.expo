@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { StyleSheet, Pressable } from 'react-native';
-import { Avatar } from 'react-native-paper';
+import Emoji from '@src/components/Emoji';
 
 type Props = {
   emoji: string;
@@ -11,19 +11,12 @@ const styles = StyleSheet.create({
   avatarContainer: {
     margin: 5,
   },
-  avatar: {
-    transform: [{ rotateY: '180deg' }],
-  },
 });
 
 function SectionItemEmoji({ onEmojiSelect, emoji }: Props) {
   return (
     <Pressable onPress={() => onEmojiSelect(emoji)}>
-      <Avatar.Text
-        label={emoji}
-        style={styles.avatarContainer}
-        labelStyle={styles.avatar}
-      />
+      <Emoji emoji={emoji} size={50} style={styles.avatarContainer} />
     </Pressable>
   );
 }

@@ -5,7 +5,7 @@ import SectionItemEmoji from './SectionItemEmoji';
 import SectionItemSeparator from './SectionItemSeparator';
 
 const width = Platform.OS === 'web' ? 790 : Dimensions.get('window').width;
-const numColumns = Math.floor(width / 75);
+const numColumns = Math.floor(width / 60);
 
 type Props = {
   item: {
