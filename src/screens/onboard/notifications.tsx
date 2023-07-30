@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
 const navNext = '/';
 
 export default function OnboardNotificationsScreen() {
-  const { push: navigate } = useRouter();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const handlePressSkip = useCallback(() => navigate(navNext), [navigate]);
+  const handlePressSkip = useCallback(() => router.push(navNext), [router]);
   const handlePressYes = useCallback(async () => {
     const pushToken = await getPushToken();
     if (pushToken !== false) {
@@ -37,13 +37,13 @@ export default function OnboardNotificationsScreen() {
       await profileUpdate({ pushToken });
       setLoading(false);
     }
-    navigate(navNext);
-  }, [navigate]);
+    router.push(navNext);
+  }, [router]);
   useEffect(() => {
     hasPermission().then((permission) => {
-      if (permission) navigate(navNext);
+      if (permission) router.push(navNext);
     });
-  }, [navigate]);
+  }, [router]);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.segment}>
