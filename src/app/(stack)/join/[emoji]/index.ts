@@ -1,4 +1,4 @@
-import { useSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import groups from '@src/lib/groups';
 
 const groupMap = new Map(
@@ -14,7 +14,7 @@ function redirect(path: string) {
 }
 
 export default function EmojiJoin() {
-  const { emoji } = useSearchParams<SearchParams>();
+  const { emoji } = useLocalSearchParams<SearchParams>();
   if (typeof emoji === 'string') {
     const groupId = groupMap.get(emoji);
     if (groupId) {
