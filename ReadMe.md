@@ -2,15 +2,23 @@
 
 - GitHub: https://github.com/webjay/emojoe.expo
 - Expo: https://expo.dev/accounts/emojoe/projects/emojoe2
+- Sentry: https://webcomdk.sentry.io/issues/?project=4504628449116160
 
 ## Expo
 
 - `npx expo-doctor` to check health.
 - `npx expo install --fix` to upgrade all dependencies to match Expo SDK.
 
+### Deploy
+
+- Bump `expo.version`, `expo.ios.buildNumber` and `expo.android.versionCode` in `app.json`.
+- `npx eas build`
+- `npx eas submit`
+- `git push` for the web app, handled by Amplify.
+
 ### Links
 
-- `npx uri-scheme open --ios exp://127.0.0.1:19000/--/group/join/927934dd-5bd6-493c-9d1e-cb15f61da6db`
+- `npx uri-scheme open --ios exp://127.0.0.1:8081/--/group/df1d0023-1814-434e-8ab1-f4fd5a526392/join`
 
 ## Amplify
 
