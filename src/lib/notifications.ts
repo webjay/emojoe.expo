@@ -1,6 +1,9 @@
 import * as Notifications from 'expo-notifications';
 import { Platform } from 'react-native';
+import Constants from 'expo-constants';
 import emoRecognition from './recognition.json';
+
+const { projectId } = Constants.expoConfig?.extra?.eas;
 
 const NotificationBehavior = {
   shouldShowAlert: true,
@@ -15,7 +18,9 @@ async function handleNotification() {
 async function getPushToken() {
   const { status } = await Notifications.requestPermissionsAsync();
   if (status === 'granted') {
-    const { data: token } = await Notifications.getExpoPushTokenAsync();
+    const { data: token } = await Notifications.getExpoPushTokenAsync({
+      projectId,
+    });
     return token;
   }
   return false;
