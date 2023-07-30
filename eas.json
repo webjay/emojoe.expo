@@ -1,14 +1,18 @@
 {
   "build": {
-    "production": {},
+    "production": {
+      "channel": "production"
+    },
     "development": {
       "extends": "production",
       "developmentClient": false,
-      "distribution": "internal"
+      "distribution": "internal",
+      "channel": "development"
     },
     "preview": {
       "extends": "production",
-      "distribution": "internal"
+      "distribution": "internal",
+      "channel": "preview"
     }
   },
   "submit": {
