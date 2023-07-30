@@ -4,7 +4,7 @@
     "name": "Emojoe",
     "slug": "emojoe2",
     "scheme": "emojoe2",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "automatic",
@@ -15,9 +15,9 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "buildNumber": "2",
       "supportsTablet": true,
       "bundleIdentifier": "dk.webcom.emojoe",
-      "buildNumber": "4",
       "associatedDomains": ["applinks:emojoe.app"],
       "appStoreUrl": "https://apps.apple.com/app/emojoe/id1540478554",
       "entitlements": {
@@ -25,8 +25,8 @@
       }
     },
     "android": {
+      "versionCode": 18,
       "package": "dk.webcom.emojoe",
-      "versionCode": 17,
       "permissions": [],
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo_transparent_1000.png",
@@ -53,7 +53,7 @@
       "description": "Build a habit"
     },
     "hooks": {
-      "postPublish": [
+      "postExport": [
         {
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
@@ -71,6 +71,9 @@
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/4d6fa508-0b6d-450a-a519-aba3de6dadda"
     }
   }
 }
