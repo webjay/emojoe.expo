@@ -3,37 +3,41 @@ import {
   DynamoDBDocumentClient,
   GetCommand,
   QueryCommand,
+  ScanCommand,
   PutCommand,
   DeleteCommand,
   BatchWriteCommand,
 } from '@aws-sdk/lib-dynamodb';
 
-const docClient = DynamoDBDocumentClient.from(
-  new DynamoDBClient({ region: 'eu-central-1' }),
+export const docClient = DynamoDBDocumentClient.from(
+  new DynamoDBClient({ region: process.env.REGION }),
 );
 
-async function get(getItemInput) {
+export async function get(getItemInput) {
   const { Item } = await docClient.send(new GetCommand(getItemInput));
   return Item;
 }
 
-async function query(queryInput) {
+export async function scan(scanCommandInput) {
+  const { Items } = await docClient.send(new ScanCommand(scanCommandInput));
+  return Items;
+}
+
+export async function query(queryInput) {
   const { Items } = await docClient.send(new QueryCommand(queryInput));
   return Items;
 }
 
-function put(TableName, Item) {
+export function put(TableName, Item) {
   return docClient.send(new PutCommand({ TableName, Item }));
 }
 
-function batchWrite(TableName, requests) {
+export function batchWrite(TableName, requests) {
   return docClient.send(
     new BatchWriteCommand({ RequestItems: { [TableName]: requests } }),
   );
 }
 
-function remove(TableName, Key) {
+export function remove(TableName, Key) {
   return docClient.send(new DeleteCommand({ TableName, Key }));
 }
-
-export { docClient, get, query, put, remove, batchWrite };

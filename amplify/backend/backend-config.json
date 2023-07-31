@@ -80,6 +80,27 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
+    "emojoeMotivationNotification": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "emojoeexpo"
+        },
+        {
+          "attributes": [
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "emojoeexpoemojoeDynamoTrigger"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "emojoeRecognitionTrigger": {
       "build": true,
       "dependsOn": [
@@ -121,6 +142,22 @@
         {
           "category": "function",
           "resourceName": "emojoeActivityTrigger"
+        }
+      ]
+    },
+    "AMPLIFY_function_emojoeMotivationNotification_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emojoeMotivationNotification"
+        }
+      ]
+    },
+    "AMPLIFY_function_emojoeMotivationNotification_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emojoeMotivationNotification"
         }
       ]
     },

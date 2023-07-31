@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "storage": {
+      "Profile:@model(appsync)": [
+        "read"
+      ],
+      "GroupMembership:@model(appsync)": [
+        "read"
+      ],
+      "Activity:@model(appsync)": [
+        "read"
+      ],
+      "Notification:@model(appsync)": [
+        "create",
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "emojoeexpoemojoeDynamoTrigger",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    }
+  ]
+}

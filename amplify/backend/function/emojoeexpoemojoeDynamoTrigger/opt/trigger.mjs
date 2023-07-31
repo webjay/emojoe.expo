@@ -1,10 +1,12 @@
 /* eslint-disable import/extensions */
 import { unmarshall } from '@aws-sdk/util-dynamodb';
-import { Expo } from 'expo-server-sdk';
-import { query, get, batchWrite } from './dynamo.mjs';
-
-const expo = new Expo();
-const sendPushNotificationsAsync = expo.sendPushNotificationsAsync.bind(expo);
+import { query, get } from './dynamo.mjs';
+import {
+  ownerToSubId,
+  getProfilesBySubIdHavingPushToken,
+  notificationsByPushTokenGroup,
+} from './helpers.mjs';
+import { sendExpoNotifications } from './notify.mjs';
 
 const appScheme = 'emojoe2://';
 // const appScheme = 'https://emojoe.app/';
@@ -42,28 +44,6 @@ function firstName(name) {
   return name.split(' ')[0];
 }
 
-function ownerToSubId(owner) {
-  return owner.substring(0, 36);
-}
-
-function notificationsByPushTokenGroup(pushTokenGroup, dateBefore) {
-  return query({
-    TableName: process.env.API_EMOJOEEXPO_NOTIFICATIONTABLE_NAME,
-    IndexName: 'notificationsByPushTokenGroupAndCreatedAt',
-    KeyConditionExpression:
-      '#pushTokenGroup = :pushTokenGroup AND #createdAt > :dateBefore',
-    ExpressionAttributeNames: {
-      '#pushTokenGroup': 'pushTokenGroup',
-      '#createdAt': 'createdAt',
-    },
-    ExpressionAttributeValues: {
-      ':pushTokenGroup': pushTokenGroup,
-      ':dateBefore': dateBefore,
-    },
-    Limit: 1,
-  });
-}
-
 function makePushTokenGroupValue(pushToken, groupId) {
   return `${pushToken}_${groupId}`;
 }
@@ -88,21 +68,6 @@ async function profilesWithoutRecentGroupActivity(profiles, groupId) {
     if (recentGroupActivity.length === 0) profilesFiltered.push(profile);
   }, Promise.resolve());
   return profilesFiltered;
-}
-
-function getProfilesBySubId(subId) {
-  return query({
-    TableName: process.env.API_EMOJOEEXPO_PROFILETABLE_NAME,
-    IndexName: 'profilesBySubId',
-    KeyConditionExpression: '#subId = :subId',
-    ExpressionAttributeNames: {
-      '#subId': 'subId',
-    },
-    ExpressionAttributeValues: {
-      ':subId': subId,
-    },
-    Limit: 1,
-  });
 }
 
 function getGroupMembershipsByGroupId(groupId) {
@@ -134,44 +99,6 @@ function getActivity(id) {
   });
 }
 
-function handleReceipts(notifications, receipts) {
-  const createdAt = new Date().toISOString();
-  const putRequests = receipts.map((receipt, index) => ({
-    PutRequest: {
-      Item: {
-        ...notifications[index],
-        ...receipt,
-        pushTokenGroup: makePushTokenGroupValueFromNotification(
-          notifications[index],
-        ),
-        createdAt,
-      },
-    },
-  }));
-  if (putRequests.length === 0) return Promise.resolve();
-  return batchWrite(
-    process.env.API_EMOJOEEXPO_NOTIFICATIONTABLE_NAME,
-    putRequests,
-  );
-}
-
-/**
- * @param {import('expo-server-sdk').ExpoPushMessage[]} notifications
- */
-function sendExpoNotifications(notifications) {
-  const notificationChunks = expo.chunkPushNotifications(
-    notifications.filter(({ to }) => Expo.isExpoPushToken(to)),
-  );
-  return Promise.all(notificationChunks.map(sendPushNotificationsAsync));
-}
-
-function profilesUniqueByPushToken(profiles) {
-  return profiles.filter(
-    ({ pushToken }, index) =>
-      index === profiles.findIndex(({ pushToken: pt }) => pushToken === pt),
-  );
-}
-
 /**
  * @param {{ id: string, emoji: string, groupId: string, owner: string }} activity
  * @returns {import('expo-server-sdk').ExpoPushMessage[]}
@@ -190,7 +117,7 @@ async function activityToExpoPushMessages({
     ({ owner: profileOwner }) => profileOwner === owner,
   );
   const profilesFiltered = await profilesWithoutRecentGroupActivity(
-    profilesUniqueByPushToken(profiles),
+    profiles,
     groupId,
   );
   return profilesFiltered
@@ -215,7 +142,9 @@ async function activityToExpoPushMessages({
  */
 async function recognitionToExpoPushMessage({ activityId, emoji }) {
   const { owner, groupId } = await getActivity(activityId);
-  const [{ pushToken }] = await getProfilesBySubId(ownerToSubId(owner));
+  const [{ pushToken }] = await getProfilesBySubIdHavingPushToken(
+    ownerToSubId(owner),
+  );
   return {
     to: pushToken,
     title: `${emoji}`,
@@ -251,7 +180,8 @@ function recordHandler({ dynamodb: { NewImage } }) {
  */
 export default async function handler({ Records }) {
   const notifications = await Promise.all(Records.map(recordHandler));
-  const notificationsFlat = notifications.flat();
-  const receiptChunks = await sendExpoNotifications(notificationsFlat);
-  await handleReceipts(notificationsFlat, receiptChunks.flat());
+  await sendExpoNotifications(
+    makePushTokenGroupValueFromNotification,
+    notifications.flat(),
+  );
 }
