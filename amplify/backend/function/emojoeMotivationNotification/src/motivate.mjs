@@ -10,7 +10,7 @@ import {
 import { sendExpoNotifications } from '/opt/notify.mjs';
 
 const MilliSecondsPerDay = 24 * 60 * 60 * 1000;
-const NotificationTimeDiffMinutes = 24 * 60;
+const NotificationTimeDiffMinutes = 12 * 60;
 const NotificationTTL = 12 * 60 * 60;
 
 function getGroups() {
