@@ -20,7 +20,7 @@
     }
   },
   "Resources": {
-    "LambdaLayerVersiond1e2a399": {
+    "LambdaLayerVersion5f178426": {
       "Type": "AWS::Lambda::LayerVersion",
       "Properties": {
         "CompatibleRuntimes": {
@@ -51,13 +51,51 @@
       "DeletionPolicy": "Delete",
       "UpdateReplacePolicy": "Retain"
     },
-    "LambdaLayerPermissionPrivated1e2a399": {
+    "LambdaLayerPermissionPrivate5f178426": {
       "Type": "AWS::Lambda::LayerVersionPermission",
       "Properties": {
         "Action": "lambda:GetLayerVersion",
         "LayerVersionArn": {
-          "Ref": "LambdaLayerVersiond1e2a399"
+          "Ref": "LambdaLayerVersion5f178426"
         },
+        "Principal": {
+          "Ref": "AWS::AccountId"
+        }
+      }
+    },
+    "LambdaLayerVersiond1e2a399": {
+      "Type": "AWS::Lambda::LayerVersion",
+      "Properties": {
+        "CompatibleRuntimes": [
+          "nodejs16.x",
+          "nodejs18.x"
+        ],
+        "Content": {
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": "amplify-builds/emojoeexpoemojoeDynamoTrigger-LambdaLayerVersiond1e2a399-build.zip"
+        },
+        "Description": "Updated layer version 2023-07-31T08:44:52.560Z",
+        "LayerName": {
+          "Fn::Sub": [
+            "emojoeexpoemojoeDynamoTrigger-${env}",
+            {
+              "env": {
+                "Ref": "env"
+              }
+            }
+          ]
+        }
+      },
+      "DeletionPolicy": "Delete",
+      "UpdateReplacePolicy": "Retain"
+    },
+    "LambdaLayerPermissionPrivated1e2a399": {
+      "Type": "AWS::Lambda::LayerVersionPermission",
+      "Properties": {
+        "Action": "lambda:GetLayerVersion",
+        "LayerVersionArn": "arn:aws:lambda:eu-central-1:716652317410:layer:emojoeexpoemojoeDynamoTrigger-dev:48",
         "Principal": {
           "Ref": "AWS::AccountId"
         }
@@ -333,7 +371,7 @@
   "Outputs": {
     "Arn": {
       "Value": {
-        "Ref": "LambdaLayerVersiond1e2a399"
+        "Ref": "LambdaLayerVersion5f178426"
       }
     }
   }

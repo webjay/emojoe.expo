@@ -45,9 +45,11 @@ function calcStreakLength(date1, date2) {
 }
 
 function streakDays(groupActivity, streakEndIndex) {
-  return calcStreakLength(
-    groupActivity[0].createdAt,
-    groupActivity[streakEndIndex].createdAt,
+  return (
+    calcStreakLength(
+      groupActivity[0].createdAt,
+      groupActivity[streakEndIndex].createdAt,
+    ) + 1
   );
 }
 
@@ -81,7 +83,6 @@ async function calcGroupStreak({ id, owner, emoji }) {
   const streakEndIndex =
     streakGapIndex === -1 ? groupActivity.length - 1 : streakGapIndex;
   const streakLength = streakDays(groupActivity, streakEndIndex);
-  if (streakLength === 0) return null;
   return {
     owner,
     emoji,

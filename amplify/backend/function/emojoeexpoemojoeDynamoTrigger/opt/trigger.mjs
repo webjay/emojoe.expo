@@ -10,6 +10,7 @@ import { sendExpoNotifications } from './notify.mjs';
 
 const appScheme = 'emojoe2://';
 // const appScheme = 'https://emojoe.app/';
+const NotificationTTL = 1 * 60 * 60;
 
 // src/lib/groups.ts
 const groupsPublic = {
@@ -133,6 +134,7 @@ async function activityToExpoPushMessages({
       },
       channelId: 'activity',
       categoryId: 'activity',
+      ttl: NotificationTTL,
     }));
 }
 
@@ -156,6 +158,7 @@ async function recognitionToExpoPushMessage({ activityId, emoji }) {
     },
     channelId: 'recognition',
     // categoryId: 'recognition',
+    ttl: NotificationTTL,
   };
 }
 
