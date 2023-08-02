@@ -20,7 +20,7 @@
     }
   },
   "Resources": {
-    "LambdaLayerVersion5f178426": {
+    "LambdaLayerVersion1e7cdb60": {
       "Type": "AWS::Lambda::LayerVersion",
       "Properties": {
         "CompatibleRuntimes": {
@@ -51,13 +51,89 @@
       "DeletionPolicy": "Delete",
       "UpdateReplacePolicy": "Retain"
     },
-    "LambdaLayerPermissionPrivate5f178426": {
+    "LambdaLayerPermissionPrivate1e7cdb60": {
       "Type": "AWS::Lambda::LayerVersionPermission",
       "Properties": {
         "Action": "lambda:GetLayerVersion",
         "LayerVersionArn": {
-          "Ref": "LambdaLayerVersion5f178426"
+          "Ref": "LambdaLayerVersion1e7cdb60"
         },
+        "Principal": {
+          "Ref": "AWS::AccountId"
+        }
+      }
+    },
+    "LambdaLayerVersiond185326b": {
+      "Type": "AWS::Lambda::LayerVersion",
+      "Properties": {
+        "CompatibleRuntimes": [
+          "nodejs16.x",
+          "nodejs18.x"
+        ],
+        "Content": {
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": "amplify-builds/emojoeexpoemojoeDynamoTrigger-LambdaLayerVersiond185326b-build.zip"
+        },
+        "Description": "Updated layer version 2023-08-01T19:44:12.942Z",
+        "LayerName": {
+          "Fn::Sub": [
+            "emojoeexpoemojoeDynamoTrigger-${env}",
+            {
+              "env": {
+                "Ref": "env"
+              }
+            }
+          ]
+        }
+      },
+      "DeletionPolicy": "Delete",
+      "UpdateReplacePolicy": "Retain"
+    },
+    "LambdaLayerPermissionPrivated185326b": {
+      "Type": "AWS::Lambda::LayerVersionPermission",
+      "Properties": {
+        "Action": "lambda:GetLayerVersion",
+        "LayerVersionArn": "arn:aws:lambda:eu-central-1:716652317410:layer:emojoeexpoemojoeDynamoTrigger-dev:50",
+        "Principal": {
+          "Ref": "AWS::AccountId"
+        }
+      }
+    },
+    "LambdaLayerVersion5f178426": {
+      "Type": "AWS::Lambda::LayerVersion",
+      "Properties": {
+        "CompatibleRuntimes": [
+          "nodejs16.x",
+          "nodejs18.x"
+        ],
+        "Content": {
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": "amplify-builds/emojoeexpoemojoeDynamoTrigger-LambdaLayerVersion5f178426-build.zip"
+        },
+        "Description": "Updated layer version 2023-08-01T11:10:26.814Z",
+        "LayerName": {
+          "Fn::Sub": [
+            "emojoeexpoemojoeDynamoTrigger-${env}",
+            {
+              "env": {
+                "Ref": "env"
+              }
+            }
+          ]
+        }
+      },
+      "DeletionPolicy": "Delete",
+      "UpdateReplacePolicy": "Retain"
+    },
+    "LambdaLayerPermissionPrivate5f178426": {
+      "Type": "AWS::Lambda::LayerVersionPermission",
+      "Properties": {
+        "Action": "lambda:GetLayerVersion",
+        "LayerVersionArn": "arn:aws:lambda:eu-central-1:716652317410:layer:emojoeexpoemojoeDynamoTrigger-dev:49",
         "Principal": {
           "Ref": "AWS::AccountId"
         }
@@ -371,7 +447,7 @@
   "Outputs": {
     "Arn": {
       "Value": {
-        "Ref": "LambdaLayerVersion5f178426"
+        "Ref": "LambdaLayerVersion1e7cdb60"
       }
     }
   }
