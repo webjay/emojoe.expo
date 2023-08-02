@@ -166,7 +166,9 @@ async function recognitionToExpoPushMessage({ activityId, emoji }) {
  * @param {import('@types/aws-lambda').StreamRecord} record
  */
 function recordHandler({ dynamodb: { NewImage } }) {
-  const item = unmarshall(NewImage);
+  const item = unmarshall(NewImage, {
+    removeUndefinedValues: true,
+  });
   const { __typename: typeName } = item;
   switch (typeName) {
     case 'Activity':
@@ -182,9 +184,13 @@ function recordHandler({ dynamodb: { NewImage } }) {
  * @type {import('@types/aws-lambda').DynamoDBStreamHandler}
  */
 export default async function handler({ Records }) {
-  const notifications = await Promise.all(Records.map(recordHandler));
-  await sendExpoNotifications(
-    makePushTokenGroupValueFromNotification,
-    notifications.flat(),
-  );
+  try {
+    const notifications = await Promise.all(Records.map(recordHandler));
+    await sendExpoNotifications(
+      makePushTokenGroupValueFromNotification,
+      notifications.flat(),
+    );
+  } catch (error) {
+    console.warn(error);
+  }
 }
