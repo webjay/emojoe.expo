@@ -21,11 +21,15 @@ export const getProfile = /* GraphQL */ `
           updatedAt
           profileGroupMembershipsId
           groupMembershipsId
+          __typename
         }
         nextToken
+        __typename
       }
+      timezoneOffset
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -44,11 +48,15 @@ export const listProfiles = /* GraphQL */ `
         pushToken
         groupMemberships {
           nextToken
+          __typename
         }
+        timezoneOffset
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -75,11 +83,15 @@ export const profilesBySubId = /* GraphQL */ `
         pushToken
         groupMemberships {
           nextToken
+          __typename
         }
+        timezoneOffset
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -100,11 +112,14 @@ export const getGroup = /* GraphQL */ `
           updatedAt
           profileGroupMembershipsId
           groupMembershipsId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -121,11 +136,14 @@ export const listGroups = /* GraphQL */ `
         emoji
         memberships {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -142,9 +160,11 @@ export const getGroupMembership = /* GraphQL */ `
         emoji
         memberships {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
+        __typename
       }
       profile {
         id
@@ -154,9 +174,12 @@ export const getGroupMembership = /* GraphQL */ `
         pushToken
         groupMemberships {
           nextToken
+          __typename
         }
+        timezoneOffset
         createdAt
         updatedAt
+        __typename
       }
       emoji
       activities {
@@ -168,13 +191,16 @@ export const getGroupMembership = /* GraphQL */ `
           groupMembershipActivitiesId
           createdAt
           updatedAt
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
       profileGroupMembershipsId
       groupMembershipsId
+      __typename
     }
   }
 `;
@@ -200,6 +226,7 @@ export const listGroupMemberships = /* GraphQL */ `
           emoji
           createdAt
           updatedAt
+          __typename
         }
         profile {
           id
@@ -207,19 +234,24 @@ export const listGroupMemberships = /* GraphQL */ `
           owner
           name
           pushToken
+          timezoneOffset
           createdAt
           updatedAt
+          __typename
         }
         emoji
         activities {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
         profileGroupMembershipsId
         groupMembershipsId
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -249,6 +281,7 @@ export const groupMembershipsByProfileId = /* GraphQL */ `
           emoji
           createdAt
           updatedAt
+          __typename
         }
         profile {
           id
@@ -256,19 +289,24 @@ export const groupMembershipsByProfileId = /* GraphQL */ `
           owner
           name
           pushToken
+          timezoneOffset
           createdAt
           updatedAt
+          __typename
         }
         emoji
         activities {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
         profileGroupMembershipsId
         groupMembershipsId
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -300,6 +338,7 @@ export const groupMembershipsByGroupIdAndProfileId = /* GraphQL */ `
           emoji
           createdAt
           updatedAt
+          __typename
         }
         profile {
           id
@@ -307,19 +346,24 @@ export const groupMembershipsByGroupIdAndProfileId = /* GraphQL */ `
           owner
           name
           pushToken
+          timezoneOffset
           createdAt
           updatedAt
+          __typename
         }
         emoji
         activities {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
         profileGroupMembershipsId
         groupMembershipsId
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -341,6 +385,7 @@ export const getActivity = /* GraphQL */ `
           emoji
           createdAt
           updatedAt
+          __typename
         }
         profile {
           id
@@ -348,21 +393,26 @@ export const getActivity = /* GraphQL */ `
           owner
           name
           pushToken
+          timezoneOffset
           createdAt
           updatedAt
+          __typename
         }
         emoji
         activities {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
         profileGroupMembershipsId
         groupMembershipsId
+        __typename
       }
       groupMembershipActivitiesId
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -388,12 +438,15 @@ export const listActivities = /* GraphQL */ `
           updatedAt
           profileGroupMembershipsId
           groupMembershipsId
+          __typename
         }
         groupMembershipActivitiesId
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -429,12 +482,15 @@ export const activitiesByGroupIdAndCreatedAt = /* GraphQL */ `
           updatedAt
           profileGroupMembershipsId
           groupMembershipsId
+          __typename
         }
         groupMembershipActivitiesId
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -470,12 +526,15 @@ export const activitiesByGroupMembershipActivitiesIdAndCreatedAt = /* GraphQL */
           updatedAt
           profileGroupMembershipsId
           groupMembershipsId
+          __typename
         }
         groupMembershipActivitiesId
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -488,6 +547,7 @@ export const getRecognition = /* GraphQL */ `
       emoji
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -505,8 +565,10 @@ export const listRecognitions = /* GraphQL */ `
         emoji
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -534,8 +596,10 @@ export const recognitionsByActivityIdAndCreatedAt = /* GraphQL */ `
         emoji
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -547,6 +611,7 @@ export const getNotification = /* GraphQL */ `
       pushTokenGroup
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -563,8 +628,10 @@ export const listNotifications = /* GraphQL */ `
         pushTokenGroup
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;
@@ -591,8 +658,10 @@ export const notificationsByPushTokenGroupAndCreatedAt = /* GraphQL */ `
         pushTokenGroup
         createdAt
         updatedAt
+        __typename
       }
       nextToken
+      __typename
     }
   }
 `;

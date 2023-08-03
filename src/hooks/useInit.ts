@@ -20,9 +20,13 @@ export default function useInit() {
       }
     }
   }, []);
+  const storeTimezoneOffset = useCallback(() => {
+    profileUpdate({ timezoneOffset: new Date().getTimezoneOffset() });
+  }, []);
   useEffect(() => {
+    storeTimezoneOffset();
     if (Platform.OS === 'web') return;
     initNotifications();
     storeCurrentPushToken();
-  }, [storeCurrentPushToken]);
+  }, [storeCurrentPushToken, storeTimezoneOffset]);
 }

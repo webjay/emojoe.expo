@@ -24,11 +24,15 @@ export const onCreateProfile = /* GraphQL */ `
           updatedAt
           profileGroupMembershipsId
           groupMembershipsId
+          __typename
         }
         nextToken
+        __typename
       }
+      timezoneOffset
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -54,11 +58,15 @@ export const onUpdateProfile = /* GraphQL */ `
           updatedAt
           profileGroupMembershipsId
           groupMembershipsId
+          __typename
         }
         nextToken
+        __typename
       }
+      timezoneOffset
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -84,11 +92,15 @@ export const onDeleteProfile = /* GraphQL */ `
           updatedAt
           profileGroupMembershipsId
           groupMembershipsId
+          __typename
         }
         nextToken
+        __typename
       }
+      timezoneOffset
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -109,11 +121,14 @@ export const onCreateGroup = /* GraphQL */ `
           updatedAt
           profileGroupMembershipsId
           groupMembershipsId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -134,11 +149,14 @@ export const onUpdateGroup = /* GraphQL */ `
           updatedAt
           profileGroupMembershipsId
           groupMembershipsId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -159,11 +177,14 @@ export const onDeleteGroup = /* GraphQL */ `
           updatedAt
           profileGroupMembershipsId
           groupMembershipsId
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -183,9 +204,11 @@ export const onCreateGroupMembership = /* GraphQL */ `
         emoji
         memberships {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
+        __typename
       }
       profile {
         id
@@ -195,9 +218,12 @@ export const onCreateGroupMembership = /* GraphQL */ `
         pushToken
         groupMemberships {
           nextToken
+          __typename
         }
+        timezoneOffset
         createdAt
         updatedAt
+        __typename
       }
       emoji
       activities {
@@ -209,13 +235,16 @@ export const onCreateGroupMembership = /* GraphQL */ `
           groupMembershipActivitiesId
           createdAt
           updatedAt
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
       profileGroupMembershipsId
       groupMembershipsId
+      __typename
     }
   }
 `;
@@ -235,9 +264,11 @@ export const onUpdateGroupMembership = /* GraphQL */ `
         emoji
         memberships {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
+        __typename
       }
       profile {
         id
@@ -247,9 +278,12 @@ export const onUpdateGroupMembership = /* GraphQL */ `
         pushToken
         groupMemberships {
           nextToken
+          __typename
         }
+        timezoneOffset
         createdAt
         updatedAt
+        __typename
       }
       emoji
       activities {
@@ -261,13 +295,16 @@ export const onUpdateGroupMembership = /* GraphQL */ `
           groupMembershipActivitiesId
           createdAt
           updatedAt
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
       profileGroupMembershipsId
       groupMembershipsId
+      __typename
     }
   }
 `;
@@ -287,9 +324,11 @@ export const onDeleteGroupMembership = /* GraphQL */ `
         emoji
         memberships {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
+        __typename
       }
       profile {
         id
@@ -299,9 +338,12 @@ export const onDeleteGroupMembership = /* GraphQL */ `
         pushToken
         groupMemberships {
           nextToken
+          __typename
         }
+        timezoneOffset
         createdAt
         updatedAt
+        __typename
       }
       emoji
       activities {
@@ -313,13 +355,16 @@ export const onDeleteGroupMembership = /* GraphQL */ `
           groupMembershipActivitiesId
           createdAt
           updatedAt
+          __typename
         }
         nextToken
+        __typename
       }
       createdAt
       updatedAt
       profileGroupMembershipsId
       groupMembershipsId
+      __typename
     }
   }
 `;
@@ -344,6 +389,7 @@ export const onCreateActivity = /* GraphQL */ `
           emoji
           createdAt
           updatedAt
+          __typename
         }
         profile {
           id
@@ -351,21 +397,26 @@ export const onCreateActivity = /* GraphQL */ `
           owner
           name
           pushToken
+          timezoneOffset
           createdAt
           updatedAt
+          __typename
         }
         emoji
         activities {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
         profileGroupMembershipsId
         groupMembershipsId
+        __typename
       }
       groupMembershipActivitiesId
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -390,6 +441,7 @@ export const onUpdateActivity = /* GraphQL */ `
           emoji
           createdAt
           updatedAt
+          __typename
         }
         profile {
           id
@@ -397,21 +449,26 @@ export const onUpdateActivity = /* GraphQL */ `
           owner
           name
           pushToken
+          timezoneOffset
           createdAt
           updatedAt
+          __typename
         }
         emoji
         activities {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
         profileGroupMembershipsId
         groupMembershipsId
+        __typename
       }
       groupMembershipActivitiesId
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -436,6 +493,7 @@ export const onDeleteActivity = /* GraphQL */ `
           emoji
           createdAt
           updatedAt
+          __typename
         }
         profile {
           id
@@ -443,21 +501,26 @@ export const onDeleteActivity = /* GraphQL */ `
           owner
           name
           pushToken
+          timezoneOffset
           createdAt
           updatedAt
+          __typename
         }
         emoji
         activities {
           nextToken
+          __typename
         }
         createdAt
         updatedAt
         profileGroupMembershipsId
         groupMembershipsId
+        __typename
       }
       groupMembershipActivitiesId
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -473,6 +536,7 @@ export const onCreateRecognition = /* GraphQL */ `
       emoji
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -488,6 +552,7 @@ export const onUpdateRecognition = /* GraphQL */ `
       emoji
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -503,6 +568,7 @@ export const onDeleteRecognition = /* GraphQL */ `
       emoji
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -517,6 +583,7 @@ export const onCreateNotification = /* GraphQL */ `
       pushTokenGroup
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -531,6 +598,7 @@ export const onUpdateNotification = /* GraphQL */ `
       pushTokenGroup
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
@@ -545,6 +613,7 @@ export const onDeleteNotification = /* GraphQL */ `
       pushTokenGroup
       createdAt
       updatedAt
+      __typename
     }
   }
 `;
