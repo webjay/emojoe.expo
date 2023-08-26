@@ -22,6 +22,9 @@
       "appStoreUrl": "https://apps.apple.com/app/emojoe/id1540478554",
       "entitlements": {
         "com.apple.developer.applesignin": ["Default"]
+      },
+      "config": {
+        "usesNonExemptEncryption": false
       }
     },
     "android": {
