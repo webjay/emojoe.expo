@@ -101,7 +101,7 @@ function getActivity(id) {
 }
 
 /**
- * @param {{ id: string, emoji: string, groupId: string, owner: string }} activity
+ * @param {{ id: string, emoji: string, groupId: string, owner: string, streakRepair?: boolean }} activity
  * @returns {import('expo-server-sdk').ExpoPushMessage[]}
  */
 async function activityToExpoPushMessages({
@@ -109,7 +109,9 @@ async function activityToExpoPushMessages({
   groupId,
   emoji,
   owner,
+  streakRepair,
 }) {
+  if (streakRepair) return [];
   const groupMemberships = await getGroupMembershipsByGroupId(groupId);
   const profiles = await Promise.all(
     groupMemberships.map(({ profileId }) => getProfile(profileId)),

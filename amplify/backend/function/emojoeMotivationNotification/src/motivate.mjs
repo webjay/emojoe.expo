@@ -1,32 +1,33 @@
 /* eslint-disable import/no-absolute-path */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
-import { scan, query } from '/opt/dynamo.mjs';
+import { randomUUID } from 'node:crypto';
+import { scan, query, put } from '/opt/dynamo.mjs';
 import {
   ownerToSubId,
   getProfilesBySubIdHavingPushToken,
   notificationsByPushTokenGroup,
 } from '/opt/helpers.mjs';
 import { sendExpoNotifications } from '/opt/notify.mjs';
+import calcGroupStreak from './handle-data.mjs';
 
-const MilliSecondsPerDay = 24 * 60 * 60 * 1000;
 const NotificationTimeDiffMinutes = 12 * 60;
 const NotificationTTL = 12 * 60 * 60;
 
 function getGroups() {
   return scan({
     TableName: process.env.API_EMOJOEEXPO_GROUPMEMBERSHIPTABLE_NAME,
-    ProjectionExpression: ['id', '#owner', 'emoji'].join(','),
+    ProjectionExpression: ['id', 'groupId', '#owner', 'emoji'].join(','),
     ExpressionAttributeNames: {
       '#owner': 'owner',
     },
   });
 }
 
-function getGroupActivity(id) {
+function getGroupActivity({ id }) {
   return query({
     TableName: process.env.API_EMOJOEEXPO_ACTIVITYTABLE_NAME,
-    ProjectionExpression: ['createdAt'].join(','),
+    ProjectionExpression: ['createdAt', 'streakRepair'].join(','),
     IndexName: 'activitiesByGroupMembershipActivitiesIdAndCreatedAt',
     KeyConditionExpression: 'groupMembershipActivitiesId = :id',
     ExpressionAttributeValues: {
@@ -36,75 +37,36 @@ function getGroupActivity(id) {
   });
 }
 
-function dateResetTime(dateStr) {
-  return Date.parse(dateStr.substring(0, 10));
-}
-
-function calcStreakLength(date1, date2) {
-  return (dateResetTime(date1) - dateResetTime(date2)) / MilliSecondsPerDay;
-}
-
-function streakDays(groupActivity, streakEndIndex) {
-  return (
-    calcStreakLength(
-      groupActivity[0].createdAt,
-      groupActivity[streakEndIndex].createdAt,
-    ) + 1
-  );
-}
-
-function areDatesWithinOneDay(date1, date2) {
-  return calcStreakLength(date1, date2) <= 1;
-}
-
-function isLatestActivityYesterday([{ createdAt }]) {
-  return calcStreakLength(new Date().toISOString(), createdAt) === 1;
-}
-
-function isLatestActivityAtThisHour([{ createdAt }]) {
-  const date1 = new Date();
-  const date2 = new Date(createdAt);
-  return date1.getHours() === date2.getHours();
-}
-
-async function calcGroupStreak({ id, owner, emoji }) {
-  const groupActivity = await getGroupActivity(id);
-  if (
-    groupActivity.length === 0 ||
-    !isLatestActivityYesterday(groupActivity) ||
-    !isLatestActivityAtThisHour(groupActivity)
-  ) {
-    return null;
-  }
-  const streakGapIndex = groupActivity.findIndex(({ createdAt }, index) => {
-    if (index + 1 === groupActivity.length) return false;
-    return !areDatesWithinOneDay(createdAt, groupActivity[index + 1].createdAt);
-  });
-  const streakEndIndex =
-    streakGapIndex === -1 ? groupActivity.length - 1 : streakGapIndex;
-  const streakLength = streakDays(groupActivity, streakEndIndex);
-  return {
+async function ghostActivity(groupId, groupMembershipActivitiesId, owner) {
+  const now = new Date().toISOString();
+  await put(process.env.API_EMOJOEEXPO_ACTIVITYTABLE_NAME, {
+    id: randomUUID(),
+    createdAt: now,
+    emoji: '👻',
+    groupId,
+    groupMembershipActivitiesId,
     owner,
-    emoji,
-    streakLength,
-  };
+    updatedAt: now,
+    __typename: 'Activity',
+    streakRepair: true,
+  });
 }
 
-function streaksUniqueByOwner(streaks) {
-  return streaks
-    .filter((streak) => streak !== null)
-    .reduce(
-      (result, { owner, emoji, streakLength }) => ({
-        ...result,
-        [owner]: {
-          streaks: {
-            ...result[owner]?.streaks,
-            [emoji]: Math.max(result[owner]?.streaks[emoji] || 0, streakLength),
-          },
+/**
+ * @param groupActivities {{ emoji: string, owner: string, id: string, groupId: string, streak: number | null }[]}
+ */
+function streaksUniqueByOwner(groupActivities) {
+  return groupActivities.reduce(
+    (result, { emoji, owner, streak }) => ({
+      ...result,
+      [owner]: {
+        streaks: {
+          [emoji]: Math.max(result[owner]?.streaks[emoji] || 0, streak),
         },
-      }),
-      {},
-    );
+      },
+    }),
+    {},
+  );
 }
 
 function assignProfiles(groupStreaksByOwner) {
@@ -132,7 +94,7 @@ async function profilesWithoutRecentNotification(streaksWithProfiles) {
   dateBefore.setMinutes(dateBefore.getMinutes() - NotificationTimeDiffMinutes);
   const dateBeforeISOString = dateBefore.toISOString();
   const filtered = [];
-  await streaksWithProfiles.reduce(async (promise, item) => {
+  await Object.values(streaksWithProfiles).reduce(async (promise, item) => {
     await promise;
     if (!item.profile) return;
     const recentNotification = await notificationsByPushTokenGroup(
@@ -161,16 +123,42 @@ function makeNotifications(items) {
   }));
 }
 
-export default async function handler() {
-  const groups = await getGroups();
-  const groupStreaks = await Promise.all(groups.map(calcGroupStreak));
-  const streaksWithProfiles = await Promise.all(
-    assignProfiles(streaksUniqueByOwner(groupStreaks)),
+export async function handleNotifications(groupActivities) {
+  const groupStreaksWithProfiles = await Promise.all(
+    assignProfiles(streaksUniqueByOwner(groupActivities)),
   );
   const streaksWithoutRecentNotification =
-    await profilesWithoutRecentNotification(streaksWithProfiles);
+    await profilesWithoutRecentNotification(groupStreaksWithProfiles);
   await sendExpoNotifications(
     makePushTokenGroupValueFromNotification,
     makeNotifications(streaksWithoutRecentNotification),
   );
+}
+
+async function handleGhostStreak({
+  streak,
+  id: groupMembershipActivitiesId,
+  groupId,
+  owner,
+}) {
+  if (streak === -1) {
+    await ghostActivity(groupId, groupMembershipActivitiesId, owner);
+  }
+}
+
+function filterStreak({ streak }) {
+  if (streak > 0) return true;
+  return false;
+}
+
+export default async function handler() {
+  const groups = await getGroups();
+  const groupActivities = await Promise.all(groups.map(getGroupActivity));
+  const streaks = groupActivities.map(calcGroupStreak);
+  const streaksWithGroups = streaks.map((streak, index) => ({
+    ...groups[index],
+    streak,
+  }));
+  await Promise.all(streaksWithGroups.map(handleGhostStreak));
+  await handleNotifications(streaksWithGroups.filter(filterStreak));
 }
