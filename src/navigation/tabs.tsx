@@ -1,26 +1,27 @@
 import React from 'react';
+import type { ComponentProps } from 'react';
 import { Tabs } from 'expo-router';
 import type { ParamListBase } from '@react-navigation/native';
 import type {
   BottomTabScreenProps,
   BottomTabNavigationOptions,
 } from '@react-navigation/bottom-tabs';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-type Icon = 'home' | 'group' | 'account-circle';
+type Icon = ComponentProps<typeof MaterialCommunityIcons>['name'];
 
 const routes = {
   '(tabs)/index': {
     title: 'Home',
-    icon: 'home',
+    icon: 'flag-checkered',
   },
   '(tabs)/groups': {
     title: 'Groups',
-    icon: 'all-inclusive',
+    icon: 'account-group',
   },
   '(tabs)/profile': {
     title: 'Profile',
-    icon: 'face',
+    icon: 'face-woman-profile',
   },
 };
 
@@ -37,7 +38,11 @@ function screenOptions({
     },
     title: route.title ? `${route.title} | Emojoe` : 'Emojoe',
     tabBarIcon: ({ color, size }) => (
-      <MaterialIcons name={route.icon as Icon} color={color} size={size} />
+      <MaterialCommunityIcons
+        name={route.icon as Icon}
+        color={color}
+        size={size}
+      />
     ),
   };
 }
