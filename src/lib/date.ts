@@ -20,8 +20,15 @@ export function hasDayGap(d1: string | Date, d2: string | Date) {
   return Math.abs(date1.getTime() - date2.getTime()) === dayMS;
 }
 
+function ISOStringToDateString(ISOString: string) {
+  return ISOString.split('T')[0];
+}
+
 export function isSameDay(d1: Date, d2: Date) {
-  return d1.toDateString() === d2.toDateString();
+  return (
+    ISOStringToDateString(d1.toISOString()) ===
+    ISOStringToDateString(d2.toISOString())
+  );
 }
 
 export function isToday(d: Date) {
