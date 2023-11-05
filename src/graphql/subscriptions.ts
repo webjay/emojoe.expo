@@ -19,6 +19,18 @@ export const onCreateProfile = /* GraphQL */ `subscription OnCreateProfile(
     name
     pushToken
     groupMemberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -43,6 +55,18 @@ export const onUpdateProfile = /* GraphQL */ `subscription OnUpdateProfile(
     name
     pushToken
     groupMemberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -67,6 +91,18 @@ export const onDeleteProfile = /* GraphQL */ `subscription OnDeleteProfile(
     name
     pushToken
     groupMemberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -86,6 +122,18 @@ export const onCreateGroup = /* GraphQL */ `subscription OnCreateGroup($filter: 
     name
     emoji
     memberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -104,6 +152,18 @@ export const onUpdateGroup = /* GraphQL */ `subscription OnUpdateGroup($filter: 
     name
     emoji
     memberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -122,6 +182,18 @@ export const onDeleteGroup = /* GraphQL */ `subscription OnDeleteGroup($filter: 
     name
     emoji
     memberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -147,6 +219,10 @@ export const onCreateGroupMembership = /* GraphQL */ `subscription OnCreateGroup
       id
       name
       emoji
+      memberships {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -157,6 +233,10 @@ export const onCreateGroupMembership = /* GraphQL */ `subscription OnCreateGroup
       owner
       name
       pushToken
+      groupMemberships {
+        nextToken
+        __typename
+      }
       timeZone
       createdAt
       updatedAt
@@ -164,6 +244,16 @@ export const onCreateGroupMembership = /* GraphQL */ `subscription OnCreateGroup
     }
     emoji
     activities {
+      items {
+        id
+        owner
+        groupId
+        emoji
+        groupMembershipActivitiesId
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -191,6 +281,10 @@ export const onUpdateGroupMembership = /* GraphQL */ `subscription OnUpdateGroup
       id
       name
       emoji
+      memberships {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -201,6 +295,10 @@ export const onUpdateGroupMembership = /* GraphQL */ `subscription OnUpdateGroup
       owner
       name
       pushToken
+      groupMemberships {
+        nextToken
+        __typename
+      }
       timeZone
       createdAt
       updatedAt
@@ -208,6 +306,16 @@ export const onUpdateGroupMembership = /* GraphQL */ `subscription OnUpdateGroup
     }
     emoji
     activities {
+      items {
+        id
+        owner
+        groupId
+        emoji
+        groupMembershipActivitiesId
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -235,6 +343,10 @@ export const onDeleteGroupMembership = /* GraphQL */ `subscription OnDeleteGroup
       id
       name
       emoji
+      memberships {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -245,6 +357,10 @@ export const onDeleteGroupMembership = /* GraphQL */ `subscription OnDeleteGroup
       owner
       name
       pushToken
+      groupMemberships {
+        nextToken
+        __typename
+      }
       timeZone
       createdAt
       updatedAt
@@ -252,6 +368,16 @@ export const onDeleteGroupMembership = /* GraphQL */ `subscription OnDeleteGroup
     }
     emoji
     activities {
+      items {
+        id
+        owner
+        groupId
+        emoji
+        groupMembershipActivitiesId
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -280,7 +406,30 @@ export const onCreateActivity = /* GraphQL */ `subscription OnCreateActivity(
       owner
       profileId
       groupId
+      group {
+        id
+        name
+        emoji
+        createdAt
+        updatedAt
+        __typename
+      }
+      profile {
+        id
+        subId
+        owner
+        name
+        pushToken
+        timeZone
+        createdAt
+        updatedAt
+        __typename
+      }
       emoji
+      activities {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       profileGroupMembershipsId
@@ -311,7 +460,30 @@ export const onUpdateActivity = /* GraphQL */ `subscription OnUpdateActivity(
       owner
       profileId
       groupId
+      group {
+        id
+        name
+        emoji
+        createdAt
+        updatedAt
+        __typename
+      }
+      profile {
+        id
+        subId
+        owner
+        name
+        pushToken
+        timeZone
+        createdAt
+        updatedAt
+        __typename
+      }
       emoji
+      activities {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       profileGroupMembershipsId
@@ -342,7 +514,30 @@ export const onDeleteActivity = /* GraphQL */ `subscription OnDeleteActivity(
       owner
       profileId
       groupId
+      group {
+        id
+        name
+        emoji
+        createdAt
+        updatedAt
+        __typename
+      }
+      profile {
+        id
+        subId
+        owner
+        name
+        pushToken
+        timeZone
+        createdAt
+        updatedAt
+        __typename
+      }
       emoji
+      activities {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       profileGroupMembershipsId

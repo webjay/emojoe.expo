@@ -16,6 +16,18 @@ export const getProfile = /* GraphQL */ `query GetProfile($id: ID!) {
     name
     pushToken
     groupMemberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -41,6 +53,10 @@ export const listProfiles = /* GraphQL */ `query ListProfiles(
       owner
       name
       pushToken
+      groupMemberships {
+        nextToken
+        __typename
+      }
       timeZone
       createdAt
       updatedAt
@@ -74,6 +90,10 @@ export const profilesBySubId = /* GraphQL */ `query ProfilesBySubId(
       owner
       name
       pushToken
+      groupMemberships {
+        nextToken
+        __typename
+      }
       timeZone
       createdAt
       updatedAt
@@ -93,6 +113,18 @@ export const getGroup = /* GraphQL */ `query GetGroup($id: ID!) {
     name
     emoji
     memberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -112,6 +144,10 @@ export const listGroups = /* GraphQL */ `query ListGroups(
       id
       name
       emoji
+      memberships {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -134,6 +170,10 @@ export const getGroupMembership = /* GraphQL */ `query GetGroupMembership($id: I
       id
       name
       emoji
+      memberships {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -144,6 +184,10 @@ export const getGroupMembership = /* GraphQL */ `query GetGroupMembership($id: I
       owner
       name
       pushToken
+      groupMemberships {
+        nextToken
+        __typename
+      }
       timeZone
       createdAt
       updatedAt
@@ -151,6 +195,16 @@ export const getGroupMembership = /* GraphQL */ `query GetGroupMembership($id: I
     }
     emoji
     activities {
+      items {
+        id
+        owner
+        groupId
+        emoji
+        groupMembershipActivitiesId
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -176,7 +230,30 @@ export const listGroupMemberships = /* GraphQL */ `query ListGroupMemberships(
       owner
       profileId
       groupId
+      group {
+        id
+        name
+        emoji
+        createdAt
+        updatedAt
+        __typename
+      }
+      profile {
+        id
+        subId
+        owner
+        name
+        pushToken
+        timeZone
+        createdAt
+        updatedAt
+        __typename
+      }
       emoji
+      activities {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       profileGroupMembershipsId
@@ -210,7 +287,30 @@ export const groupMembershipsByProfileId = /* GraphQL */ `query GroupMemberships
       owner
       profileId
       groupId
+      group {
+        id
+        name
+        emoji
+        createdAt
+        updatedAt
+        __typename
+      }
+      profile {
+        id
+        subId
+        owner
+        name
+        pushToken
+        timeZone
+        createdAt
+        updatedAt
+        __typename
+      }
       emoji
+      activities {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       profileGroupMembershipsId
@@ -246,7 +346,30 @@ export const groupMembershipsByGroupIdAndProfileId = /* GraphQL */ `query GroupM
       owner
       profileId
       groupId
+      group {
+        id
+        name
+        emoji
+        createdAt
+        updatedAt
+        __typename
+      }
+      profile {
+        id
+        subId
+        owner
+        name
+        pushToken
+        timeZone
+        createdAt
+        updatedAt
+        __typename
+      }
       emoji
+      activities {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       profileGroupMembershipsId
@@ -272,7 +395,30 @@ export const getActivity = /* GraphQL */ `query GetActivity($id: ID!) {
       owner
       profileId
       groupId
+      group {
+        id
+        name
+        emoji
+        createdAt
+        updatedAt
+        __typename
+      }
+      profile {
+        id
+        subId
+        owner
+        name
+        pushToken
+        timeZone
+        createdAt
+        updatedAt
+        __typename
+      }
       emoji
+      activities {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       profileGroupMembershipsId
@@ -300,6 +446,18 @@ export const listActivities = /* GraphQL */ `query ListActivities(
       owner
       groupId
       emoji
+      groupMembership {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       groupMembershipActivitiesId
       createdAt
       updatedAt
@@ -334,6 +492,18 @@ export const activitiesByGroupIdAndCreatedAt = /* GraphQL */ `query ActivitiesBy
       owner
       groupId
       emoji
+      groupMembership {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       groupMembershipActivitiesId
       createdAt
       updatedAt
@@ -368,6 +538,18 @@ export const activitiesByGroupMembershipActivitiesIdAndCreatedAt = /* GraphQL */
       owner
       groupId
       emoji
+      groupMembership {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       groupMembershipActivitiesId
       createdAt
       updatedAt

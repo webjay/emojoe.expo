@@ -19,6 +19,18 @@ export const createProfile = /* GraphQL */ `mutation CreateProfile(
     name
     pushToken
     groupMemberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -43,6 +55,18 @@ export const updateProfile = /* GraphQL */ `mutation UpdateProfile(
     name
     pushToken
     groupMemberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -67,6 +91,18 @@ export const deleteProfile = /* GraphQL */ `mutation DeleteProfile(
     name
     pushToken
     groupMemberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -89,6 +125,18 @@ export const createGroup = /* GraphQL */ `mutation CreateGroup(
     name
     emoji
     memberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -110,6 +158,18 @@ export const updateGroup = /* GraphQL */ `mutation UpdateGroup(
     name
     emoji
     memberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -131,6 +191,18 @@ export const deleteGroup = /* GraphQL */ `mutation DeleteGroup(
     name
     emoji
     memberships {
+      items {
+        id
+        owner
+        profileId
+        groupId
+        emoji
+        createdAt
+        updatedAt
+        profileGroupMembershipsId
+        groupMembershipsId
+        __typename
+      }
       nextToken
       __typename
     }
@@ -156,6 +228,10 @@ export const createGroupMembership = /* GraphQL */ `mutation CreateGroupMembersh
       id
       name
       emoji
+      memberships {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -166,6 +242,10 @@ export const createGroupMembership = /* GraphQL */ `mutation CreateGroupMembersh
       owner
       name
       pushToken
+      groupMemberships {
+        nextToken
+        __typename
+      }
       timeZone
       createdAt
       updatedAt
@@ -173,6 +253,16 @@ export const createGroupMembership = /* GraphQL */ `mutation CreateGroupMembersh
     }
     emoji
     activities {
+      items {
+        id
+        owner
+        groupId
+        emoji
+        groupMembershipActivitiesId
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -200,6 +290,10 @@ export const updateGroupMembership = /* GraphQL */ `mutation UpdateGroupMembersh
       id
       name
       emoji
+      memberships {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -210,6 +304,10 @@ export const updateGroupMembership = /* GraphQL */ `mutation UpdateGroupMembersh
       owner
       name
       pushToken
+      groupMemberships {
+        nextToken
+        __typename
+      }
       timeZone
       createdAt
       updatedAt
@@ -217,6 +315,16 @@ export const updateGroupMembership = /* GraphQL */ `mutation UpdateGroupMembersh
     }
     emoji
     activities {
+      items {
+        id
+        owner
+        groupId
+        emoji
+        groupMembershipActivitiesId
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -244,6 +352,10 @@ export const deleteGroupMembership = /* GraphQL */ `mutation DeleteGroupMembersh
       id
       name
       emoji
+      memberships {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -254,6 +366,10 @@ export const deleteGroupMembership = /* GraphQL */ `mutation DeleteGroupMembersh
       owner
       name
       pushToken
+      groupMemberships {
+        nextToken
+        __typename
+      }
       timeZone
       createdAt
       updatedAt
@@ -261,6 +377,16 @@ export const deleteGroupMembership = /* GraphQL */ `mutation DeleteGroupMembersh
     }
     emoji
     activities {
+      items {
+        id
+        owner
+        groupId
+        emoji
+        groupMembershipActivitiesId
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -289,7 +415,30 @@ export const createActivity = /* GraphQL */ `mutation CreateActivity(
       owner
       profileId
       groupId
+      group {
+        id
+        name
+        emoji
+        createdAt
+        updatedAt
+        __typename
+      }
+      profile {
+        id
+        subId
+        owner
+        name
+        pushToken
+        timeZone
+        createdAt
+        updatedAt
+        __typename
+      }
       emoji
+      activities {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       profileGroupMembershipsId
@@ -320,7 +469,30 @@ export const updateActivity = /* GraphQL */ `mutation UpdateActivity(
       owner
       profileId
       groupId
+      group {
+        id
+        name
+        emoji
+        createdAt
+        updatedAt
+        __typename
+      }
+      profile {
+        id
+        subId
+        owner
+        name
+        pushToken
+        timeZone
+        createdAt
+        updatedAt
+        __typename
+      }
       emoji
+      activities {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       profileGroupMembershipsId
@@ -351,7 +523,30 @@ export const deleteActivity = /* GraphQL */ `mutation DeleteActivity(
       owner
       profileId
       groupId
+      group {
+        id
+        name
+        emoji
+        createdAt
+        updatedAt
+        __typename
+      }
+      profile {
+        id
+        subId
+        owner
+        name
+        pushToken
+        timeZone
+        createdAt
+        updatedAt
+        __typename
+      }
       emoji
+      activities {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       profileGroupMembershipsId
