@@ -101,9 +101,10 @@ export default function GroupCard({
             </Tooltip>
           </View>
           <View style={styles.chips}>
-            {doneToday && <Chip icon="check-decagram">Done</Chip>}
             <Tooltip title="Streak length">
-              <Chip icon={streakIcon}>{streak}</Chip>
+              <Chip mode={doneToday ? 'flat' : 'outlined'} icon={streakIcon}>
+                {streak}
+              </Chip>
             </Tooltip>
           </View>
         </View>
