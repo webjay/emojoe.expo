@@ -1,4 +1,4 @@
-import { API, graphqlOperation } from '@aws-amplify/api';
+import { GraphQLAPI as API, graphqlOperation } from '@aws-amplify/api-graphql';
 import type { GraphQLResult } from '@aws-amplify/api-graphql';
 import getCognitoUserSub from '@src/lib/cognito';
 import {
