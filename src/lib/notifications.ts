@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 import Constants from 'expo-constants';
 import emoRecognition from './recognition.json';
 
-const { projectId } = Constants.expoConfig?.extra?.eas;
+const { projectId } = Constants.expoConfig?.extra?.eas || {};
 
 const NotificationBehavior = {
   shouldShowAlert: true,
