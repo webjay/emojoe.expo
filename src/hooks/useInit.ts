@@ -20,13 +20,15 @@ export default function useInit() {
       }
     }
   }, []);
-  const storeTimezoneOffset = useCallback(() => {
-    profileUpdate({ timezoneOffset: new Date().getTimezoneOffset() });
+  const storeTimezone = useCallback(() => {
+    profileUpdate({
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    });
   }, []);
   useEffect(() => {
-    storeTimezoneOffset();
+    storeTimezone();
     if (Platform.OS === 'web') return;
     initNotifications();
     storeCurrentPushToken();
-  }, [storeCurrentPushToken, storeTimezoneOffset]);
+  }, [storeCurrentPushToken, storeTimezone]);
 }

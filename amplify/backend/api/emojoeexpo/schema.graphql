@@ -13,7 +13,7 @@ type Profile
   name: String
   pushToken: String
   groupMemberships: [GroupMembership] @hasMany
-  timezoneOffset: Int
+  timeZone: String
 }
 
 type Group
