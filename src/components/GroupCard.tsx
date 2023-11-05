@@ -44,14 +44,9 @@ const styles = StyleSheet.create({
 });
 
 export default function GroupCard({
-  group: {
-    id,
-    groupId,
-    emoji,
-    group: { name },
-  },
+  group: { id, groupId, emoji, group },
 }: Props) {
-  const { push: navigate } = useRouter();
+  const router = useRouter();
   const {
     streak,
     streakProgressWeek,
@@ -60,8 +55,8 @@ export default function GroupCard({
     doneToday,
   } = useGroupStats(id);
   const onPressTitle = useCallback(
-    () => navigate(`/group/${groupId}/edit`),
-    [groupId, navigate],
+    () => router.push(`/group/${groupId}/edit`),
+    [groupId, router],
   );
   const cardLeft = useCallback<({ size }: { size: number }) => JSX.Element>(
     ({ size }) => (
@@ -82,7 +77,7 @@ export default function GroupCard({
       <Card.Title
         title={
           <Text variant="titleLarge" onPress={onPressTitle}>
-            {name}
+            {group?.name}
           </Text>
         }
         left={cardLeft}
