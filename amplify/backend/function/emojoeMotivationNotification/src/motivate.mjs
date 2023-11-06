@@ -38,15 +38,17 @@ function getGroupActivity({ id }) {
 }
 
 async function ghostActivity(groupId, groupMembershipActivitiesId, owner) {
-  const now = new Date().toISOString();
+  const date = new Date();
+  date.setHours(23, 59, 59, 999);
+  const createdAt = date.toISOString();
   await put(process.env.API_EMOJOEEXPO_ACTIVITYTABLE_NAME, {
     id: randomUUID(),
-    createdAt: now,
+    createdAt,
+    updatedAt: createdAt,
     emoji: '👻',
     groupId,
     groupMembershipActivitiesId,
     owner,
-    updatedAt: now,
     __typename: 'Activity',
     streakRepair: true,
   });
