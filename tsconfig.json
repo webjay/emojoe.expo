@@ -6,7 +6,8 @@
     "baseUrl": ".",
     "paths": {
       "@app/*": ["src/app/*"],
-      "@src/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "/opt/*": ["amplify/backend/function/emojoeexpoemojoeDynamoTrigger/opt/*"]
     }
   }
 }
