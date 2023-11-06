@@ -149,8 +149,7 @@ async function handleGhostStreak({
 }
 
 function filterStreak({ streak }) {
-  if (streak > 0) return true;
-  return false;
+  return streak > 0;
 }
 
 export default async function handler() {
