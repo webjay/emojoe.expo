@@ -41,9 +41,7 @@ function activitiesToday(activities: Activity[]) {
   return activitiesDoneToday;
 }
 
-export default function useGroupStats(
-  id: Activity['groupMembershipActivitiesId'],
-) {
+export default function useGroupStats(id: string) {
   const [streak, setStreak] = useState<number>(0);
   const [doneToday, setDoneToday] = useState<Activity[]>([]);
   const streakProgressWeek = useMemo(() => streak / 7, [streak]);

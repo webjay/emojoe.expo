@@ -38,28 +38,28 @@ function sectionsMapToArray(map: SectionsMap) {
 
 function makeSections(activities: Activity[]) {
   const sections: SectionsMap = new Map();
-  activities.forEach(
-    ({ id, createdAt, emoji, groupMembership: { profileId } }) => {
-      const createdAtDateString = toDateString(createdAt);
-      if (!sections.has(createdAtDateString)) {
-        sections.set(createdAtDateString, {
-          title: dayTitle(new Date(createdAt)),
-          data: new Map(),
-        });
-      }
-      const section = sections.get(createdAtDateString);
-      if (!section?.data.has(profileId)) {
-        section?.data.set(profileId, []);
-      }
-      const sectionForProfile = section?.data.get(profileId);
-      sectionForProfile?.push({
-        id,
-        createdAt,
-        emoji,
-        profileId,
+  activities.forEach(({ id, createdAt, emoji, groupMembership }) => {
+    if (!groupMembership) return;
+    const { profileId } = groupMembership;
+    const createdAtDateString = toDateString(createdAt);
+    if (!sections.has(createdAtDateString)) {
+      sections.set(createdAtDateString, {
+        title: dayTitle(new Date(createdAt)),
+        data: new Map(),
       });
-    },
-  );
+    }
+    const section = sections.get(createdAtDateString);
+    if (!section?.data.has(profileId)) {
+      section?.data.set(profileId, []);
+    }
+    const sectionForProfile = section?.data.get(profileId);
+    sectionForProfile?.push({
+      id,
+      createdAt,
+      emoji,
+      profileId,
+    });
+  });
   return sections;
 }
 

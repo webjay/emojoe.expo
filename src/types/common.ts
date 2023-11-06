@@ -1,10 +1,10 @@
-import type { Activity } from './api';
+import type { Activity, GroupMembership } from './api';
 
 export type ActivityItem = {
   id: Activity['id'];
   createdAt: Activity['createdAt'];
   emoji: Activity['emoji'];
-  profileId: Activity['groupMembership']['profileId'];
+  profileId: GroupMembership['profileId'];
 };
 
 export type ActivitySection = {
