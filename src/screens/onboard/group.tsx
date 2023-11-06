@@ -36,8 +36,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const navNext = '/onboard/notifications';
-
 export default function OnboardGroupScreen() {
   const { push: navigate } = useRouter();
   const [selected, setSelected] = useState<string[]>([]);
@@ -52,7 +50,10 @@ export default function OnboardGroupScreen() {
       return [...previousState, groupId];
     });
   }, []);
-  const handlePressSkip = useCallback(() => navigate(navNext), [navigate]);
+  const handlePressSkip = useCallback(
+    () => navigate('/group/create'),
+    [navigate],
+  );
   const handlePressDone = useCallback(async () => {
     setLoading(true);
     await Promise.all(
@@ -66,7 +67,7 @@ export default function OnboardGroupScreen() {
       ),
     );
     setLoading(false);
-    navigate(navNext);
+    navigate('/onboard/notifications');
   }, [selected, navigate]);
   return (
     <SafeAreaView style={styles.container}>
