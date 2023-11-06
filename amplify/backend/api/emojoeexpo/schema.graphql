@@ -62,8 +62,8 @@ type Activity
     )
   groupId: ID! @index(sortKeyFields: ["createdAt"])
   emoji: String!
-  groupMembership: GroupMembership! @belongsTo
-  groupMembershipActivitiesId: ID! @index(sortKeyFields: ["createdAt"])
+  groupMembership: GroupMembership @belongsTo
+  groupMembershipActivitiesId: ID @index(sortKeyFields: ["createdAt"])
   createdAt: AWSDateTime!
 }
 
