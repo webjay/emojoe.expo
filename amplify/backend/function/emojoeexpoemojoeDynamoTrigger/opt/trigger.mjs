@@ -113,6 +113,13 @@ async function activityToExpoPushMessages({
 }) {
   if (streakRepair) return [];
   const groupMemberships = await getGroupMembershipsByGroupId(groupId);
+  const profileGroupEmoji = groupMemberships.reduce(
+    (acc, { profileId, emoji: groupEmoji }) => ({
+      ...acc,
+      [profileId]: groupEmoji,
+    }),
+    {},
+  );
   const profiles = await Promise.all(
     groupMemberships.map(({ profileId }) => getProfile(profileId)),
   );
@@ -125,9 +132,9 @@ async function activityToExpoPushMessages({
   );
   return profilesFiltered
     .filter(({ owner: profileOwner }) => profileOwner !== owner)
-    .map(({ pushToken }) => ({
+    .map(({ pushToken, id }) => ({
       to: pushToken,
-      title: `${firstName(ownerProfile.name)} ➡️ ${emoji}`,
+      title: `${firstName(ownerProfile.name)} ➡️ ${profileGroupEmoji[id]}`,
       data: {
         url: `${appScheme}activity/${activityId}`,
         groupId,
