@@ -17,12 +17,18 @@ const styles = StyleSheet.create({
 
 function SectionActivityHeader({ section: { title, data } }: Props) {
   const {
-    colors: { secondaryContainer: backgroundColor },
+    colors: { secondaryContainer: backgroundColor, secondary: badgeBackground },
   } = useTheme();
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <Text>{title}</Text>
-      <Badge>{data.length}</Badge>
+      <Badge
+        theme={{
+          colors: { error: badgeBackground, onError: backgroundColor },
+        }}
+      >
+        {data.length}
+      </Badge>
     </View>
   );
 }
