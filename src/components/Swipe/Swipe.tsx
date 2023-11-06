@@ -29,8 +29,7 @@ const goalX = 20 + emojiSize;
 const acceptPercentage = 0.65;
 
 export default function Swipe({ emoji, groupId }: Props) {
-  // const { replace: goto } = useRouter();
-  const { push: goto } = useRouter();
+  const { replace: goto } = useRouter();
   const {
     colors: { surfaceVariant: backgroundColor },
   } = useTheme();
