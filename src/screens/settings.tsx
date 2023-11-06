@@ -88,7 +88,6 @@ function SettingsScreen() {
     <Container safeArea={false}>
       <Appbar.Header mode="small">
         <Appbar.Content title="Settings" />
-        <Appbar.Action icon="logout" onPress={() => navigate('/logout')} />
       </Appbar.Header>
       <View style={styles.container}>
         <View style={styles.segment}>
@@ -101,6 +100,9 @@ function SettingsScreen() {
         </View>
         <Divider />
         <View style={styles.segment}>
+          <Button mode="outlined" onPress={() => navigate('/logout')}>
+            Sign out
+          </Button>
           <Button mode="outlined" onPress={onPressDelete}>
             Delete account
           </Button>
