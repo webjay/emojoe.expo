@@ -6,6 +6,7 @@ import type { GroupMembership } from '@src/types/api';
 import useGroupStats from '@src/hooks/useGroupStats';
 import EmojiButton from '@src/components/EmojiButton';
 import GroupMenu from '@src/components/GroupMenu';
+import Dot from '@src/components/Dot';
 
 type Props = {
   group: GroupMembership;
@@ -26,15 +27,18 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: 'row',
-    gap: 10,
+    justifyContent: 'space-between',
   },
   progressView: {
-    flex: 1,
+    width: 100,
     gap: 5,
     justifyContent: 'flex-end',
   },
+  progressDay: {
+    flexDirection: 'row',
+    gap: 5,
+  },
   progress: {
-    width: 100,
     borderRadius: 10,
   },
   chips: {
@@ -87,6 +91,13 @@ export default function GroupCard({
       <Card.Content>
         <View style={styles.content}>
           <View style={styles.progressView}>
+            <Tooltip title="Day progress">
+              <View style={styles.progressDay}>
+                {doneToday.map(({ createdAt }) => (
+                  <Dot key={createdAt} />
+                ))}
+              </View>
+            </Tooltip>
             <Tooltip title="Week progress">
               <ProgressBar
                 animatedValue={streakProgressWeek}
@@ -102,7 +113,10 @@ export default function GroupCard({
           </View>
           <View style={styles.chips}>
             <Tooltip title="Streak length">
-              <Chip mode={doneToday ? 'flat' : 'outlined'} icon={streakIcon}>
+              <Chip
+                mode={doneToday.length ? 'flat' : 'outlined'}
+                icon={streakIcon}
+              >
                 {streak}
               </Chip>
             </Tooltip>
