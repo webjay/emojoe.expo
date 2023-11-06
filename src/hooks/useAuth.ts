@@ -23,7 +23,7 @@ export default function useAuth() {
       });
   }, []);
   const handleSignIn = useCallback(() => {
-    setIsSignedIn(null);
+    setIsSignedIn(false);
     Auth.federatedSignIn();
   }, []);
   useEffect(check, [check]);
