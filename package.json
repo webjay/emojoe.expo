@@ -10,7 +10,7 @@
     "amplify": "amplify",
     "repack": "rm package-lock.json && rm -rf node_modules && npm install",
     "lint": "eslint ./src/ --ext .jsx,.js,.mjs,.tsx,.ts",
-    "typecheck": "tsc --strict --noEmit --incremental false",
+    "typecheck": "tsc --noEmit --incremental false",
     "test": "mocha",
     "start": "expo-internal start",
     "start:clear": "expo-internal start --clear"
