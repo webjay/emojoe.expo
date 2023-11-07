@@ -4,8 +4,14 @@ const dayMonth = new Intl.DateTimeFormat('en-US', {
   weekday: 'long',
 });
 
+function dateToUTC(date: Date) {
+  const utcDate = new Date(date);
+  utcDate.setMinutes(utcDate.getMinutes() + utcDate.getTimezoneOffset());
+  return utcDate;
+}
+
 export function dayProgressFlex(createdAt: string) {
-  const date = new Date(createdAt);
+  const date = dateToUTC(new Date(createdAt));
   const dayStart = new Date(date);
   dayStart.setHours(0, 0, 0, 0);
   const progressMS = date.getTime() - dayStart.getTime();
