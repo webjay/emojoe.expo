@@ -62,6 +62,10 @@ export default function GroupCard({
     () => router.push(`/group/${groupId}/edit`),
     [groupId, router],
   );
+  const onPressStreak = useCallback(
+    () => router.push(`/group/${groupId}`),
+    [groupId, router],
+  );
   const cardLeft = useCallback<({ size }: { size: number }) => JSX.Element>(
     ({ size }) => (
       <EmojiButton
@@ -116,6 +120,7 @@ export default function GroupCard({
               <Chip
                 mode={doneToday.length ? 'flat' : 'outlined'}
                 icon={streakIcon}
+                onPress={onPressStreak}
               >
                 {streak}
               </Chip>
