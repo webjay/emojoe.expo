@@ -3,7 +3,7 @@ const MilliSecondsPerDay = 24 * MilliSecondsPerHour;
 
 function dateResetTime(date) {
   const dateReset = new Date(date);
-  dateReset.setHours(0, 0, 0, 0);
+  dateReset.setUTCHours(0, 0, 0, 0);
   return dateReset;
 }
 
@@ -31,13 +31,22 @@ function isLatestActivityStreakRepair(activities) {
 }
 
 function isLatestActivityYesterday([{ createdAt }]) {
-  return calcStreakLength(new Date(), createdAt) === 1;
+  const now = new Date();
+  const todayUtcMidnight = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+  );
+  const yesterdayUtcMidnight = new Date(todayUtcMidnight);
+  yesterdayUtcMidnight.setUTCDate(yesterdayUtcMidnight.getUTCDate() - 1);
+  const activityDate = new Date(createdAt);
+  return (
+    activityDate >= yesterdayUtcMidnight && activityDate < todayUtcMidnight
+  );
 }
 
 function isLatestActivityAtThisHour([{ createdAt }]) {
-  const date1 = new Date();
-  const date2 = new Date(createdAt);
-  return date1.getHours() === date2.getHours();
+  const currentHourUtc = new Date().getUTCHours();
+  const createdHourUtc = new Date(createdAt).getUTCHours();
+  return currentHourUtc === createdHourUtc;
 }
 
 function isAtDayEnd() {
@@ -62,6 +71,5 @@ export default function calcGroupStreak(groupActivity) {
   });
   const streakEndIndex =
     streakGapIndex === -1 ? groupActivity.length - 1 : streakGapIndex;
-  const streakLength = streakDays(groupActivity, streakEndIndex);
-  return streakLength;
+  return streakDays(groupActivity, streakEndIndex);
 }

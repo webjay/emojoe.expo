@@ -39,7 +39,7 @@ function getGroupActivity({ id }) {
 
 async function ghostActivity(groupId, groupMembershipActivitiesId, owner) {
   const date = new Date();
-  date.setHours(23, 59, 59, 999);
+  date.setUTCHours(23, 59, 59, 999);
   const createdAt = date.toISOString();
   await put(process.env.API_EMOJOEEXPO_ACTIVITYTABLE_NAME, {
     id: randomUUID(),
@@ -93,7 +93,9 @@ function makePushTokenGroupValueFromNotification({ to }) {
 
 async function profilesWithoutRecentNotification(streaksWithProfiles) {
   const dateBefore = new Date();
-  dateBefore.setMinutes(dateBefore.getMinutes() - NotificationTimeDiffMinutes);
+  dateBefore.setUTCMinutes(
+    dateBefore.getUTCMinutes() - NotificationTimeDiffMinutes,
+  );
   const dateBeforeISOString = dateBefore.toISOString();
   const filtered = [];
   await Object.values(streaksWithProfiles).reduce(async (promise, item) => {
