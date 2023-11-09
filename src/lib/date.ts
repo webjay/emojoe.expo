@@ -41,19 +41,19 @@ export function isToday(d: Date) {
   return isSameDay(new Date(), d);
 }
 
-export function isYesterday(d: Date) {
-  const date = new Date();
-  date.setDate(date.getDate() - 1);
-  return isSameDay(date, d);
+export function isYesterday(date: Date) {
+  const dateCompare = new Date();
+  dateCompare.setUTCDate(dateCompare.getUTCDate() - 1);
+  return isSameDay(dateCompare, new Date(date));
 }
 
 export function toDateString(dateString: string) {
   const date = new Date(dateString);
-  return date.toDateString();
+  return ISOStringToDateString(date.toISOString());
 }
 
-export function dayTitle(d: Date) {
-  if (isToday(d)) return 'Today';
-  if (isYesterday(d)) return 'Yesterday';
-  return dayMonth.format(d);
+export function dayTitle(date: Date) {
+  if (isToday(date)) return 'Today';
+  if (isYesterday(date)) return 'Yesterday';
+  return dayMonth.format(dateToUTC(date));
 }
