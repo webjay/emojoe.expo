@@ -25,8 +25,9 @@ function areDatesWithinOneDay(date1, date2) {
 }
 
 function isLatestActivityStreakRepair(activities) {
+  const pauseDays = 1;
   return activities
-    .slice(0, 2)
+    .slice(0, pauseDays)
     .every(({ streakRepair }) => Boolean(streakRepair));
 }
 
