@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, View, Platform, Alert } from 'react-native';
-import { openSettings } from 'expo-linking';
+import { openSettings, openURL } from 'expo-linking';
 import { useRouter } from 'expo-router';
 import {
   Appbar,
@@ -24,6 +24,11 @@ const styles = StyleSheet.create({
     gap: 10,
     alignItems: 'center',
     padding: 15,
+  },
+  buttons: {
+    padding: 30,
+    gap: 30,
+    alignItems: 'center',
   },
 });
 
@@ -53,6 +58,11 @@ function SettingsScreen() {
     }
   }, []);
   const onDismissSnackBar = useCallback(() => setSnackbarVisible(false), []);
+  const handleSupportClick = useCallback(
+    () => openURL('mailto:support@webcom.dk'),
+    [],
+  );
+  const handleSignOut = useCallback(() => navigate('/logout'), [navigate]);
   const handleAccountDelete = useCallback(() => userDelete(), []);
   const onPressDelete = useCallback(() => {
     if (Platform.OS === 'web') {
@@ -99,11 +109,18 @@ function SettingsScreen() {
           <Text variant="labelLarge">Notifications</Text>
         </View>
         <Divider />
-        <View style={styles.segment}>
-          <Button mode="outlined" onPress={() => navigate('/logout')}>
+        <View style={styles.buttons}>
+          <Button mode="outlined" onPress={handleSignOut}>
             Sign out
           </Button>
-          <Button mode="outlined" onPress={onPressDelete}>
+          <Button mode="outlined" onPress={handleSupportClick}>
+            Support
+          </Button>
+          <Button
+            mode="outlined"
+            onPress={onPressDelete}
+            theme={{ colors: { primary: 'red' } }}
+          >
             Delete account
           </Button>
         </View>
