@@ -1,8 +1,8 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
-import { Appbar } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import Container from '@src/components/Container';
 import useGroupMemberships from '../hooks/useGroupMemberships';
 import Empty from '../components/Empty';
@@ -14,6 +14,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 10,
+  },
+  groupCreate: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    margin: 10,
+    marginTop: 30,
   },
 });
 
@@ -31,12 +38,11 @@ export default function GroupsScreen() {
       loadData(false);
     }, [loadData]),
   );
+  const onGroupCreateClick = useCallback(() => {
+    navigate('/group/create');
+  }, [navigate]);
   return (
     <Container>
-      <Appbar.Header mode="small" statusBarHeight={0}>
-        <Appbar.Content title="Groups" />
-        <Appbar.Action icon="plus" onPress={() => navigate('/group/create')} />
-      </Appbar.Header>
       <ScrollViewRefresh
         loading={loading}
         refetch={loadData}
@@ -46,6 +52,14 @@ export default function GroupsScreen() {
         {groups.map((group) => (
           <GroupCard key={group.groupId} group={group} />
         ))}
+        <View style={styles.groupCreate}>
+          <IconButton
+            icon="plus"
+            mode="outlined"
+            accessibilityLabel="Create group"
+            onPress={onGroupCreateClick}
+          />
+        </View>
         <SafeAreaBottom />
       </ScrollViewRefresh>
     </Container>
