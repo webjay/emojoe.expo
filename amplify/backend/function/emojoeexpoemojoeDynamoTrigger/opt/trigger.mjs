@@ -152,13 +152,17 @@ async function activityToExpoPushMessages({
  * @returns {import('expo-server-sdk').ExpoPushMessage}
  */
 async function recognitionToExpoPushMessage({ activityId, emoji }) {
-  const { owner, groupId } = await getActivity(activityId);
+  const {
+    owner,
+    emoji: activityEmoji,
+    groupId,
+  } = await getActivity(activityId);
   const [{ pushToken }] = await getProfilesBySubIdHavingPushToken(
     ownerToSubId(owner),
   );
   return {
     to: pushToken,
-    title: `${emoji}`,
+    title: `${activityEmoji} ~ ${emoji}`,
     data: {
       url: `${appScheme}group/${groupId}`,
       groupId,
