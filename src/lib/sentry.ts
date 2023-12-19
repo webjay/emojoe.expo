@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import * as Sentry from 'sentry-expo';
 
 Sentry.init({
-  dsn: 'https://7dc6ac81d3574ba88c10141830bd4307@o373802.ingest.sentry.io/4504628449116160',
+  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
   enableInExpoDevelopment: true,
 });
 
