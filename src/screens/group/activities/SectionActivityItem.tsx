@@ -1,5 +1,6 @@
-import React, { useMemo, memo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useCallback, useMemo, memo } from 'react';
+import { StyleSheet, View, Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useTheme } from 'react-native-paper';
 import type { ActivityItem } from '@src/types/common';
 import { dayProgressFlex } from '@src/lib/date';
@@ -47,6 +48,13 @@ function SectionActivityItem({ item }: Props) {
   const {
     colors: { secondaryContainer: borderColor },
   } = useTheme();
+  const { push: navigate } = useRouter();
+  const onPress = useCallback(
+    async (id: ActivityItem['id']) => {
+      navigate(`/activity/${id}`);
+    },
+    [navigate],
+  );
   const actions = useMemo(
     () => item.sort(({ createdAt: a }, { createdAt: b }) => a.localeCompare(b)),
     [item],
@@ -63,8 +71,10 @@ function SectionActivityItem({ item }: Props) {
         <View key={createdAt} style={styles.emojiAnimatedView}>
           <AnimatedFlexView flex={dayProgressFlex(createdAt)} />
           <View style={styles.emojiView}>
-            <Emoji emoji={emoji} style={[styles.emoji, { borderColor }]} />
-            <RecognitionEmojis activityId={id} />
+            <Pressable onPress={() => onPress(id)}>
+              <Emoji emoji={emoji} style={[styles.emoji, { borderColor }]} />
+              <RecognitionEmojis activityId={id} />
+            </Pressable>
           </View>
         </View>
       ))}

@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Button } from 'react-native-paper';
+import { Button, Text } from 'react-native-paper';
 import { handleCreateRecognition } from '@src/lib/task';
-import type { Activity } from '@src/types/api';
-import { activityGet } from '@src/lib/api';
+import type { Activity, Recognition } from '@src/types/api';
+import { activityGet, getRecognitionByActivityId } from '@src/lib/api';
+import { getCognitoUsername } from '@src/lib/cognito';
 import useGroup from '@src/hooks/useGroup';
 import emoRecognition from '@src/lib/recognition.json';
 import EmojiTitle from '@src/components/EmojiTitle';
@@ -37,6 +38,8 @@ export default function GroupActivityScreen({
 }: Props) {
   const { replace } = useRouter();
   const [activity, setActivity] = useState<Activity>();
+  const [username, setUsername] = useState();
+  const [recognitions, setRecognitions] = useState<Recognition[]>([]);
   const { group } = useGroup(activity?.groupId);
   const onAppreciationPress = useCallback(
     (emoji: Activity['emoji']) => {
@@ -47,7 +50,13 @@ export default function GroupActivityScreen({
   );
   useEffect(() => {
     activityGet(activityId).then(setActivity);
+    getCognitoUsername().then(setUsername);
+    getRecognitionByActivityId(activityId).then(setRecognitions);
   }, [activityId]);
+  const hasGivenRecognition = useMemo(
+    () => recognitions?.filter(({ owner }) => owner === username),
+    [recognitions, username],
+  );
   return (
     <SafeAreaView style={styles.container}>
       <EmojiTitle
@@ -60,12 +69,16 @@ export default function GroupActivityScreen({
           <Button
             key={key}
             mode="outlined"
+            disabled={Boolean(hasGivenRecognition.length)}
             onPress={() => onAppreciationPress(emoji)}
           >
             {emoji}
           </Button>
         ))}
       </View>
+      {Boolean(hasGivenRecognition.length) && (
+        <Text>You already gave {hasGivenRecognition[0].emoji}</Text>
+      )}
     </SafeAreaView>
   );
 }
