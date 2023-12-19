@@ -9,6 +9,7 @@ import { getCognitoUsername } from '@src/lib/cognito';
 import useGroup from '@src/hooks/useGroup';
 import emoRecognition from '@src/lib/recognition.json';
 import EmojiTitle from '@src/components/EmojiTitle';
+import Howto from '@src/components/Howto';
 
 type Props = {
   route: {
@@ -79,6 +80,7 @@ export default function GroupActivityScreen({
       {Boolean(hasGivenRecognition.length) && (
         <Text>You already gave {hasGivenRecognition[0].emoji}</Text>
       )}
+      <Howto />
     </SafeAreaView>
   );
 }

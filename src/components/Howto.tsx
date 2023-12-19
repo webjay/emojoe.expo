@@ -1,28 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { usePathname } from 'expo-router';
 import { Snackbar } from 'react-native-paper';
 import { storageGet, storageSet } from '@src/lib/storage';
 
+const guides = [
+  ['/activity/', 'Press the emoji you want to send as recognition.'],
+  ['/', 'Swipe the emoji, when you have done an activity.'],
+];
+
 const duration = 30 * 1000;
-const storageKey = 'HowtoSwipe';
 const trueStr = 'true';
 
-function onPress() {
+function onPress(storageKey: string) {
   storageSet(storageKey, trueStr);
 }
 
-const action = {
-  label: 'OK',
-  onPress,
-};
-
 function Howto() {
+  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
+  const guide = useMemo(
+    () =>
+      guides.find(([path]) => path === pathname || pathname.startsWith(path)),
+    [pathname],
+  );
+  const guidePath = useMemo(() => (guide ? guide[0] : null), [guide]);
+  const guideText = useMemo(() => (guide ? guide[1] : null), [guide]);
+  const storageKey = useMemo(() => `howto-${guidePath}`, [guidePath]);
+  const action = useMemo(
+    () => ({
+      label: 'OK',
+      onPress: () => onPress(storageKey),
+    }),
+    [storageKey],
+  );
   useEffect(() => {
     storageGet(storageKey).then((seen) => {
       if (seen === trueStr) return;
       setVisible(true);
     });
-  }, []);
+  }, [storageKey]);
+  if (!guideText) return null;
   return (
     <Snackbar
       visible={visible}
@@ -30,7 +47,7 @@ function Howto() {
       action={action}
       duration={duration}
     >
-      Swipe the emoji, when you have done an activity.
+      {guideText}
     </Snackbar>
   );
 }
