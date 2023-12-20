@@ -2,7 +2,7 @@ import { isDevice } from 'expo-device';
 import { Platform } from 'react-native';
 import { createURL } from 'expo-linking';
 import { Amplify } from '@aws-amplify/core';
-import awsConfig from '../aws-exports';
+import awsConfig from '../amplifyconfiguration.json';
 import urlOpener from './urlOpener';
 
 const redirectUrl =
